@@ -7,12 +7,16 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.PowerManipulator;
 import frc.robot.subsystems.DriveSystem;
+import frc.robot.subsystems.Manipulator;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -24,7 +28,11 @@ import frc.robot.subsystems.DriveSystem;
 public class Robot extends TimedRobot {
   public static RobotMap robotMap; 
   public static DriveSystem driveSystem; 
+  public static UsbCamera camera; 
+  public static Manipulator manipulator; 
   public static OI oi;
+
+  Command manipulatorControl; 
 
   Command autonomousCommand;
   SendableChooser<Command> chooser = new SendableChooser<>();
@@ -37,10 +45,18 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     robotMap = new RobotMap();
     driveSystem = new DriveSystem();
+    manipulator = new Manipulator(); 
     oi = new OI();
+
+    manipulatorControl = new PowerManipulator(); 
 //    chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
  //   SmartDashboard.putData("Auto mode", m_chooser);
+
+    UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture();
+		cam0.setExposureManual(50);
+		cam0.setResolution(320, 240);
+		cam0.setFPS(30); 
   }
 
   /**
@@ -115,6 +131,8 @@ public class Robot extends TimedRobot {
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
+
+    manipulatorControl.start(); 
   }
 
   /**

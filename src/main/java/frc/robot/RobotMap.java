@@ -21,6 +21,11 @@ public class RobotMap {
   public static int FLD = 2; 
   public static int FRD = 3; 
 
+  //manipulator and lift talons 
+  public static int manipulatorTalon = 4; 
+
+  //controllers
   public static int controllerZero = 0;
+  public static int controllerOne = 1; 
 
 }

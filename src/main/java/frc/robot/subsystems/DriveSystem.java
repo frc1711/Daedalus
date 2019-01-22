@@ -26,10 +26,12 @@ public class DriveSystem extends Subsystem {
 	public WPI_TalonSRX rearLeftDrive;
   public WPI_TalonSRX rearRightDrive;
 
-  public DifferentialDrive robotDrive; 
+  public DifferentialDrive robotDrive;
 
   SpeedControllerGroup leftSideDrive; 
   SpeedControllerGroup rightSideDrive; 
+
+  Boolean quickTurn; 
 
   public DriveSystem() {
     frontLeftDrive = new WPI_TalonSRX(RobotMap.FLD); 
@@ -40,18 +42,16 @@ public class DriveSystem extends Subsystem {
     leftSideDrive = new SpeedControllerGroup(frontLeftDrive, rearLeftDrive);
     rightSideDrive = new SpeedControllerGroup(frontRightDrive, rearRightDrive); 
 
-    robotDrive = new DifferentialDrive (leftSideDrive, rightSideDrive); 
+    robotDrive = new DifferentialDrive (leftSideDrive, rightSideDrive);
 
   }
-  public void StopRobot() {
+  public void stopRobot() {
     frontLeftDrive.set(0);
     frontRightDrive.set(0);
     rearLeftDrive.set(0);
     rearRightDrive.set(0); 
   }
-
-
-
+  
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
