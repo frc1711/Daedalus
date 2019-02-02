@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
+import frc.robot.subsystems.Manipulator;
 
 public class PowerManipulator extends Command {
   public PowerManipulator() {
@@ -29,13 +31,33 @@ public class PowerManipulator extends Command {
   //TODO -> figure out what the voltage is, make this automatically stop 
   @Override
   protected void execute() { 
-    if (OI.controllerOne.getRawButton(1)) {
+
+    //Intake and outtake method
+    if (!Robot.manipulator.getManipulatorSwitch() && OI.controllerOne.getRawButton(5)) {
       Robot.manipulator.runManipulator(.75);
-      OI.controllerOne.setRumble(RumbleType.kLeftRumble, 1);
-  }
-    else if (OI.controllerOne.getRawButton(2)) {
+      // OI.controllerOne.setRumble(RumbleType.kLeftRumble, 1);
+    } else if (OI.controllerOne.getRawButton(6)){
       Robot.manipulator.runManipulator(-.75); 
+    } else if (Robot.manipulator.getManipulatorSwitch()) {
+      Robot.manipulator.runManipulator(0);
+
+
+      if (OI.controllerOne.getRawButton(5)) {
+        OI.controllerOne.setRumble(RumbleType.kLeftRumble, 1); 
+      } else {
+        OI.controllerOne.setRumble(RumbleType.kLeftRumble, 0);
+      }
+    } else {
+      Robot.manipulator.runManipulator(0);
+    } 
+    /*if (OI.controllerOne.getRawButton(4)) {
+      Robot.manipulator.runManipulator((-.75));
+    //  OI.controllerOne.setRumble(RumbleType.kLeftRumble, 1); 
     }
+    else if (OI.controllerOne.getRawButton(2)) {
+      Robot.manipulator.runManipulator(0); 
+      OI.controllerOne.setRumble(RumbleType.kLeftRumble, 0);
+    } */
 
   }
 

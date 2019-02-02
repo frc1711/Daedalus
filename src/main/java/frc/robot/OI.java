@@ -40,7 +40,7 @@ public class OI {
 
   // Start the command when the button is released and let it run the command
   // until it is finished as determined by it's isFinished method.
-  // button.whenReleased(new ExampleCommand());
+  // button.whenReleased(new Example  Command());
 
   public static Joystick controllerZero = new Joystick(RobotMap.controllerZero);
   public static Joystick controllerOne = new Joystick(RobotMap.controllerOne); 

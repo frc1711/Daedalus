@@ -31,8 +31,6 @@ public class DriveSystem extends Subsystem {
   SpeedControllerGroup leftSideDrive; 
   SpeedControllerGroup rightSideDrive; 
 
-  Boolean quickTurn; 
-
   public DriveSystem() {
     frontLeftDrive = new WPI_TalonSRX(RobotMap.FLD); 
     frontRightDrive = new WPI_TalonSRX(RobotMap.FRD);

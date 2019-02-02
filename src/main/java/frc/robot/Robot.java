@@ -52,12 +52,9 @@ public class Robot extends TimedRobot {
 //    chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
  //   SmartDashboard.putData("Auto mode", m_chooser);
-
     UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture();
-		cam0.setExposureManual(50);
-		cam0.setResolution(320, 240);
-		cam0.setFPS(30); 
   }
+
 
   /**
    * This function is called every robot packet, no matter the mode. Use
@@ -142,6 +139,9 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     driveSystem.robotDrive.arcadeDrive(-(OI.controllerZero.getRawAxis(1)), OI.controllerZero.getRawAxis(4));
     Scheduler.getInstance().run();
+    
+    var temporaryThing = manipulator.getManipulatorSwitch();
+    System.out.println(temporaryThing);
   }
 
   /**

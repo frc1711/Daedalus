@@ -28,4 +28,7 @@ public class RobotMap {
   public static int controllerZero = 0;
   public static int controllerOne = 1; 
 
+  //digital ports
+  public static int manipulatorSwitch = 5; 
+
 }
