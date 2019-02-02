@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.PowerManipulator;
 import frc.robot.subsystems.DriveSystem;
 import frc.robot.subsystems.Manipulator;
+import io.github.pseudoresonance.pixy2api.Pixy2;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -30,6 +31,7 @@ public class Robot extends TimedRobot {
   public static DriveSystem driveSystem; 
   public static UsbCamera camera; 
   public static Manipulator manipulator; 
+  public static Pixy2 pixy; 
   public static OI oi;
 
   Command manipulatorControl; 
