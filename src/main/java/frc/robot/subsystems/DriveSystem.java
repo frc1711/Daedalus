@@ -8,11 +8,14 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.SerialPort;
 import frc.robot.RobotMap;
 
 /**
@@ -25,6 +28,8 @@ public class DriveSystem extends Subsystem {
 	public WPI_TalonSRX frontRightDrive;
 	public WPI_TalonSRX rearLeftDrive;
   public WPI_TalonSRX rearRightDrive;
+
+  public AHRS gyro;
 
   public DifferentialDrive robotDrive;
 
@@ -40,8 +45,10 @@ public class DriveSystem extends Subsystem {
     leftSideDrive = new SpeedControllerGroup(frontLeftDrive, rearLeftDrive);
     rightSideDrive = new SpeedControllerGroup(frontRightDrive, rearRightDrive); 
 
-    robotDrive = new DifferentialDrive (leftSideDrive, rightSideDrive);
+    gyro = new AHRS(SerialPort.Port.kUSB);
 
+    robotDrive = new DifferentialDrive (leftSideDrive, rightSideDrive);
+    
   }
   public void stopRobot() {
     frontLeftDrive.set(0);
@@ -49,6 +56,26 @@ public class DriveSystem extends Subsystem {
     rearLeftDrive.set(0);
     rearRightDrive.set(0); 
   }
+
+  public double getGyroAngle()
+    {
+    	return gyro.getAngle();
+    }
+    
+    public void zeroGyro()
+    {
+    	gyro.zeroYaw();
+    }
+    
+    public boolean isGyroConnected()
+    {
+    	return gyro.isConnected();
+    }
+    
+    public boolean isGyroCalibrating()
+    {
+    	return gyro.isCalibrating();
+    }
   
   @Override
   public void initDefaultCommand() {
