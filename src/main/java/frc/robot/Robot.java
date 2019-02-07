@@ -8,15 +8,14 @@
 package frc.robot;
 
 import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.cameraserver.CameraServer;
+//import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.PowerManipulator;
-import frc.robot.subsystems.DriveSystem;
-import frc.robot.subsystems.Manipulator;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
 import io.github.pseudoresonance.pixy2api.Pixy2;
 
 /**
@@ -32,6 +31,8 @@ public class Robot extends TimedRobot {
   public static UsbCamera camera; 
   public static Manipulator manipulator; 
   public static Pixy2 pixy; 
+  public static Pneumatics pneumatics;
+  public static Command testCylinder;
   public static OI oi;
 
   Command manipulatorControl; 
@@ -48,13 +49,15 @@ public class Robot extends TimedRobot {
     robotMap = new RobotMap();
     driveSystem = new DriveSystem();
     manipulator = new Manipulator(); 
+    pneumatics = new Pneumatics();
     oi = new OI();
 
-    manipulatorControl = new PowerManipulator(); 
+    manipulatorControl = new PowerManipulator();
+    testCylinder = new toggleTestCylinder(); 
 //    chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
  //   SmartDashboard.putData("Auto mode", m_chooser);
-    UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture();
+    //UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture();
   }
 
 
@@ -139,11 +142,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    driveSystem.robotDrive.arcadeDrive(-(OI.controllerZero.getRawAxis(1)), OI.controllerZero.getRawAxis(4));
+    driveSystem.robotDrive.arcadeDrive(-(OI.controllerZero.getRawAxis(1)), OI.controllerZero.getRawAxis(0));
+    if(OI.controllerZero.getRawButtonPressed(2)){
+      testCylinder.start();
+    }
     Scheduler.getInstance().run();
     
     var temporaryThing = manipulator.getManipulatorSwitch();
     System.out.println(temporaryThing);
+    System.out.println(driveSystem.getGyroAngle());
   }
 
   /**

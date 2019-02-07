@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
-import frc.robot.subsystems.Manipulator;
+//import frc.robot.RobotMap;
+//import frc.robot.subsystems.Manipulator;
 
 public class PowerManipulator extends Command {
   public PowerManipulator() {

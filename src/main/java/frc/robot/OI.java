@@ -43,5 +43,5 @@ public class OI {
   // button.whenReleased(new Example  Command());
 
   public static Joystick controllerZero = new Joystick(RobotMap.controllerZero);
-  public static Joystick controllerOne = new Joystick(RobotMap.controllerOne); 
+  public static Joystick controllerOne = new Joystick(RobotMap.controllerOne);
 }

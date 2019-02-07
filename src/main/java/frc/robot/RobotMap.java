@@ -31,4 +31,7 @@ public class RobotMap {
   //digital ports
   public static int manipulatorSwitch = 5; 
 
+  //Solenoids
+  public static int testCylinder = 0;
+
 }
