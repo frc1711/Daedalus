@@ -9,7 +9,6 @@ package frc.robot.subsystems.vision;
 
 import java.util.ArrayList;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Dashboard;
 import io.github.pseudoresonance.pixy2api.Pixy2CCC.Block;
 
@@ -35,9 +34,10 @@ public class BallTrack {
         }
       }
 
-      int ballX = largestBlock.getX(); 
+      int ballX = largestBlock.getX();
       double yaw = ((ballX - 157.5) * 0.1904761905); 
     
+
       Dashboard.getInstance().putNumber(false, "Ball Angle", yaw);
       Dashboard.getInstance().putNumber(false, "Ball X", largestBlock.getX());
       Dashboard.getInstance().putNumber(false, "Ball Y", largestBlock.getY());
@@ -45,4 +45,6 @@ public class BallTrack {
       Dashboard.getInstance().putNumber(false, "Ball Box Height", largestBlock.getHeight());
     }
   }
+
+
 }

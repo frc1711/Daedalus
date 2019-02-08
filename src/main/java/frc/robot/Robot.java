@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.FollowBall;
 import frc.robot.commands.PowerManipulator;
 import frc.robot.subsystems.DriveSystem;
 import frc.robot.subsystems.Manipulator;
@@ -38,6 +39,7 @@ public class Robot extends TimedRobot {
   public static OI oi;
 
   Command manipulatorControl; 
+  Command followBall;
 
   Command autonomousCommand;
   SendableChooser<Command> chooser = new SendableChooser<>();
@@ -48,14 +50,17 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    //BASIC FILES AND SUBSYTEMS
     robotMap = new RobotMap();
     driveSystem = new DriveSystem();
     manipulator = new Manipulator(); 
     oi = new OI();
 
+    //COMMANDS
     manipulatorControl = new PowerManipulator(); 
-  //////CAMERA STUFF/////////
-  //////PixyCam/////////////
+    followBall = new FollowBall(); 
+
+    //CAMERAS AND PIXYCAM
     CameraConfig.setup(); 
 
     SmartDashboard.putBoolean("Pixy2 Light", false);
@@ -144,7 +149,8 @@ public class Robot extends TimedRobot {
       autonomousCommand.cancel();
     }
     
-    manipulatorControl.start(); 
+    manipulatorControl.start();
+    followBall.start(); 
   }
 
   /**
@@ -161,6 +167,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+    followBall.start();
 
   }
 }

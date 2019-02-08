@@ -7,7 +7,6 @@
 
 package frc.robot.subsystems.vision;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
 import io.github.pseudoresonance.pixy2api.Pixy2;
 import io.github.pseudoresonance.pixy2api.Pixy2CCC;
 import io.github.pseudoresonance.pixy2api.links.Link;

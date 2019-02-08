@@ -7,72 +7,61 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
 import frc.robot.Robot;
+import frc.robot.RobotMap.RoboDir;
+import frc.robot.subsystems.vision.BallTrack;
 
-public class PowerManipulator extends Command {
-  public PowerManipulator() {
+public class FollowBall extends Command {
 
-    requires(Robot.manipulator);
+  double ballX = SmartDashboard.getNumber("Ball X", 700);
+  double ballY = SmartDashboard.getNumber("Ball Y", 700); 
+  double ballAngle = SmartDashboard.getNumber("Ball Angle", 700); 
 
+  public FollowBall() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
+    requires(Robot.driveSystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.manipulator.runManipulator(0);
+    Robot.driveSystem.stopRobot();
   }
 
   // Called repeatedly when this Command is scheduled to run
-  //TODO -> figure out what the voltage is, make this automatically stop 
   @Override
-  protected void execute() { 
+  protected void execute() {
 
-    //Intake and outtake method
-    if (!Robot.manipulator.getManipulatorSwitch() && OI.manipButtonZero.get()) {
-      
-      Robot.manipulator.runManipulator(.75);
-
-    } else if (OI.manipButtonOne.get()){
-
-      Robot.manipulator.runManipulator(-.75); 
-
-    } else if (Robot.manipulator.getManipulatorSwitch()) {
-
-      Robot.manipulator.runManipulator(0);
-
-      if (OI.manipButtonZero.get()) {
-        OI.controllerOne.setRumble(RumbleType.kLeftRumble, 1); 
-      } else {
-        OI.controllerOne.setRumble(RumbleType.kLeftRumble, 0);
+    if (OI.visionEnable.get()) {
+      if(ballX < 150) {
+        Robot.driveSystem.driveDirection(.3, RoboDir.LEFT); 
+      } else if (ballX > 160) {
+        Robot.driveSystem.driveDirection(.3, RoboDir.RIGHT); 
+      } else if (ballX >= 150 && ballX <= 160) {
+        Robot.driveSystem.driveDirection(.3, RoboDir.STRAIGHT); 
       }
-
-    } else {
-
-      Robot.manipulator.runManipulator(0);
-
-    } 
-
+      
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return false; 
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.manipulator.runManipulator(0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.manipulator.runManipulator(0);
   }
 }
