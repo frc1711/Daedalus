@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import frc.robot.commands.PowerManipulator;
 import frc.robot.subsystems.DriveSystem;
 import frc.robot.subsystems.Manipulator;
@@ -162,5 +161,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+
   }
 }
