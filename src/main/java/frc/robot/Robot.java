@@ -9,15 +9,19 @@ package frc.robot;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import frc.robot.commands.PowerManipulator;
 import frc.robot.subsystems.DriveSystem;
 import frc.robot.subsystems.Manipulator;
-import io.github.pseudoresonance.pixy2api.Pixy2;
+
+import frc.robot.subsystems.vision.CameraConfig;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,11 +31,11 @@ import io.github.pseudoresonance.pixy2api.Pixy2;
  * project.
  */
 public class Robot extends TimedRobot {
+  
   public static RobotMap robotMap; 
   public static DriveSystem driveSystem; 
   public static UsbCamera camera; 
   public static Manipulator manipulator; 
-  public static Pixy2 pixy; 
   public static OI oi;
 
   Command manipulatorControl; 
@@ -51,9 +55,15 @@ public class Robot extends TimedRobot {
     oi = new OI();
 
     manipulatorControl = new PowerManipulator(); 
-//    chooser.setDefaultOption("Default Auto", new ExampleCommand());
-    // chooser.addOption("My Auto", new MyAutoCommand());
- //   SmartDashboard.putData("Auto mode", m_chooser);
+  //////CAMERA STUFF/////////
+  //////PixyCam/////////////
+    CameraConfig.setup(); 
+
+    SmartDashboard.putBoolean("Pixy2 Light", false);
+    boolean PixyLightState = SmartDashboard.getBoolean("Pixy2 Light", false); 
+    CameraConfig.light(PixyLightState); 
+
+
     UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture();
   }
 
@@ -68,7 +78,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    Scheduler.getInstance().run();
+    CameraConfig.run(); 
 
+    boolean PixyLightState = SmartDashboard.getBoolean("Pixy2 Light", false); 
+    CameraConfig.light(PixyLightState); 
   }
 
   /**
@@ -130,7 +144,7 @@ public class Robot extends TimedRobot {
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
-
+    
     manipulatorControl.start(); 
   }
 
@@ -140,10 +154,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     driveSystem.robotDrive.arcadeDrive(-(OI.controllerZero.getRawAxis(1)), OI.controllerZero.getRawAxis(4));
-    Scheduler.getInstance().run();
-    
-    var temporaryThing = manipulator.getManipulatorSwitch();
-    System.out.println(temporaryThing);
   }
 
   /**
@@ -151,5 +161,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+    
   }
 }

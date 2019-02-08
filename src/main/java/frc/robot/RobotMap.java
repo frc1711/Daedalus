@@ -31,4 +31,21 @@ public class RobotMap {
   //digital ports
   public static int manipulatorSwitch = 5; 
 
+  //enums
+  public enum RoboDir { 
+    LEFT (-1), 
+    RIGHT (1), 
+    STRAIGHT(0);
+    
+    private int num; 
+
+    private RoboDir(int num) {
+      this.num = num; 
+    }
+
+    public int getNum() {
+      return this.num; 
+    }
+  };
+
 }
