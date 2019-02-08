@@ -150,6 +150,12 @@ public class Robot extends TimedRobot {
     if(OI.controllerOne.getRawButtonPressed(2)){
       pneumatics.setHatchCylinder(Value.kForward);
     }
+    if(OI.controllerOne.getRawButtonPressed(3)){
+      pneumatics.setHatchCylinder(Value.kReverse);
+    }
+    if(OI.controllerOne.getRawButtonPressed(1)){
+      pneumatics.setHatchCylinder(Value.kOff);
+    }
     
     System.out.println(manipulator.getManipulatorSwitch());
     System.out.println(driveSystem.getGyroAngle());
