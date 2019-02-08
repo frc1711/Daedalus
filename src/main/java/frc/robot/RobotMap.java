@@ -32,6 +32,11 @@ public class RobotMap {
   public static int manipulatorSwitch = 5; 
 
   //Solenoids
-  public static int testCylinder = 0;
-
+  public static int climbCylinder = 0;
+  public static int pinCylinder = 1;
+  public static int hatchCylinderF = 2;
+  public static int hatchCylinderR = 3;
+  public static int wheelCylinder = 4;
+  public static int armCylinderF = 5;
+  public static int armCylinderR = 6;
 }
