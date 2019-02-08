@@ -154,6 +154,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     driveSystem.robotDrive.arcadeDrive(-(OI.controllerZero.getRawAxis(1)), OI.controllerZero.getRawAxis(4));
+    System.out.println(manipulator.getManipulatorSwitch());
   }
 
   /**
@@ -161,6 +162,5 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
-    
   }
 }
