@@ -18,6 +18,9 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import io.github.pseudoresonance.pixy2api.Pixy2;
 
+//Added to allow for direct variable input to double solenoid set functions
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -145,7 +148,7 @@ public class Robot extends TimedRobot {
     Scheduler.getInstance().run();
     
     if(OI.controllerOne.getRawButtonPressed(2)){
-      pneumatics.setHatchCylinder("forward");
+      pneumatics.setHatchCylinder(Value.kForward);
     }
     
     System.out.println(manipulator.getManipulatorSwitch());

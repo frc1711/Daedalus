@@ -52,36 +52,12 @@ public class Pneumatics extends Subsystem {
   }
 
   //Set the state of Double Action Solenoids to "off", "forward", and "reverse".
-  public void setHatchClinder(String state){
-    switch(state){
-      case "off":
-        hatchCylinder.set(Value.kOff);
-        break;
-      case "forward":
-        hatchCylinder.set(Value.kForward);
-        break;
-      case "reverse":
-        hatchCylinder.set(Value.kReverse);
-        break;
-      default:
-        System.out.println("[Daedalus]: Please use \"off\", \"forward\", or \"reverse\" to set DoubleSolenoid hacthCylinder");
-    }
+  public void setHatchCylinder(Value state){
+    hatchCylinder.set(state);
   }
 
-  public void setArmCylinder(String state){
-    switch(state){
-      case "off":
-        armCylinder.set(Value.kOff);
-        break;
-      case "forward":
-        armCylinder.set(Value.kForward);
-        break;
-      case "reverse":
-        armCylinder.set(Value.kReverse);
-        break;
-      default:
-        System.out.println("[Daedalus]: Please use \"off\", \"forward\", or \"reverse\" to set DoubleSolenoid armCylinder");
-    }
+  public void setArmCylinder(Value state){
+    armCylinder.set(state);
   }
 
 
