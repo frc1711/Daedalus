@@ -9,11 +9,13 @@ package frc.robot.subsystems.vision;
 
 import java.util.ArrayList;
 
-import frc.robot.Dashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import io.github.pseudoresonance.pixy2api.Pixy2CCC.Block;
 
-/**
- * Add your docs here.
+/***
+ * Shoutout to team 4546.
+* @author: Lou DeZeeuw 
  */
 public class BallTrack {
   // Put methods for controlling this subsystem
@@ -38,11 +40,11 @@ public class BallTrack {
       double yaw = ((ballX - 157.5) * 0.1904761905); 
     
 
-      Dashboard.getInstance().putNumber(false, "Ball Angle", yaw);
-      Dashboard.getInstance().putNumber(false, "Ball X", largestBlock.getX());
-      Dashboard.getInstance().putNumber(false, "Ball Y", largestBlock.getY());
-      Dashboard.getInstance().putNumber(false, "Ball Box Width", largestBlock.getWidth());
-      Dashboard.getInstance().putNumber(false, "Ball Box Height", largestBlock.getHeight());
+      SmartDashboard.putNumber("Ball Angle", yaw);
+      SmartDashboard.putNumber("Ball X", largestBlock.getX());
+      SmartDashboard.putNumber("Ball Y", largestBlock.getY());
+      SmartDashboard.putNumber("Ball Box Width", largestBlock.getWidth());
+      SmartDashboard.putNumber("Ball Box Height", largestBlock.getHeight());
     }
   }
 

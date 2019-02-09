@@ -18,9 +18,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.FollowBall;
 import frc.robot.commands.PowerManipulator;
+import frc.robot.commands.TogglePneumatics;
 import frc.robot.subsystems.DriveSystem;
 import frc.robot.subsystems.Manipulator;
-
+import frc.robot.subsystems.Pneumatics;
 import frc.robot.subsystems.vision.CameraConfig;
 
 /**
@@ -36,9 +37,11 @@ public class Robot extends TimedRobot {
   public static DriveSystem driveSystem; 
   public static UsbCamera camera; 
   public static Manipulator manipulator; 
+  public static Pneumatics pneumatics;
   public static OI oi;
 
   Command manipulatorControl; 
+  Command togglePneumatics;
   Command followBall;
 
   Command autonomousCommand;
@@ -54,10 +57,12 @@ public class Robot extends TimedRobot {
     robotMap = new RobotMap();
     driveSystem = new DriveSystem();
     manipulator = new Manipulator(); 
+    pneumatics = new Pneumatics(); 
     oi = new OI();
 
     //COMMANDS
     manipulatorControl = new PowerManipulator(); 
+    togglePneumatics = new TogglePneumatics();
     followBall = new FollowBall(); 
 
     //CAMERAS AND PIXYCAM
@@ -150,6 +155,7 @@ public class Robot extends TimedRobot {
     }
     
     manipulatorControl.start();
+    togglePneumatics.start(); 
     followBall.start(); 
   }
 
@@ -167,7 +173,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
-    followBall.start();
 
   }
 }

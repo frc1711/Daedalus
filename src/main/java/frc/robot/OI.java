@@ -47,7 +47,14 @@ public class OI {
   public static Joystick controllerOne = new Joystick(RobotMap.controllerOne); 
   
   //BUTTONS
+  //controller zero, drive 
   public static JoystickButton visionEnable = new JoystickButton(controllerZero, 1);
+ 
+  //controller one, manipulator
+  public static JoystickButton hatchButtonBack = new JoystickButton(controllerOne, 1); 
+  public static JoystickButton hatchButtonOff = new JoystickButton(controllerOne, 2); 
+  public static JoystickButton hatchButtonForward = new JoystickButton(controllerOne, 3);
   public static JoystickButton manipButtonZero = new JoystickButton(controllerOne, 5); 
   public static JoystickButton manipButtonOne = new JoystickButton(controllerOne, 6);
+  
 }

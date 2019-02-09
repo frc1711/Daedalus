@@ -11,9 +11,11 @@ import io.github.pseudoresonance.pixy2api.Pixy2;
 import io.github.pseudoresonance.pixy2api.Pixy2CCC;
 import io.github.pseudoresonance.pixy2api.links.Link;
 
-/**
- * Add your docs here.
+/***
+ * Shoutout to team 4546 
+ * @author: Lou DeZeeuw 
  */
+
 public class PixyCamera {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.

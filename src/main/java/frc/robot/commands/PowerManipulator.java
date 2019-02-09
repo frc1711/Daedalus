@@ -12,6 +12,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
 import frc.robot.Robot;
 
+/***
+ *@author: Lou DeZeeuw
+ */
+
 public class PowerManipulator extends Command {
   public PowerManipulator() {
 

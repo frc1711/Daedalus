@@ -24,6 +24,15 @@ public class RobotMap {
   //manipulator and lift talons 
   public static int manipulatorTalon = 4; 
 
+  //solenoids
+  public static int climbCylinder = 0;
+  public static int pinCylinder = 1;
+  public static int hatchCylinderFront = 2;
+  public static int hatchCylinderRear = 3;
+  public static int wheelCylinder = 4;
+  public static int armCylinderFront = 5;
+  public static int armCylinderRear = 6;
+
   //controllers
   public static int controllerZero = 0;
   public static int controllerOne = 1; 

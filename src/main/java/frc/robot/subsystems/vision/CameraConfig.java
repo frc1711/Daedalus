@@ -9,9 +9,11 @@ package frc.robot.subsystems.vision;
 
 import io.github.pseudoresonance.pixy2api.links.SPILink;
 
-/**
- * Add your docs here.
+/***
+ *Shoutout to team 4546
+ * @author: Lou DeZeeuw 
  */
+
 public class CameraConfig {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.

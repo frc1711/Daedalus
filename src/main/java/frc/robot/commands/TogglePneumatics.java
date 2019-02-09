@@ -7,54 +7,42 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.RobotMap.RoboDir;
-import frc.robot.subsystems.vision.BallTrack;
 
-/***
- *@author: Lou DeZeeuw
+/**
+ * @author: Spencer Crawford and Lou DeZeeuw
  */
-public class FollowBall extends Command {
-
-  double ballX = SmartDashboard.getNumber("Ball X", 700);
-  double ballY = SmartDashboard.getNumber("Ball Y", 700); 
-  double ballAngle = SmartDashboard.getNumber("Ball Angle", 700); 
-
-  public FollowBall() {
+public class TogglePneumatics extends Command {
+  public TogglePneumatics() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.driveSystem);
+    requires(Robot.pneumatics); 
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.driveSystem.stopRobot();
+    
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
-    if (OI.visionEnable.get()) {
-      if(ballX < 150) {
-        Robot.driveSystem.driveDirection(.3, RoboDir.LEFT); 
-      } else if (ballX > 160) {
-        Robot.driveSystem.driveDirection(.3, RoboDir.RIGHT); 
-      } else if (ballX >= 150 && ballX <= 160) {
-        Robot.driveSystem.driveDirection(.3, RoboDir.STRAIGHT); 
-      }
-      
-    }
+    if (OI.hatchButtonBack.get()) 
+      Robot.pneumatics.setHatchCylinder(Value.kReverse); 
+    else if (OI.hatchButtonForward.get())
+      Robot.pneumatics.setHatchCylinder(Value.kForward);
+    else if (OI.hatchButtonOff.get()) 
+      Robot.pneumatics.setHatchCylinder(Value.kOff);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false; 
+    return false;
   }
 
   // Called once after isFinished returns true
