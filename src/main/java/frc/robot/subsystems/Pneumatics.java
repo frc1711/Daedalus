@@ -8,7 +8,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.RobotMap;
@@ -20,46 +20,44 @@ public class Pneumatics extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  public Solenoid climbCylinder;
-  public Solenoid pinCylinder;
-  public Solenoid wheelCylinder;
-  public DoubleSolenoid hatchCylinder;
+  public DoubleSolenoid climbCylinder;
+  public DoubleSolenoid pinCylinder;
+  public DoubleSolenoid wheelCylinder;
   public DoubleSolenoid armCylinder;
+  public Relay hatchCylinder;
 
   public Pneumatics(){
 
-    //Single Action Solenoids are either ON or OFF, which requires one port
-    climbCylinder = new Solenoid(RobotMap.climbCylinder);
-    pinCylinder = new Solenoid(RobotMap.pinCylinder);
-    wheelCylinder = new Solenoid(RobotMap.wheelCylinder);
-
     //Double Action Solenoids are FORWARD, REVERSE, or OFF, and require 2 ports
-    hatchCylinder = new DoubleSolenoid(RobotMap.hatchCylinderFront,RobotMap.hatchCylinderRear);
+    climbCylinder = new DoubleSolenoid(RobotMap.climbCylinderFront,RobotMap.climbCylinderRear);
+    pinCylinder = new DoubleSolenoid(RobotMap.pinCylinderFront,RobotMap.pinCylinderRear);
+    wheelCylinder = new DoubleSolenoid(RobotMap.wheelCylinderFront,RobotMap.wheelCylinderRear);
     armCylinder = new DoubleSolenoid(RobotMap.armCylinderFront,RobotMap.armCylinderRear);
+    hatchCylinder = new Relay(RobotMap.hatchCylinder);
   }
   
   //Toggle Single Action Solenoids by setting position to opposite of current state
-  public void toggleClimbCylinder(){
-    climbCylinder.set(!climbCylinder.get());
-  }
-
-  public void togglePinCylinder(){
-    pinCylinder.set(!pinCylinder.get());
-  }
-
-  public void toggleWheelCylinder(){
-    wheelCylinder.set(!wheelCylinder.get());
-  }
 
   //Set the state of Double Action Solenoids to "off", "forward", and "reverse".
-  public void setHatchCylinder(Value state){
-    hatchCylinder.set(state);
-  }
+
 
   public void setArmCylinder(Value state){
     armCylinder.set(state);
   }
 
+  public void setPinCylinder(Value state){
+    pinCylinder.set(state);
+  }
+
+  public void setWheelCylinder(Value state){
+    wheelCylinder.set(state);
+  }
+
+  public void setClimbCylinder(Value state){
+    climbCylinder.set(state);
+  }
+
+  
 
   @Override
   public void initDefaultCommand() {

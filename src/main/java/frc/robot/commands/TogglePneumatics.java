@@ -32,11 +32,11 @@ public class TogglePneumatics extends Command {
   @Override
   protected void execute() {
     if (OI.hatchButtonBack.get()) 
-      Robot.pneumatics.setHatchCylinder(Value.kReverse); 
+      Robot.pneumatics.setArmCylinder(Value.kReverse); 
     else if (OI.hatchButtonForward.get())
-      Robot.pneumatics.setHatchCylinder(Value.kForward);
+      Robot.pneumatics.setArmCylinder(Value.kForward);
     else if (OI.hatchButtonOff.get()) 
-      Robot.pneumatics.setHatchCylinder(Value.kOff);
+      Robot.pneumatics.setArmCylinder(Value.kOff);
   }
 
   // Make this return true when this Command no longer needs to run execute()

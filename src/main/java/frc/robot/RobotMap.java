@@ -25,13 +25,17 @@ public class RobotMap {
   public static int manipulatorTalon = 4; 
 
   //solenoids
-  public static int climbCylinder = 0;
-  public static int pinCylinder = 1;
-  public static int hatchCylinderFront = 2;
-  public static int hatchCylinderRear = 3;
-  public static int wheelCylinder = 4;
-  public static int armCylinderFront = 5;
-  public static int armCylinderRear = 6;
+  public static int climbCylinderRear = 0;
+  public static int climbCylinderFront = 1;
+  public static int pinCylinderFront = 2;
+  public static int pinCylinderRear = 3;
+  public static int wheelCylinderFront = 4;
+  public static int wheelCylinderRear = 5;
+  public static int armCylinderFront = 6;
+  public static int armCylinderRear = 7;
+
+  //The solenoid that's a problmem child
+  public static int hatchCylinder = 0;
 
   //controllers
   public static int controllerZero = 0;
