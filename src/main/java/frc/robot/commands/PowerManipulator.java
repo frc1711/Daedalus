@@ -30,7 +30,8 @@ public class PowerManipulator extends Command {
   }
 
   // Called repeatedly when this Command is scheduled to run
-@Override
+  //TODO -> figure out what the voltage is, make this automatically stop 
+  @Override
   protected void execute() { 
 
     //Intake and outtake method

@@ -18,8 +18,7 @@ import frc.robot.RobotMap.RoboDir;
 public class BallFollow {
     
     public static void run() {
-    double ballX = SmartDashboard.getNumber("Ball X", 700);
-    double ballY = SmartDashboard.getNumber("Ball Y", 700); 
+        
     double ballAngle = SmartDashboard.getNumber("Ball Angle", 700); 
 
         if (OI.visionEnable.get()) {
