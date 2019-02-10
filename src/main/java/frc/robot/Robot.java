@@ -70,6 +70,7 @@ public class Robot extends TimedRobot {
 
 
     UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture();
+    cam0.setFPS(300);
   }
 
 

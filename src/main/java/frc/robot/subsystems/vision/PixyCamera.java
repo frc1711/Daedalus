@@ -42,6 +42,7 @@ public class PixyCamera {
       final int count = pixyCam.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG1, 25); 
       BallTrack.run(count); 
       BallFollow.run(); 
+      ReflectiveAlign.run(refCount); 
     }
   }
 
