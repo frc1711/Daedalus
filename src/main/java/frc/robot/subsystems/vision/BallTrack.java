@@ -10,7 +10,6 @@ package frc.robot.subsystems.vision;
 import java.util.ArrayList;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Dashboard;
 import io.github.pseudoresonance.pixy2api.Pixy2CCC.Block;
 
 /***
