@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.FollowBall;
 import frc.robot.commands.PowerManipulator;
 import frc.robot.commands.TogglePneumatics;
 import frc.robot.subsystems.DriveSystem;
@@ -42,7 +41,6 @@ public class Robot extends TimedRobot {
 
   Command manipulatorControl; 
   Command togglePneumatics;
-  Command followBall;
 
   Command autonomousCommand;
   SendableChooser<Command> chooser = new SendableChooser<>();
@@ -63,8 +61,6 @@ public class Robot extends TimedRobot {
     //COMMANDS
     manipulatorControl = new PowerManipulator(); 
     togglePneumatics = new TogglePneumatics();
-    followBall = new FollowBall(); 
-
     //CAMERAS AND PIXYCAM
     CameraConfig.setup(); 
 
@@ -156,7 +152,6 @@ public class Robot extends TimedRobot {
     
     manipulatorControl.start();
     togglePneumatics.start(); 
-    followBall.start(); 
   }
 
   /**
@@ -165,7 +160,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     driveSystem.robotDrive.arcadeDrive(-(OI.controllerZero.getRawAxis(1)), OI.controllerZero.getRawAxis(4));
-    System.out.println(manipulator.getManipulatorSwitch());
+   // System.out.println(manipulator.getManipulatorSwitch());
+
   }
 
   /**

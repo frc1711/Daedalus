@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.RobotMap;
 
@@ -19,7 +20,7 @@ import frc.robot.RobotMap;
 public class Pneumatics extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-
+  public Relay pnuematicRelay; 
   public Solenoid climbCylinder;
   public Solenoid pinCylinder;
   public Solenoid wheelCylinder;
@@ -36,7 +37,10 @@ public class Pneumatics extends Subsystem {
     //Double Action Solenoids are FORWARD, REVERSE, or OFF, and require 2 ports
     hatchCylinder = new DoubleSolenoid(RobotMap.hatchCylinderFront,RobotMap.hatchCylinderRear);
     armCylinder = new DoubleSolenoid(RobotMap.armCylinderFront,RobotMap.armCylinderRear);
-  }
+  
+    //That One Lonely Relay
+    pnuematicRelay = new Relay (RobotMap.pnuematicRelay); 
+  } 
   
   //Toggle Single Action Solenoids by setting position to opposite of current state
   public void toggleClimbCylinder(){
@@ -58,6 +62,10 @@ public class Pneumatics extends Subsystem {
 
   public void setArmCylinder(Value state){
     armCylinder.set(state);
+  }
+
+  public void setPneumaticRelay(Relay.Value state) {
+    pnuematicRelay.set(state);
   }
 
 

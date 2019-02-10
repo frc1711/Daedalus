@@ -54,7 +54,8 @@ public class OI {
   public static JoystickButton hatchButtonBack = new JoystickButton(controllerOne, 1); 
   public static JoystickButton hatchButtonOff = new JoystickButton(controllerOne, 2); 
   public static JoystickButton hatchButtonForward = new JoystickButton(controllerOne, 3);
+  public static JoystickButton pneumaticRelayButton = new JoystickButton(controllerOne, 4); 
   public static JoystickButton manipButtonZero = new JoystickButton(controllerOne, 5); 
   public static JoystickButton manipButtonOne = new JoystickButton(controllerOne, 6);
-  
+  public static JoystickButton pnuematicRelayButtonOff = new JoystickButton(controllerOne, 7); 
 }

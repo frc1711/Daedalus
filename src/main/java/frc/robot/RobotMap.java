@@ -33,6 +33,8 @@ public class RobotMap {
   public static int armCylinderFront = 5;
   public static int armCylinderRear = 6;
 
+  //relays
+  public static int pnuematicRelay = 1; 
   //controllers
   public static int controllerZero = 0;
   public static int controllerOne = 1; 

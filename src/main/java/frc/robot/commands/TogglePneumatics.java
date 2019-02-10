@@ -7,19 +7,20 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
 import frc.robot.Robot;
 
 /**
- * @author: Spencer Crawford and Lou DeZeeuw
+ * @author: Spencer Crawford and Lou DeZeeuo
  */
 public class TogglePneumatics extends Command {
   public TogglePneumatics() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.pneumatics); 
+  //  requires(Robot.pneumatics); 
   }
 
   // Called just before this Command runs the first time
@@ -37,7 +38,12 @@ public class TogglePneumatics extends Command {
       Robot.pneumatics.setHatchCylinder(Value.kForward);
     else if (OI.hatchButtonOff.get()) 
       Robot.pneumatics.setHatchCylinder(Value.kOff);
-  }
+    else if (OI.pneumaticRelayButton.get()) {
+      Robot.pneumatics.setPneumaticRelay(Relay.Value.kForward);
+    } else if (OI.pnuematicRelayButtonOff.get()) {
+      Robot.pneumatics.setPneumaticRelay(Relay.Value.kOff); 
+    }
+   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override

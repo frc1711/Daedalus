@@ -10,7 +10,7 @@ package frc.robot.subsystems.vision;
 import java.util.ArrayList;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import frc.robot.Dashboard;
 import io.github.pseudoresonance.pixy2api.Pixy2CCC.Block;
 
 /***
@@ -22,11 +22,14 @@ public class BallTrack {
   // here. Call these from Commands.
   private static ArrayList<Block> blocks = CameraConfig.getPixyCamera().getPixy().getCCC().getBlocks();
   private static final int blockSignature = 1; 
+  public static Block largestBlock = null; 
+  public static double yaw; 
+  public static int threeChoice; 
 
   public static void run(int count) {
     if (count > 0) {
-      Block largestBlock = null; 
-      
+      Block largestBlock = null;  
+      threeChoice = 3; 
       for (Block block : blocks) {
         if(block.getSignature() == blockSignature) {
           if (largestBlock == null) 
@@ -37,8 +40,7 @@ public class BallTrack {
       }
 
       int ballX = largestBlock.getX();
-      double yaw = ((ballX - 157.5) * 0.1904761905); 
-    
+      yaw = ((ballX - 157.5) * 0.1904761905);
 
       SmartDashboard.putNumber("Ball Angle", yaw);
       SmartDashboard.putNumber("Ball X", largestBlock.getX());
@@ -47,6 +49,6 @@ public class BallTrack {
       SmartDashboard.putNumber("Ball Box Height", largestBlock.getHeight());
     }
   }
-
+  
 
 }

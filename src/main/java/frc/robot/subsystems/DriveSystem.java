@@ -58,17 +58,18 @@ public class DriveSystem extends Subsystem {
   public void driveDirection (double speed, RoboDir direction) {
     
     if(direction == RoboDir.LEFT || direction == RoboDir.RIGHT) {
+     // System.out.println(direction); 
 
       frontLeftDrive.set(direction.getNum()*speed); 
       rearLeftDrive.set(direction.getNum()*speed); 
-      frontRightDrive.set(-direction.getNum()*speed); 
-      rearRightDrive.set(-direction.getNum()*speed); 
+      frontRightDrive.set(direction.getNum()*speed); 
+      rearRightDrive.set(direction.getNum()*speed); 
 
     } else {
 
-      frontLeftDrive.set(speed); 
+      frontLeftDrive.set(-speed); 
       frontRightDrive.set(speed);
-      rearLeftDrive.set(speed); 
+      rearLeftDrive.set(-speed); 
       rearRightDrive.set(speed); 
       
     }

@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems.vision;
 
+import frc.robot.commands.FollowBall;
 import io.github.pseudoresonance.pixy2api.Pixy2;
 import io.github.pseudoresonance.pixy2api.Pixy2CCC;
 import io.github.pseudoresonance.pixy2api.links.Link;
@@ -38,8 +39,10 @@ public class PixyCamera {
     final int pixyStatus = pixyCam.init(PixyResult); 
     if (pixyStatus == 0) {
       
+      final int refCount = pixyCam.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG3, 2); 
       final int count = pixyCam.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG1, 25); 
       BallTrack.run(count); 
+      BallFollow.run(); 
     }
   }
 
