@@ -38,7 +38,6 @@ public class Manipulator extends Subsystem {
   public void setHatchRelay(Relay.Value state) {
     hatchRelay.set(state); 
   }
-  
   public boolean getManipulatorSwitch() {
     return manipulatorSwitch.get();
   }
