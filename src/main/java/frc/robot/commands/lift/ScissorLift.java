@@ -48,6 +48,7 @@ public class ScissorLift extends Command {
       Robot.lift.unlockBotLift(Value.kForward); 
       unlockState = 1; 
     }
+    
   }
 
   // Make this return true when this Command no longer needs to run execute()
