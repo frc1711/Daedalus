@@ -45,7 +45,7 @@ public class Lift extends Subsystem {
   }
 
   public void unlockBotLift(Value state) {
-
+    unlockBot.set(state); 
   }
 
   public void setAuxWheel(Value state) { 
