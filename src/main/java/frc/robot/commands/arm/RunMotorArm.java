@@ -8,14 +8,11 @@
 package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.OI;
-import frc.robot.Robot;
 
 public class RunMotorArm extends Command {
   public RunMotorArm() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.arm); 
   }
 
   // Called just before this Command runs the first time
@@ -26,9 +23,6 @@ public class RunMotorArm extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Math.abs(OI.controllerOne.getRawAxis(1)) > .1) {
-      Robot.arm.runArm(OI.controllerOne.getRawAxis(1)); 
-    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
