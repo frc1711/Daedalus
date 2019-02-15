@@ -21,20 +21,18 @@ public class RobotMap {
   public static int FLD = 2; 
   public static int FRD = 3; 
 
-  //manipulator and lift talons 
-  public static int manipulatorTalon = 4; 
+  //manipulator and arm talons 
+  public static int manipulatorTalon = 3; 
+  public static int armTalon = 5; 
+
+  //lift
+  public static int auxWheelTalon = 6; 
 
   //solenoids
-  public static int climbCylinder = 0;
-  public static int pinCylinder = 1;
-  public static int hatchCylinderFront = 2;
-  public static int hatchCylinderRear = 3;
-  public static int wheelCylinder = 4;
-  public static int armCylinderFront = 5;
-  public static int armCylinderRear = 6;
+  public static int armSolenoidFront = 0; 
+  public static int armSolenoidRear = 1; 
+  public static int auxWheelSolenoid = 2; 
 
-  //relays
-  public static int pnuematicRelay = 1; 
   //controllers
   public static int controllerZero = 0;
   public static int controllerOne = 1; 
@@ -58,5 +56,8 @@ public class RobotMap {
       return this.num; 
     }
   };
+
+ 
+  
 
 }

@@ -38,7 +38,7 @@ public class PixyCamera {
     final int pixyStatus = pixyCam.init(PixyResult); 
     if (pixyStatus == 0) {
       
-      final int refCount = pixyCam.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG3, 2); 
+      //final int refCount = pixyCam.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG3, 2); 
       final int count = pixyCam.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG1, 25); 
       BallTrack.run(count); 
       BallFollow.run(); 

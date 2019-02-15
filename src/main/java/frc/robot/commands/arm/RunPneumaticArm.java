@@ -5,45 +5,41 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.arm;
 
-import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
 import frc.robot.Robot;
 
-/**
- * @author: Spencer Crawford and Lou DeZeeuo
- */
-public class TogglePneumatics extends Command {
-  public TogglePneumatics() {
+public class RunPneumaticArm extends Command {
+  public int state; 
+  public RunPneumaticArm() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-  //  requires(Robot.pneumatics); 
+    requires(Robot.arm); 
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    
+    Robot.arm.setArmSolenoid(Value.kReverse); 
+    state = 2; 
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (OI.hatchButtonBack.get()) 
-      Robot.pneumatics.setHatchCylinder(Value.kReverse); 
-    else if (OI.hatchButtonForward.get())
-      Robot.pneumatics.setHatchCylinder(Value.kForward);
-    else if (OI.hatchButtonOff.get()) 
-      Robot.pneumatics.setHatchCylinder(Value.kOff);
-    else if (OI.pneumaticRelayButton.get()) {
-      Robot.pneumatics.setPneumaticRelay(Relay.Value.kForward);
-    } else if (OI.pnuematicRelayButtonOff.get()) {
-      Robot.pneumatics.setPneumaticRelay(Relay.Value.kOff); 
+    //this has to work so that it can turn the solenoid on and off
+
+    if (OI.armButton.get() && state == 1 || state == 0) {
+      Robot.arm.setArmSolenoid(Value.kReverse); 
+      state = 2; 
+    } else if (OI.armButton.get() && state == 2) {
+      Robot.arm.setArmSolenoid(Value.kForward); 
+      state = 1; 
     }
-   }
+  }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override

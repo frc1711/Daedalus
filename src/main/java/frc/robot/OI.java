@@ -49,13 +49,13 @@ public class OI {
   //BUTTONS
   //controller zero, drive 
   public static JoystickButton visionEnable = new JoystickButton(controllerZero, 1);
- 
+  public static JoystickButton manipButtonZero = new JoystickButton(controllerZero, 5); 
+  public static JoystickButton manipButtonOne = new JoystickButton(controllerZero, 6);
+
   //controller one, manipulator
-  public static JoystickButton hatchButtonBack = new JoystickButton(controllerOne, 1); 
-  public static JoystickButton hatchButtonOff = new JoystickButton(controllerOne, 2); 
-  public static JoystickButton hatchButtonForward = new JoystickButton(controllerOne, 3);
+  public static JoystickButton armButton = new JoystickButton(controllerOne, 1); 
+  public static JoystickButton armButtonOff = new JoystickButton(controllerOne, 3);
   public static JoystickButton pneumaticRelayButton = new JoystickButton(controllerOne, 4); 
-  public static JoystickButton manipButtonZero = new JoystickButton(controllerOne, 5); 
-  public static JoystickButton manipButtonOne = new JoystickButton(controllerOne, 6);
-  public static JoystickButton pnuematicRelayButtonOff = new JoystickButton(controllerOne, 7); 
+  public static JoystickButton auxWheelButton = new JoystickButton(controllerOne, 7); 
+
 }

@@ -16,11 +16,13 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.PowerManipulator;
-import frc.robot.commands.TogglePneumatics;
+import frc.robot.commands.arm.RunPneumaticArm;
+import frc.robot.commands.lift.AuxWheel;
+import frc.robot.commands.manipulators.CargoManipulator;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveSystem;
+import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Manipulator;
-import frc.robot.subsystems.Pneumatics;
 import frc.robot.subsystems.vision.CameraConfig;
 
 /**
@@ -36,11 +38,16 @@ public class Robot extends TimedRobot {
   public static DriveSystem driveSystem; 
   public static UsbCamera camera; 
   public static Manipulator manipulator; 
-  public static Pneumatics pneumatics;
+  public static Arm arm;
+  public static Lift lift;  
   public static OI oi;
 
-  Command manipulatorControl; 
-  Command togglePneumatics;
+  Command runPneumaticArm; 
+  Command runMotorArm;
+  Command auxWheel; 
+  Command scissorLift; 
+  Command cargoManipulator; 
+  Command hatchManipulator; 
 
   Command autonomousCommand;
   SendableChooser<Command> chooser = new SendableChooser<>();
@@ -55,12 +62,15 @@ public class Robot extends TimedRobot {
     robotMap = new RobotMap();
     driveSystem = new DriveSystem();
     manipulator = new Manipulator(); 
-    pneumatics = new Pneumatics(); 
+    arm = new Arm(); 
+    lift = new Lift(); 
     oi = new OI();
 
     //COMMANDS
-    manipulatorControl = new PowerManipulator(); 
-    togglePneumatics = new TogglePneumatics();
+    runPneumaticArm = new RunPneumaticArm();
+    runMotorArm = new RunMotorArm(); 
+    cargoManipulator = new CargoManipulator(); 
+    auxWheel = new AuxWheel();
     //CAMERAS AND PIXYCAM
     CameraConfig.setup(); 
 
@@ -151,8 +161,9 @@ public class Robot extends TimedRobot {
       autonomousCommand.cancel();
     }
     
-    manipulatorControl.start();
-    togglePneumatics.start(); 
+    cargoManipulator.start();
+    runPneumaticArm.start(); 
+    auxWheel.start(); 
   }
 
   /**

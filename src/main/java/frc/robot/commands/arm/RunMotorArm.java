@@ -5,60 +5,24 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.arm;
 
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.OI;
-import frc.robot.Robot;
 
-/***
- *@author: Lou DeZeeuw
- */
-
-public class PowerManipulator extends Command {
-  public PowerManipulator() {
-
-    requires(Robot.manipulator);
-
+public class RunMotorArm extends Command {
+  public RunMotorArm() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.manipulator.runManipulator(0);
   }
 
   // Called repeatedly when this Command is scheduled to run
-  //TODO -> figure out what the voltage is, make this automatically stop 
   @Override
-  protected void execute() { 
-
-    //Intake and outtake method
-    if (!Robot.manipulator.getManipulatorSwitch() && OI.manipButtonZero.get()) {
-      
-      Robot.manipulator.runManipulator(.75);
-
-    } else if (OI.manipButtonOne.get()){
-
-      Robot.manipulator.runManipulator(-.75); 
-
-    } else if (Robot.manipulator.getManipulatorSwitch()) {
-
-      Robot.manipulator.runManipulator(0);
-
-      if (OI.manipButtonZero.get()) {
-        OI.controllerOne.setRumble(RumbleType.kLeftRumble, 1); 
-      } else {
-        OI.controllerOne.setRumble(RumbleType.kLeftRumble, 0);
-      }
-
-    } else {
-
-      Robot.manipulator.runManipulator(0);
-
-    } 
-
+  protected void execute() {
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -70,13 +34,11 @@ public class PowerManipulator extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.manipulator.runManipulator(0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.manipulator.runManipulator(0);
   }
 }

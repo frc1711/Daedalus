@@ -7,39 +7,39 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
-public class Manipulator extends Subsystem {
+public class Arm extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  TalonSRX manipulatorTalon; 
-  Relay hatchRelay; 
-  DigitalInput manipulatorSwitch; 
+  public WPI_TalonSRX armTalon;
 
-  public Manipulator() {
-    manipulatorTalon = new TalonSRX(RobotMap.manipulatorTalon);
-    hatchRelay = new Relay(RobotMap.hatchRelay); 
-    manipulatorSwitch = new DigitalInput(RobotMap.manipulatorSwitch);
+  public DoubleSolenoid armSolenoid; 
+
+  public Arm() {
+    armTalon = new WPI_TalonSRX(RobotMap.armTalon); 
+    armSolenoid = new DoubleSolenoid(RobotMap.armSolenoid, RobotMap.armSolenoid); 
   }
 
-  public void runManipulator(double speed) {
-    manipulatorTalon.set(ControlMode.PercentOutput, speed);
+  public void stopArm() {
+    armTalon.set(0); 
   }
-  
-  public void setHatchRelay(Relay.Value state) {
-    hatchRelay.set(state); 
+
+  public void runArm(double speed) {
+    armTalon.set(speed);
   }
-  public boolean getManipulatorSwitch() {
-    return manipulatorSwitch.get();
+
+  public void setArmSolenoid(Value state) {
+    armSolenoid.set(state); 
   }
 
   @Override
