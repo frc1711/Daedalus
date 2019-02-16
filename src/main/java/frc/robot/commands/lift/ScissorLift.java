@@ -13,8 +13,8 @@ import frc.robot.OI;
 import frc.robot.Robot;
 
 public class ScissorLift extends Command {
-  int state; 
-  int unlockState; 
+  int state = 0; 
+  int unlockState = 0; 
   public ScissorLift() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -33,21 +33,22 @@ public class ScissorLift extends Command {
   @Override
   protected void execute() {
     //TODO: put in two other safety protocols 
-    if (OI.controllerZero.getRawAxis(3) > .1 && OI.controllerZero.getRawAxis(3) < .1 && state == 2) {
+    if (Math.abs(OI.controllerZero.getRawAxis(3)) > .1 && Math.abs(OI.controllerZero.getRawAxis(2)) > .1 && state == 2) {
       Robot.lift.setBotLift(Value.kForward); 
       state = 1; 
-    } else if (OI.controllerZero.getRawAxis(3) > .1 && OI.controllerZero.getRawAxis(3) < .1 && state == 1) {
+    } else if (Math.abs(OI.controllerZero.getRawAxis(3)) > .1 && Math.abs(OI.controllerZero.getRawAxis(2)) > .1 && state == 1) {
       Robot.lift.setBotLift(Value.kReverse); 
       state = 2; 
     }
     //TODO: replace this with the actual buton later
-    if (false && unlockState == 1) {
+    if (OI.controllerOne.getPOV() == 180 && unlockState == 1 || unlockState == 0) {
       Robot.lift.unlockBotLift(Value.kReverse); 
       unlockState = 2; 
-    } else if (false && unlockState == 2) {
+    } else if (OI.controllerOne.getPOV() == 180 && Math.abs(OI.controllerZero.getRawAxis(3)) > .1 && Math.abs(OI.controllerZero.getRawAxis(2)) > .1 && unlockState == 2) {
       Robot.lift.unlockBotLift(Value.kForward); 
       unlockState = 1; 
     }
+    
   }
 
   // Make this return true when this Command no longer needs to run execute()

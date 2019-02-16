@@ -13,7 +13,7 @@ import frc.robot.OI;
 import frc.robot.Robot;
 
 public class AuxWheel extends Command {
-  public int state; 
+  public int state = 0; 
   public AuxWheel() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -31,7 +31,7 @@ public class AuxWheel extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (OI.auxWheelButton.get() && state == 2) {
+    if (OI.auxWheelButton.get() && state == 2 || state == 0) {
       Robot.lift.setAuxWheel(Value.kForward); 
       state = 1;
     } else if (OI.auxWheelButton.get() && state == 1) {

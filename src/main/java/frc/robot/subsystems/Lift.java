@@ -28,8 +28,8 @@ public class Lift extends Subsystem {
 
   public Lift () {
     auxWheelTalon = new WPI_TalonSRX(RobotMap.auxWheelTalon); 
-    botLift = new DoubleSolenoid(RobotMap.botLift, RobotMap.botLift); 
-    unlockBot = new DoubleSolenoid(RobotMap.botUnlock, RobotMap.botUnlock); 
+    botLift = new DoubleSolenoid(RobotMap.botLift, RobotMap.botLiftRear); 
+    unlockBot = new DoubleSolenoid(RobotMap.botUnlock, RobotMap.botUnlockRear); 
   }
 
   public void stopWheel() {
@@ -45,7 +45,7 @@ public class Lift extends Subsystem {
   }
 
   public void unlockBotLift(Value state) {
-
+    unlockBot.set(state); 
   }
 
   public void setAuxWheel(Value state) { 

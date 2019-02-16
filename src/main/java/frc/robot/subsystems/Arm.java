@@ -12,7 +12,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
 /**
@@ -27,7 +26,7 @@ public class Arm extends Subsystem {
 
   public Arm() {
     armTalon = new WPI_TalonSRX(RobotMap.armTalon); 
-    armSolenoid = new DoubleSolenoid(RobotMap.armSolenoid, RobotMap.armSolenoid); 
+    armSolenoid = new DoubleSolenoid(RobotMap.armSolenoid, RobotMap.armSolenoidRear); 
   }
 
   public void stopArm() {

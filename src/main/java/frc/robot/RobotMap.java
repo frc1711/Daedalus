@@ -22,16 +22,24 @@ public class RobotMap {
   public static int FRD = 3; 
 
   //manipulator and arm talons 
-  public static int manipulatorTalon = 3; 
-  public static int armTalon = 5; 
+  public static int manipulatorTalon = 5; 
+  public static int armTalon = 6; 
 
   //lift
   public static int auxWheelTalon = 6; 
 
+  //relays
+  public static int hatchRelay = 0;
+
   //solenoids
-  public static int armSolenoidFront = 0; 
-  public static int armSolenoidRear = 1; 
-  public static int auxWheelSolenoid = 2; 
+  public static int armSolenoid = 1; 
+  public static int armSolenoidRear = 5; 
+  public static int botLift = 3; 
+  public static int botLiftRear = 7; 
+  public static int auxWheelSolenoid = 2;
+  public static int auxWheelSolenoidRear = 6;  
+  public static int botUnlock = 4; 
+  public static int botUnlockRear = 0; 
 
   //controllers
   public static int controllerZero = 0;

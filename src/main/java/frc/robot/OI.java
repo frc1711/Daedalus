@@ -56,6 +56,8 @@ public class OI {
   public static JoystickButton armButton = new JoystickButton(controllerOne, 1); 
   public static JoystickButton armButtonOff = new JoystickButton(controllerOne, 3);
   public static JoystickButton pneumaticRelayButton = new JoystickButton(controllerOne, 4); 
-  public static JoystickButton auxWheelButton = new JoystickButton(controllerOne, 7); 
-
+  public static JoystickButton auxWheelButton = new JoystickButton(controllerOne, 9); 
+  
+  //this needs to be a trigger i think 
+  public static JoystickButton hatchButton = new JoystickButton(controllerOne, 5);
 }

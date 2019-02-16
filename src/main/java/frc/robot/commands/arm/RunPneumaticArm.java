@@ -9,11 +9,13 @@ package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.OI;
 import frc.robot.Robot;
+import frc.robot.subsystems.Arm;
 
 public class RunPneumaticArm extends Command {
-  public int state; 
+public int state = 0; 
   public RunPneumaticArm() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -23,8 +25,10 @@ public class RunPneumaticArm extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    
     Robot.arm.setArmSolenoid(Value.kReverse); 
     state = 2; 
+    
   }
 
   // Called repeatedly when this Command is scheduled to run

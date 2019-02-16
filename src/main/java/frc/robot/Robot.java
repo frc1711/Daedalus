@@ -16,8 +16,11 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.PneumaticOff;
+import frc.robot.commands.arm.RunMotorArm;
 import frc.robot.commands.arm.RunPneumaticArm;
 import frc.robot.commands.lift.AuxWheel;
+import frc.robot.commands.lift.ScissorLift;
 import frc.robot.commands.manipulators.CargoManipulator;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveSystem;
@@ -43,6 +46,7 @@ public class Robot extends TimedRobot {
   public static OI oi;
 
   Command runPneumaticArm; 
+  Command pneumaticOff; 
   Command runMotorArm;
   Command auxWheel; 
   Command scissorLift; 
@@ -71,6 +75,9 @@ public class Robot extends TimedRobot {
     runMotorArm = new RunMotorArm(); 
     cargoManipulator = new CargoManipulator(); 
     auxWheel = new AuxWheel();
+    pneumaticOff = new PneumaticOff(); 
+    scissorLift = new ScissorLift(); 
+
     //CAMERAS AND PIXYCAM
     CameraConfig.setup(); 
 
@@ -97,8 +104,8 @@ public class Robot extends TimedRobot {
     Scheduler.getInstance().run();
     CameraConfig.run(); 
 
-    boolean PixyLightState = SmartDashboard.getBoolean("Pixy2 Light", false); 
-    CameraConfig.light(PixyLightState); 
+    /*boolean PixyLightState = SmartDashboard.getBoolean("Pixy2 Light", false); 
+    CameraConfig.light(PixyLightState);  */
   }
 
   /**
@@ -161,9 +168,13 @@ public class Robot extends TimedRobot {
       autonomousCommand.cancel();
     }
     
-    cargoManipulator.start();
+    runMotorArm.start(); 
     runPneumaticArm.start(); 
     auxWheel.start(); 
+    scissorLift.start(); 
+    cargoManipulator.start();
+    hatchManipulator.start();
+    pneumaticOff.start(); 
   }
 
   /**
