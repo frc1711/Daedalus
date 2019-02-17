@@ -7,6 +7,7 @@
 
 package frc.robot.commands.lift;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
@@ -24,23 +25,29 @@ public class AuxWheel extends Command {
   @Override
   protected void initialize() {
     Robot.lift.stopWheel(); 
-    Robot.lift.setAuxWheel(Value.kReverse);
+    Robot.lift.auxWheelSolenoid.set(Value.kReverse);
     state = 2; 
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
+  protected void execute() { 
     if (OI.auxWheelButton.get() && state == 2 || state ==  0) {
-      Robot.lift.setAuxWheel(Value.kForward); 
-      state = 1;
+      Robot.lift.auxWheelSolenoid.set(Value.kForward); 
+      System.out.println("ForwardAux");
+      if (OI.controllerOne.getRawButtonReleased(10)) 
+        state = 1;
     } else if (OI.auxWheelButton.get() && state == 1) {
-      Robot.lift.setAuxWheel(Value.kReverse); 
-      state = 2; 
+      Robot.lift.auxWheelSolenoid.set(Value.kReverse); 
+      System.out.println("BackwardAux");
+      if (OI.controllerOne.getRawButtonReleased(10)) 
+        state = 2; 
     } 
     
-    if (Math.abs(OI.controllerOne.getRawAxis(0)) > .1) {
-      Robot.lift.runAuxWheel(OI.controllerOne.getRawAxis(0));
+    if (Math.abs(OI.controllerOne.getRawAxis(5)) > .1) {
+      Robot.lift.runAuxWheel(OI.controllerOne.getRawAxis(5));
+    } else if (OI.controllerOne.getRawAxis(5) == 0) {
+      Robot.lift.runAuxWheel(0);
     }
   }
 

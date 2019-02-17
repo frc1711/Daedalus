@@ -5,21 +5,18 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.manipulators;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
 import frc.robot.Robot;
 
-public class PneumaticOff extends Command {
-  public PneumaticOff() {
+public class SpitHatches extends Command {
+  public SpitHatches() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.manipulator); 
-    requires(Robot.arm); 
-    requires(Robot.lift); 
+    requires(Robot.hatchManipulatorSub); 
   }
 
   // Called just before this Command runs the first time
@@ -31,13 +28,11 @@ public class PneumaticOff extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (OI.pnuematicOff.get() && OI.pnuematicOffTwo.get()) {
-      Robot.manipulator.hatchRelay.set(Relay.Value.kOff); 
-      Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kOff); 
-      Robot.lift.unlockBot.set(DoubleSolenoid.Value.kOff); 
-      Robot.lift.auxWheelSolenoid.set(DoubleSolenoid.Value.kOff);
-      Robot.lift.botLift.set(DoubleSolenoid.Value.kOff); 
-      System.out.println("All pneumatics are off.");
+    if (OI.controllerZero.getRawAxis(2) > .1 || OI.controllerZero.getRawAxis(3) > .1) {
+      System.out.println("This is running"); 
+      Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kForward);
+    } else {
+      Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kOff); 
     }
   }
 

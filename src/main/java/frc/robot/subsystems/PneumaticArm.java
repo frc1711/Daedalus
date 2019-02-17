@@ -7,42 +7,26 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
-public class Manipulator extends Subsystem {
+public class PneumaticArm extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  TalonSRX manipulatorTalon; 
-  public Relay hatchRelay; 
-  DigitalInput manipulatorSwitch; 
+  public DoubleSolenoid armSolenoid; 
 
-  public Manipulator() {
-    manipulatorTalon = new TalonSRX(RobotMap.manipulatorTalon);
-   // hatchRelay = new Relay(RobotMap.hatchRelay); 
-    manipulatorSwitch = new DigitalInput(RobotMap.manipulatorSwitch);
+  public PneumaticArm() {
+    armSolenoid = new DoubleSolenoid(RobotMap.armSolenoid, RobotMap.armSolenoidRear);
+
   }
 
-  public void runManipulator(double speed) {
-    manipulatorTalon.set(ControlMode.PercentOutput, speed);
+  public void setArmSolenoid(DoubleSolenoid.Value state) {
+    armSolenoid.set(state); 
   }
-  
-  /*public void setHatchRelay(Relay.Value state) {
-    hatchRelay.set(state); 
-  }*/
-  
-  public boolean getManipulatorSwitch() {
-    return manipulatorSwitch.get();
-  }
-
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

@@ -7,26 +7,24 @@
 
 package frc.robot.commands.arm;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.subsystems.Arm;
 
 public class RunPneumaticArm extends Command {
 public int state = 0; 
   public RunPneumaticArm() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.arm); 
+    requires(Robot.pneumaticArm); 
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     
-    Robot.arm.setArmSolenoid(Value.kReverse); 
+    Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kReverse); 
     state = 2; 
     
   }
@@ -36,11 +34,11 @@ public int state = 0;
   protected void execute() {
     //this has to work so that it can turn the solenoid on and off
 
-    if (OI.armButton.get() && state == 1 || state == 0) {
-      Robot.arm.setArmSolenoid(Value.kReverse); 
+    if (OI.controllerOne.getPOV() == 180 && state == 1 ) {
+      Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kReverse); 
       state = 2; 
-    } else if (OI.armButton.get() && state == 2) {
-      Robot.arm.setArmSolenoid(Value.kForward); 
+    } else if (OI.controllerOne.getPOV() == 0 && state == 2 || state == 0) {
+      Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kForward);
       state = 1; 
     }
   }

@@ -7,7 +7,6 @@
 
 package frc.robot.commands.manipulators;
 
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
 import frc.robot.Robot;
@@ -34,7 +33,7 @@ public class CargoManipulator extends Command {
   protected void execute() { 
 
     //Intake and outtake method
-    if (!Robot.manipulator.getManipulatorSwitch() && OI.manipButtonZero.get()) {
+    /*if (!Robot.manipulator.getManipulatorSwitch() && OI.manipButtonZero.get()) {
       
       Robot.manipulator.runManipulator(.75);
 
@@ -57,7 +56,14 @@ public class CargoManipulator extends Command {
       Robot.manipulator.runManipulator(0);
 
     } 
-
+*/
+    if (OI.manipButtonZero.get()) {
+      Robot.manipulator.runManipulator(.75); 
+    } else if (OI.manipButtonOne.get()) {
+      Robot.manipulator.runManipulator(-.75); 
+    } else {
+      Robot.manipulator.runManipulator(0); 
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -26,9 +26,28 @@ public class RunMotorArm extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Math.abs(OI.controllerOne.getRawAxis(1)) > .1) {
-      Robot.arm.runArm(OI.controllerOne.getRawAxis(1)); 
+    if (OI.controllerOne.getRawAxis(1) > 0) {
+      double speed = OI.controllerOne.getRawAxis(1) * OI.controllerOne.getRawAxis(1); 
+      Robot.arm.runArm(speed / 4); 
+      System.out.println("speed / 8 is " + speed);
+    } else if (OI.controllerOne.getRawAxis(1) < 0) {
+      double speed = OI.controllerOne.getRawAxis(1) * OI.controllerOne.getRawAxis(1); 
+      Robot.arm.runArm(-speed / 2);
+      System.out.println(-speed / 4); 
     }
+    else {
+      Robot.arm.runArm(0);
+    }
+
+   /* if (OI.armPosZero.get()) {
+
+    } else if (OI.armPosOne.get()) {
+
+    } else if (OI.armPosTwo.get()) {
+
+    } else if (OI.armPosThree.get()) {
+
+    } */
   }
 
   // Make this return true when this Command no longer needs to run execute()

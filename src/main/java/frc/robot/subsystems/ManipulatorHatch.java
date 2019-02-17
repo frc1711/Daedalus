@@ -7,10 +7,6 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -18,29 +14,17 @@ import frc.robot.RobotMap;
 /**
  * Add your docs here.
  */
-public class Manipulator extends Subsystem {
+public class ManipulatorHatch extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  TalonSRX manipulatorTalon; 
   public Relay hatchRelay; 
-  DigitalInput manipulatorSwitch; 
 
-  public Manipulator() {
-    manipulatorTalon = new TalonSRX(RobotMap.manipulatorTalon);
-   // hatchRelay = new Relay(RobotMap.hatchRelay); 
-    manipulatorSwitch = new DigitalInput(RobotMap.manipulatorSwitch);
+  public ManipulatorHatch() {
+    hatchRelay = new Relay(RobotMap.hatchRelay); 
   }
 
-  public void runManipulator(double speed) {
-    manipulatorTalon.set(ControlMode.PercentOutput, speed);
-  }
-  
-  /*public void setHatchRelay(Relay.Value state) {
+  public void setHatchRelay(Relay.Value state) { 
     hatchRelay.set(state); 
-  }*/
-  
-  public boolean getManipulatorSwitch() {
-    return manipulatorSwitch.get();
   }
 
   @Override

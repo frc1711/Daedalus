@@ -7,14 +7,14 @@
 
 package frc.robot.commands.manipulators;
 
-import edu.wpi.first.wpilibj.Relay.Value;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
 import frc.robot.Robot;
 
-public class HatchManipulator extends Command {
-  int state; 
-  public HatchManipulator() {
+public class HatchManipulatorFirst extends Command {
+
+  public HatchManipulatorFirst() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.manipulator); 
@@ -23,20 +23,20 @@ public class HatchManipulator extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.manipulator.setHatchRelay(Value.kOff); 
-    state = 0; 
+     //Robot.manipulator.hatchRelay.set(Relay.Value.kOff); 
   }
-
+  //OI.controllerZero.getRawAxis(2) > .1 || OI.controllerZero.getRawAxis(3) > .1
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(OI.hatchButton.get() && state == 0) {
-      Robot.manipulator.setHatchRelay(Value.kForward); 
-      state = 1; 
-    } else if (OI.hatchButton.get() && state == 1) {
-      Robot.manipulator.setHatchRelay(Value.kOff);
-      state = 0; 
-    }
+    if(OI.controllerZero.getRawAxis(2) > .1 || OI.controllerZero.getRawAxis(3) > .1) {
+     Robot.manipulator.hatchRelay.set(Relay.Value.kForward); 
+     System.out.println("yes");
+     
+    } else if (OI.controllerZero.getRawAxis(2) < .1 && OI.controllerZero.getRawAxis(3) == 0) {
+      Robot.manipulator.hatchRelay.set(Relay.Value.kOff); 
+      System.out.println("Also yes"); 
+    } 
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -22,10 +22,14 @@ import frc.robot.commands.arm.RunPneumaticArm;
 import frc.robot.commands.lift.AuxWheel;
 import frc.robot.commands.lift.ScissorLift;
 import frc.robot.commands.manipulators.CargoManipulator;
+import frc.robot.commands.manipulators.HatchManipulatorFirst;
+import frc.robot.commands.manipulators.SpitHatches;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveSystem;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Manipulator;
+import frc.robot.subsystems.ManipulatorHatch;
+import frc.robot.subsystems.PneumaticArm;
 import frc.robot.subsystems.vision.CameraConfig;
 
 /**
@@ -41,17 +45,20 @@ public class Robot extends TimedRobot {
   public static DriveSystem driveSystem; 
   public static UsbCamera camera; 
   public static Manipulator manipulator; 
+  public static ManipulatorHatch hatchManipulatorSub;
+  public static PneumaticArm pneumaticArm; 
   public static Arm arm;
   public static Lift lift;  
   public static OI oi;
 
+  Command spitHatches; 
   Command runPneumaticArm; 
   Command pneumaticOff; 
   Command runMotorArm;
   Command auxWheel; 
   Command scissorLift; 
   Command cargoManipulator; 
-  Command hatchManipulator; 
+  Command hatchManipulatorFirst; 
 
   Command autonomousCommand;
   SendableChooser<Command> chooser = new SendableChooser<>();
@@ -67,17 +74,20 @@ public class Robot extends TimedRobot {
     driveSystem = new DriveSystem();
     manipulator = new Manipulator(); 
     arm = new Arm(); 
+    pneumaticArm = new PneumaticArm();
+    hatchManipulatorSub = new ManipulatorHatch();  
     lift = new Lift(); 
     oi = new OI();
 
-    //COMMANDS
+    // COMMANDS
+    spitHatches = new SpitHatches(); 
     runPneumaticArm = new RunPneumaticArm();
     runMotorArm = new RunMotorArm(); 
     cargoManipulator = new CargoManipulator(); 
     auxWheel = new AuxWheel();
     pneumaticOff = new PneumaticOff(); 
     scissorLift = new ScissorLift(); 
-
+    hatchManipulatorFirst = new HatchManipulatorFirst(); 
     //CAMERAS AND PIXYCAM
     CameraConfig.setup(); 
 
@@ -168,13 +178,9 @@ public class Robot extends TimedRobot {
       autonomousCommand.cancel();
     }
     
-    runMotorArm.start(); 
-    runPneumaticArm.start(); 
-    auxWheel.start(); 
-    scissorLift.start(); 
-    cargoManipulator.start();
-    hatchManipulator.start();
-    pneumaticOff.start(); 
+
+    //hatchManipulator.start();
+    
   }
 
   /**
@@ -182,6 +188,14 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    runPneumaticArm.start(); 
+    //hatchManipulator.start(); 
+    spitHatches.start(); 
+    auxWheel.start(); 
+    runMotorArm.start(); 
+    scissorLift.start(); 
+    cargoManipulator.start();
+    //pneumaticOff.start();
     driveSystem.robotDrive.arcadeDrive(-(OI.controllerZero.getRawAxis(1)), OI.controllerZero.getRawAxis(4));
    // System.out.println(manipulator.getManipulatorSwitch());
 

@@ -7,6 +7,9 @@
 
 package frc.robot.commands.lift;
 
+import java.util.concurrent.TimeUnit;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
@@ -23,30 +26,45 @@ public class ScissorLift extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.lift.setBotLift(Value.kReverse);
+    Robot.lift.botLift.set(Value.kReverse);
     state = 2;  
-    Robot.lift.unlockBotLift(Value.kForward); 
-    unlockState = 1; 
+    Robot.lift.unlockBot.set(Value.kReverse); 
+    unlockState = 2; 
+    System.out.println("Initialize");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     //TODO: put in two other safety protocols 
-    if (Math.abs(OI.controllerZero.getRawAxis(3)) > .1 && Math.abs(OI.controllerZero.getRawAxis(2)) > .1 && state == 2) {
-      Robot.lift.setBotLift(Value.kForward); 
-      state = 1; 
-    } else if (Math.abs(OI.controllerZero.getRawAxis(3)) > .1 && Math.abs(OI.controllerZero.getRawAxis(2)) > .1 && state == 1) {
-      Robot.lift.setBotLift(Value.kReverse); 
-      state = 2; 
+    boolean onOff = OI.climbSafety.get() && OI.liftDeployZero.get() && OI.liftDeployOne.get();
+    if ( onOff && state == 2) {
+      Robot.lift.botLift.set(DoubleSolenoid.Value.kForward); 
+      if (OI.controllerOne.getRawButtonReleased(5) && OI.controllerOne.getRawButtonReleased(6) && OI.controllerZero.getRawButtonReleased(7))
+        state = 1; 
+      System.out.println("Forward" + state); 
+    } else if (onOff && state == 1) {
+      Robot.lift.botLift.set(DoubleSolenoid.Value.kReverse); 
+      if (OI.controllerOne.getRawButtonReleased(5) && OI.controllerOne.getRawButtonReleased(6) && OI.controllerZero.getRawButtonReleased(7))
+        state = 2; 
+      System.out.println("Reverse" + state); 
     }
     //TODO: replace this with the actual buton later
-    if (OI.controllerOne.getPOV() == 180 && unlockState == 1 || unlockState == 0) {
-      Robot.lift.unlockBotLift(Value.kReverse); 
-      unlockState = 2; 
-    } else if (OI.controllerOne.getPOV() == 180 && Math.abs(OI.controllerZero.getRawAxis(3)) > .1 && Math.abs(OI.controllerZero.getRawAxis(2)) > .1 && unlockState == 2) {
-      Robot.lift.unlockBotLift(Value.kForward); 
-      unlockState = 1; 
+    boolean onOffUnlock = OI.climbSafety.get() && OI.liftDeployZero.get() && OI.armPosZero.get();
+    
+    if (onOffUnlock && unlockState == 2) {
+     
+      Robot.lift.unlockBot.set(DoubleSolenoid.Value.kReverse); 
+      
+      if (OI.controllerZero.getRawButtonReleased(7) && OI.controllerOne.getRawButtonReleased(5) && OI.controllerOne.getRawButtonReleased(2)) 
+        unlockState = 1; 
+      System.out.println("Back");
+    
+    } else if ( onOffUnlock && unlockState == 1) {
+      Robot.lift.unlockBot.set(DoubleSolenoid.Value.kForward); 
+      if (OI.controllerZero.getRawButtonReleased(7) && OI.controllerOne.getRawButtonReleased(5) && OI.controllerOne.getRawButtonReleased(2)) 
+         unlockState = 2; 
+      System.out.println("Forward");
     }
     
   }

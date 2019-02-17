@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
@@ -45,19 +46,23 @@ public class OI {
 
   public static Joystick controllerZero = new Joystick(RobotMap.controllerZero);
   public static Joystick controllerOne = new Joystick(RobotMap.controllerOne); 
-  
   //BUTTONS
   //controller zero, drive 
-  public static JoystickButton visionEnable = new JoystickButton(controllerZero, 1);
+  public static JoystickButton visionEnable = new JoystickButton(controllerZero, 4);
   public static JoystickButton manipButtonZero = new JoystickButton(controllerZero, 5); 
   public static JoystickButton manipButtonOne = new JoystickButton(controllerZero, 6);
+  public static JoystickButton climbSafety = new JoystickButton(controllerZero, 7); 
+  
 
   //controller one, manipulator
-  public static JoystickButton armButton = new JoystickButton(controllerOne, 1); 
-  public static JoystickButton armButtonOff = new JoystickButton(controllerOne, 3);
-  public static JoystickButton pneumaticRelayButton = new JoystickButton(controllerOne, 4); 
-  public static JoystickButton auxWheelButton = new JoystickButton(controllerOne, 9); 
+  public static JoystickButton armPosZero = new JoystickButton(controllerOne, 2); 
+  public static JoystickButton armPosOne = new JoystickButton(controllerOne, 1);
+  public static JoystickButton armPosTwo = new JoystickButton(controllerOne, 3); 
+  public static JoystickButton armPosThree = new JoystickButton(controllerOne, 4); 
+  public static JoystickButton liftDeployZero = new JoystickButton(controllerOne, 5); 
+  public static JoystickButton liftDeployOne = new JoystickButton(controllerOne, 6); 
+  public static JoystickButton pnuematicOff = new JoystickButton(controllerOne, 7); 
+  public static JoystickButton pnuematicOffTwo = new JoystickButton(controllerOne, 8); 
+  public static JoystickButton auxWheelButton = new JoystickButton(controllerOne, 10); 
   
-  //this needs to be a trigger i think 
-  public static JoystickButton hatchButton = new JoystickButton(controllerOne, 5);
 }
