@@ -3,7 +3,7 @@
 ### Troubleshooting: 
 #### No comms? 
 What's the bridge doing? 
-![bridge troubleshooting](https://s3.amazonaws.com/screensteps_live/images/Wpilib/144972/7/rendered/7cece587-3872-4dc7-a159-11c8b74c1a80_display.png?AWSAccessKeyId=AKIAJRW37ULKKSXWY73Q&Expires=1550238797&Signature=Bcm6oPf1TLWdH3%2BfTV5uu0in%2FgA%3D "bridge troubleshooting")
+![bridge troubleshooting](https://s3.amazonaws.com/screensteps_live/image_assets/assets/000/295/302/original/b23f2b0c-053e-43cc-b7b0-dcd259993955.png?1483918602 "bridge troubleshooting")
 
 #### No robot code, even after pushing? 
 
