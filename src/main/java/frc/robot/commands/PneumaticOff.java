@@ -32,7 +32,6 @@ public class PneumaticOff extends Command {
   @Override
   protected void execute() {
     if (OI.pnuematicOff.get() && OI.pnuematicOffTwo.get()) {
-      Robot.manipulator.hatchRelay.set(Relay.Value.kOff); 
       Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kOff); 
       Robot.lift.unlockBot.set(DoubleSolenoid.Value.kOff); 
       Robot.lift.auxWheelSolenoid.set(DoubleSolenoid.Value.kOff);

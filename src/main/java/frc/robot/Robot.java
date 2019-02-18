@@ -22,7 +22,6 @@ import frc.robot.commands.arm.RunPneumaticArm;
 import frc.robot.commands.lift.AuxWheel;
 import frc.robot.commands.lift.ScissorLift;
 import frc.robot.commands.manipulators.CargoManipulator;
-import frc.robot.commands.manipulators.HatchManipulatorFirst;
 import frc.robot.commands.manipulators.SpitHatches;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveSystem;
@@ -87,7 +86,7 @@ public class Robot extends TimedRobot {
     auxWheel = new AuxWheel();
     pneumaticOff = new PneumaticOff(); 
     scissorLift = new ScissorLift(); 
-    hatchManipulatorFirst = new HatchManipulatorFirst(); 
+
     //CAMERAS AND PIXYCAM
     CameraConfig.setup(); 
 
@@ -97,7 +96,8 @@ public class Robot extends TimedRobot {
 
 
     UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture();
-    cam0.setFPS(300);
+    cam0.setFPS(30);
+    cam0.setResolution(480, 320); 
   }
 
 

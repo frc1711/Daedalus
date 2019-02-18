@@ -10,6 +10,7 @@ package frc.robot.commands.lift;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
 import frc.robot.Robot;
 
@@ -32,6 +33,12 @@ public class AuxWheel extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() { 
+    if (state  == 1) {
+      SmartDashboard.putString("Aux Wheel State:", "Forward"); 
+    } else if (state == 2) {
+      SmartDashboard.putString("Aux Wheel State:", "Reverse"); 
+    }
+
     if (OI.auxWheelButton.get() && state == 2 || state ==  0) {
       Robot.lift.auxWheelSolenoid.set(Value.kForward); 
       System.out.println("ForwardAux");

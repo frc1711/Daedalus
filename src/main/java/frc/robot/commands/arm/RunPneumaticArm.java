@@ -9,11 +9,12 @@ package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
 import frc.robot.Robot;
 
 public class RunPneumaticArm extends Command {
-public int state = 0; 
+public int state = 2; 
   public RunPneumaticArm() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -22,10 +23,7 @@ public int state = 0;
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {
-    
-    Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kReverse); 
-    state = 2; 
+  protected void initialize() { 
     
   }
 
@@ -33,7 +31,11 @@ public int state = 0;
   @Override
   protected void execute() {
     //this has to work so that it can turn the solenoid on and off
-
+    if (state  == 1) {
+      SmartDashboard.putString("Pneumatic Arm State:", "Forward"); 
+    } else if (state == 2) {
+      SmartDashboard.putString("Pneumatic Arm State:", "Reverse"); 
+    }
     if (OI.controllerOne.getPOV() == 180 && state == 1 ) {
       Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kReverse); 
       state = 2; 

@@ -8,6 +8,7 @@
 package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
 import frc.robot.Robot;
 
@@ -26,28 +27,34 @@ public class RunMotorArm extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (OI.controllerOne.getRawAxis(1) > 0) {
-      double speed = OI.controllerOne.getRawAxis(1) * OI.controllerOne.getRawAxis(1); 
-      Robot.arm.runArm(speed / 4); 
-      System.out.println("speed / 8 is " + speed);
-    } else if (OI.controllerOne.getRawAxis(1) < 0) {
-      double speed = OI.controllerOne.getRawAxis(1) * OI.controllerOne.getRawAxis(1); 
-      Robot.arm.runArm(-speed / 2);
-      System.out.println(-speed / 4); 
+   double speed = OI.controllerOne.getRawAxis(1) * OI.controllerOne.getRawAxis(1); 
+    double runningSpeed = speed / 2; 
+    SmartDashboard.putNumber("Arm speed", runningSpeed); 
+     
+    if (OI.controllerOne.getRawAxis(1) > 0 && !OI.armPosZero.get() && !OI.armPosOne.get() && !OI.armPosTwo.get() && !OI.armPosThree.get()) {
+      Robot.arm.runArm(runningSpeed); 
+    } else if (OI.controllerOne.getRawAxis(1) < 0 && !OI.armPosZero.get() && !OI.armPosOne.get() && !OI.armPosTwo.get() && !OI.armPosThree.get()) {  
+      Robot.arm.runArm(-runningSpeed);
     }
-    else {
+    else if (OI.controllerOne.getRawAxis(1) == 0 && !OI.armPosZero.get() && !OI.armPosOne.get() && !OI.armPosTwo.get() && !OI.armPosThree.get()) {
       Robot.arm.runArm(0);
-    }
+    } 
+//OI.controllerOne.getRawButtonReleased(2)
+   if (OI.armPosZero.get()) {
+     System.out.println("B button pressed"); 
+     // if(Robot.arm.armMax/2 >= Robot.arm.getSensorValue() && Robot.arm.armMin/2 < Robot.arm.getSensorValue()) {
+        Robot.arm.runPIDArm(Robot.arm.posOne);
+   //     System.out.print(Robot.arm.runPIDArm(Robot.arm.armMax)); 
+        System.out.println(Robot.arm.getSensorValue());
 
-   /* if (OI.armPosZero.get()) {
-
+     // }
     } else if (OI.armPosOne.get()) {
 
     } else if (OI.armPosTwo.get()) {
 
     } else if (OI.armPosThree.get()) {
 
-    } */
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

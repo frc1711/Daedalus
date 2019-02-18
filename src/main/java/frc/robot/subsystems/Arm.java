@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 //import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -24,29 +25,34 @@ public class Arm extends Subsystem {
   public WPI_TalonSRX armTalon;
   
   public double armMin; 
-  public double armMax; 
+  public double posOne; 
   public int unitsPerRotation; 
   public double baseSpeed; 
 
   public Arm() {
     armTalon = new WPI_TalonSRX(RobotMap.armTalon); 
     
-    /*armMin = -12288; 
-    armMax = 12288;
-    unitsPerRotation = 4096;
-    baseSpeed = 0.1;
+    armMin = -1; 
+    posOne = 3737;
+    unitsPerRotation = 1205;
+    baseSpeed = 0.5;
 
     armTalon.setSelectedSensorPosition(0);
     armTalon.selectProfileSlot(0, 0);
-    armTalon.config_kF(0, 0.0);
-    armTalon.config_kP(0, 0.25);
+    //corectionary values
+    armTalon.config_kF(0, 0.0); 
+    armTalon.config_kP(0, 0.125);
     armTalon.config_kI(0, 0.0);
     armTalon.config_kD(0, 0.0);
-    armTalon.configClosedLoopPeakOutput(0, 0.2);
-    armTalon.configAllowableClosedloopError(0, 2048);
-    armTalon.configMotionAcceleration(13585);
-    armTalon.configMotionCruiseVelocity(13585);
-    */
+    //max speed
+    armTalon.configClosedLoopPeakOutput(0, 0.5);
+    //allowable error
+    armTalon.configAllowableClosedloopError(0, 70);
+    //(how fast you get there) how many counts per 100 milliseconds you can go  (rate of change of duty cycle)
+    armTalon.configMotionAcceleration(500);
+    //how fast you go once you're there
+    armTalon.configMotionCruiseVelocity(500);
+    
     
     
 
@@ -57,9 +63,12 @@ public class Arm extends Subsystem {
   }
 
   public void runArm(double speed) {
-    armTalon.config_kP(0, 0.25);
-    armTalon.configClosedLoopPeakOutput(0, 0.2);  
     armTalon.set(speed); 
+  }
+
+  public void runPIDArm (double speed) {
+    System.out.println("Go " + speed); 
+    armTalon.set(ControlMode.MotionMagic, speed); 
   }
 
   public int getSensorValue() {

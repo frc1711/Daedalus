@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
 import frc.robot.Robot;
 
@@ -36,6 +37,16 @@ public class ScissorLift extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    if (state  == 1) {
+      SmartDashboard.putString("Scissor Lift State:", "Forward"); 
+    } else if (state == 2) {
+      SmartDashboard.putString("Scissor Lift State:", "Reverse"); 
+    }
+    if (unlockState  == 1) {
+      SmartDashboard.putString("Pins State:", "Forward"); 
+    } else if (unlockState == 2) {
+      SmartDashboard.putString("Pins State:", "Reverse"); 
+    }
     //TODO: put in two other safety protocols 
     boolean onOff = OI.climbSafety.get() && OI.liftDeployZero.get() && OI.liftDeployOne.get();
     if ( onOff && state == 2) {

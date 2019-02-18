@@ -22,22 +22,16 @@ public class Manipulator extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   TalonSRX manipulatorTalon; 
-  public Relay hatchRelay; 
   DigitalInput manipulatorSwitch; 
 
   public Manipulator() {
     manipulatorTalon = new TalonSRX(RobotMap.manipulatorTalon);
-   // hatchRelay = new Relay(RobotMap.hatchRelay); 
     manipulatorSwitch = new DigitalInput(RobotMap.manipulatorSwitch);
   }
 
   public void runManipulator(double speed) {
     manipulatorTalon.set(ControlMode.PercentOutput, speed);
   }
-  
-  /*public void setHatchRelay(Relay.Value state) {
-    hatchRelay.set(state); 
-  }*/
   
   public boolean getManipulatorSwitch() {
     return manipulatorSwitch.get();
