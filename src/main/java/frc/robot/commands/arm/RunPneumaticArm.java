@@ -31,15 +31,18 @@ public int state = 2;
   @Override
   protected void execute() {
     //this has to work so that it can turn the solenoid on and off
+    double armMotorSpeed = SmartDashboard.getNumber("Arm speed", 0); 
     if (state  == 1) {
       SmartDashboard.putString("Pneumatic Arm State:", "Forward"); 
     } else if (state == 2) {
       SmartDashboard.putString("Pneumatic Arm State:", "Reverse"); 
     }
     if (OI.controllerOne.getPOV() == 180 && state == 1 ) {
+      Robot.arm.runPIDArm(Robot.arm.rightAngle); 
       Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kReverse); 
       state = 2; 
-    } else if (OI.controllerOne.getPOV() == 0 && state == 2 || state == 0) {
+      //&& !(armMotorSpeed == 0)
+    } else if (OI.controllerOne.getPOV() == 0 && state == 2) {
       Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kForward);
       state = 1; 
     }

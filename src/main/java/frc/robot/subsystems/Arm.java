@@ -14,6 +14,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 //import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
 /**
@@ -25,7 +26,11 @@ public class Arm extends Subsystem {
   public WPI_TalonSRX armTalon;
   
   public double armMin; 
+  public double posZero; 
   public double posOne; 
+  public double posTwo; 
+  public double posThree; 
+  public double rightAngle; 
   public int unitsPerRotation; 
   public double baseSpeed; 
 
@@ -33,26 +38,29 @@ public class Arm extends Subsystem {
     armTalon = new WPI_TalonSRX(RobotMap.armTalon); 
     
     armMin = -1; 
-    posOne = 3737;
-    unitsPerRotation = 1205;
-    baseSpeed = 0.5;
+    posZero = 1000; //TODO: fix pos one and pos two to be in order bc we're not lazy programmers (jk but we do need to fix it)
+    posOne = 500; 
+    posTwo = 400; 
+    posThree = 1100; 
+    rightAngle = 2000;
 
+    unitsPerRotation = 4096; //This was 1205 
+    
     armTalon.setSelectedSensorPosition(0);
     armTalon.selectProfileSlot(0, 0);
     //corectionary values
-    armTalon.config_kF(0, 0.0); 
-    armTalon.config_kP(0, 0.125);
-    armTalon.config_kI(0, 0.0);
-    armTalon.config_kD(0, 0.0);
+    armTalon.config_kF(0, 0.0); //feed forward gain
+    armTalon.config_kP(0, 0.3); //proportional
+    armTalon.config_kI(0, 0.0005); 
+    armTalon.config_kD(0, 0.2);
     //max speed
-    armTalon.configClosedLoopPeakOutput(0, 0.5);
+    armTalon.configClosedLoopPeakOutput(0, 0.7);
     //allowable error
-    armTalon.configAllowableClosedloopError(0, 70);
+    armTalon.configAllowableClosedloopError(0, 185);
     //(how fast you get there) how many counts per 100 milliseconds you can go  (rate of change of duty cycle)
-    armTalon.configMotionAcceleration(500);
+    armTalon.configMotionAcceleration(250);
     //how fast you go once you're there
-    armTalon.configMotionCruiseVelocity(500);
-    
+    armTalon.configMotionCruiseVelocity(200);
     
     
 
@@ -66,9 +74,11 @@ public class Arm extends Subsystem {
     armTalon.set(speed); 
   }
 
-  public void runPIDArm (double speed) {
-    System.out.println("Go " + speed); 
-    armTalon.set(ControlMode.MotionMagic, speed); 
+  public void runPIDArm (double pos) {
+    double tester = armTalon.getActiveTrajectoryVelocity(); 
+    SmartDashboard.putNumber("Velocity", tester); 
+    SmartDashboard.putNumber("Position", pos); 
+    armTalon.set(ControlMode.MotionMagic, pos); 
   }
 
   public int getSensorValue() {
