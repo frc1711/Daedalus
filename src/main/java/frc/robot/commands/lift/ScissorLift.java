@@ -61,18 +61,18 @@ public class ScissorLift extends Command {
       System.out.println("Reverse" + state); 
     }
     //TODO: replace this with the actual buton later
-    boolean onOffUnlock = OI.climbSafety.get() && OI.liftDeployZero.get() && OI.armPosZero.get();
-    
+    boolean onOffUnlock = OI.climbSafety.get() && OI.liftDeployZero.get() && OI.pnuematicOffTwo.get();
+    SmartDashboard.putBoolean("Is This Working", onOffUnlock); 
     if (onOffUnlock && unlockState == 2) {
      
-      Robot.lift.unlockBot.set(DoubleSolenoid.Value.kReverse); 
+      Robot.lift.unlockBot.set(DoubleSolenoid.Value.kForward); 
       
       if (OI.controllerZero.getRawButtonReleased(7) && OI.controllerOne.getRawButtonReleased(5) && OI.controllerOne.getRawButtonReleased(2)) 
         unlockState = 1; 
       System.out.println("Back");
     
     } else if ( onOffUnlock && unlockState == 1) {
-      Robot.lift.unlockBot.set(DoubleSolenoid.Value.kForward); 
+      Robot.lift.unlockBot.set(DoubleSolenoid.Value.kReverse); 
       if (OI.controllerZero.getRawButtonReleased(7) && OI.controllerOne.getRawButtonReleased(5) && OI.controllerOne.getRawButtonReleased(2)) 
          unlockState = 2; 
       System.out.println("Forward");

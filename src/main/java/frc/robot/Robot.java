@@ -24,6 +24,7 @@ import frc.robot.commands.lift.ScissorLift;
 import frc.robot.commands.manipulators.CargoManipulator;
 import frc.robot.commands.manipulators.SpitHatches;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Clock;
 import frc.robot.subsystems.DriveSystem;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Manipulator;
@@ -48,6 +49,7 @@ public class Robot extends TimedRobot {
   public static PneumaticArm pneumaticArm; 
   public static Arm arm;
   public static Lift lift;  
+  public static Clock clock; 
   public static OI oi;
 
   Command spitHatches; 
@@ -76,6 +78,7 @@ public class Robot extends TimedRobot {
     pneumaticArm = new PneumaticArm();
     hatchManipulatorSub = new ManipulatorHatch();  
     lift = new Lift(); 
+    clock = new Clock(); 
     oi = new OI();
 
     // COMMANDS
