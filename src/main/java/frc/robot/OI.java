@@ -53,7 +53,7 @@ public class OI {
   public static JoystickButton manipButtonOne = new JoystickButton(controllerZero, 6);
   public static JoystickButton climbSafety = new JoystickButton(controllerZero, 7); 
   
-
+  
   //controller one, manipulator
   public static JoystickButton armPosZero = new JoystickButton(controllerOne, 2); 
   public static JoystickButton armPosOne = new JoystickButton(controllerOne, 1);
