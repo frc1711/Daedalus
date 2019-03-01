@@ -9,6 +9,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -23,12 +25,14 @@ import frc.robot.RobotMap.RoboDir;
 public class DriveSystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  public WPI_TalonSRX frontLeftDrive;
+ /* public WPI_TalonSRX frontLeftDrive;
 	public WPI_TalonSRX frontRightDrive;
 	public WPI_TalonSRX rearLeftDrive;
-  public WPI_TalonSRX rearRightDrive;
-
-  
+  public WPI_TalonSRX rearRightDrive; */
+  public CANSparkMax frontLeftDrive; 
+  public CANSparkMax frontRightDrive; 
+  public CANSparkMax rearLeftDrive; 
+  public CANSparkMax rearRightDrive; 
 
   public AHRS gyro; 
 
@@ -38,10 +42,14 @@ public class DriveSystem extends Subsystem {
   SpeedControllerGroup rightSideDrive; 
 
   public DriveSystem() {
-    frontLeftDrive = new WPI_TalonSRX(RobotMap.FLD); 
+    /*frontLeftDrive = new WPI_TalonSRX(RobotMap.FLD); 
     frontRightDrive = new WPI_TalonSRX(RobotMap.FRD);
     rearRightDrive = new WPI_TalonSRX(RobotMap.RRD);
-    rearLeftDrive = new WPI_TalonSRX(RobotMap.RLD);
+    rearLeftDrive = new WPI_TalonSRX(RobotMap.RLD);*/
+    frontLeftDrive = new CANSparkMax(RobotMap.FLD, MotorType.kBrushless); 
+    frontRightDrive = new CANSparkMax(RobotMap.FRD, MotorType.kBrushless); 
+    rearLeftDrive = new CANSparkMax(RobotMap.RLD, MotorType.kBrushless); 
+    rearRightDrive = new CANSparkMax(RobotMap.RRD, MotorType.kBrushless); 
 
     leftSideDrive = new SpeedControllerGroup(frontLeftDrive, rearLeftDrive);
     rightSideDrive = new SpeedControllerGroup(frontRightDrive, rearRightDrive); 
