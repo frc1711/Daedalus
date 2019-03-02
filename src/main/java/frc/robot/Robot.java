@@ -91,12 +91,12 @@ public class Robot extends TimedRobot {
     scissorLift = new ScissorLift(); 
 
     //CAMERAS AND PIXYCAM
-    CameraConfig.setup(); 
+   /* CameraConfig.setup(); 
 
     SmartDashboard.putBoolean("Pixy2 Light", false);
     boolean PixyLightState = SmartDashboard.getBoolean("Pixy2 Light", false); 
     CameraConfig.light(PixyLightState); 
-
+*/
 
     UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture();
     cam0.setFPS(30);
@@ -115,7 +115,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     Scheduler.getInstance().run();
-    CameraConfig.run(); 
+   // CameraConfig.run(); 
 
     /*boolean PixyLightState = SmartDashboard.getBoolean("Pixy2 Light", false); 
     CameraConfig.light(PixyLightState);  */
@@ -199,9 +199,10 @@ public class Robot extends TimedRobot {
     scissorLift.start(); 
     cargoManipulator.start();
     //pneumaticOff.start();
+    //double speed = ((OI.controllerZero.getRawAxis(1))/2);
     driveSystem.robotDrive.arcadeDrive(-(OI.controllerZero.getRawAxis(1)), OI.controllerZero.getRawAxis(4));
    // System.out.println(manipulator.getManipulatorSwitch());
-
+   // driveSystem.robotDrive.arcadeDrive(-speed, OI.controllerZero.getRawAxis(4)); 
   }
 
   /**
