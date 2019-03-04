@@ -11,10 +11,10 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 //import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 //import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.OI;
 import frc.robot.RobotMap;
 
 /**
@@ -39,8 +39,8 @@ public class Arm extends Subsystem {
     armTalon = new WPI_TalonSRX(RobotMap.armTalon); 
     
     armMin = -1; 
-    posZero = -799; //TODO: fix pos one and pos two to be in order bc we're not lazy programmers (jk but we do need to fix it)
-    posOne = -1355; //-1481
+    posZero = 1912; //-799
+    posOne = 1355; //-1356
     posTwo = -2220; //-2823
     posThree = -1520; //-2195
     posAbsZero = 0; 
@@ -60,22 +60,22 @@ public class Arm extends Subsystem {
     //allowable error
     armTalon.configAllowableClosedloopError(0, 100);
     //(how fast you get there) how many counts per 100 milliseconds you can go  (rate of change of duty cycle)
-    armTalon.configMotionAcceleration(250);
+    armTalon.configMotionAcceleration(250); //250 ON ROBOT
     //how fast you go once you're there
-    armTalon.configMotionCruiseVelocity(100);
+    armTalon.configMotionCruiseVelocity(100); //100 on robot
     
     armTalon.config_kF(1, 0.0); 
-    armTalon.config_kP(1, 0.5); 
-    armTalon.config_kI(1, 0.00005);
-    armTalon.config_kD(1, 0.5);
+    armTalon.config_kP(1, 0.8); 
+    armTalon.config_kI(1, 0.0001);
+    armTalon.config_kD(1, 5.5);
     
     armTalon.configClosedLoopPeakOutput(1, 0.7); 
 
-    armTalon.configAllowableClosedloopError(1, 100); 
+    armTalon.configAllowableClosedloopError(1, 50); 
 
-    armTalon.configMotionAcceleration(250); 
+    armTalon.configMotionAcceleration(50); //250 ON ROBOT
 
-    armTalon.configMotionCruiseVelocity(380); 
+    armTalon.configMotionCruiseVelocity(50); //380 ON ROBOT
 
   }
 
@@ -86,11 +86,19 @@ public class Arm extends Subsystem {
   public void runArm(double speed) {
     armTalon.set(speed); 
   }
-
+  public double returnArmPos() {
+    if(OI.controllerOne.getRawButtonReleased(2)) 
+      return armTalon.getMotorOutputPercent(); 
+    else {
+      return 0; 
+    }
+  }
   public void runPIDArm (double pos) {
     double tester = armTalon.getActiveTrajectoryVelocity(); 
+    double theSpeed = armTalon.getMotorOutputPercent(); 
     SmartDashboard.putNumber("Velocity", tester); 
     SmartDashboard.putNumber("Position", pos); 
+    SmartDashboard.putNumber("armTalon Motor Output Percent", theSpeed);
     armTalon.set(ControlMode.MotionMagic, pos); 
   }
 

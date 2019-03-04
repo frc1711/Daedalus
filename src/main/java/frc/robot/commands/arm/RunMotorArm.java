@@ -7,16 +7,16 @@
 
 package frc.robot.commands.arm;
 
-import java.util.spi.TimeZoneNameProvider;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
 import frc.robot.Robot;
 
 public class RunMotorArm extends Command {
+  public boolean hold = false; 
   public RunMotorArm() {
+    
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.arm); 
@@ -26,6 +26,7 @@ public class RunMotorArm extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+   
     Robot.clock.resetClock();
    // Robot.clock.stopClock();     
   }
@@ -34,7 +35,6 @@ public class RunMotorArm extends Command {
   @Override
   protected void execute() {
    SmartDashboard.putNumber("Enc position", Robot.arm.getSensorValue()); 
-   double startingPos = SmartDashboard.getNumber("Target position", 0); 
    double speed = OI.controllerOne.getRawAxis(1) * OI.controllerOne.getRawAxis(1); 
    double runningSpeed = speed / 2; 
    SmartDashboard.putNumber("Arm speed", runningSpeed); 
@@ -62,6 +62,19 @@ public class RunMotorArm extends Command {
       }
     } */
 
+    if (!OI.armPosZero.get() && !OI.armPosOne.get() && !OI.armPosTwo.get() && !OI.armPosThree.get() && !(OI.controllerOne.getPOV() == 90)) {
+      double holdPos = SmartDashboard.getNumber("armTalon Motor Output Percent", 0); 
+      Robot.arm.runArm(holdPos); 
+    } else if ( !(Math.abs(OI.controllerOne.getRawAxis(1)) > .1) && hold == true) {
+      Robot.arm.runArm(0); 
+      hold = false; 
+    }
+    if (Math.abs(OI.controllerOne.getRawAxis(1)) > .1) {
+      double armSpeedRun = OI.controllerOne.getRawAxis(1) / 3; 
+      Robot.arm.runArm(armSpeedRun); 
+      SmartDashboard.putNumber("Arm Value", armSpeedRun); 
+    }
+  
     if (OI.armPosZero.get()) {
      System.out.println("B button pressed"); 
      // if(Robot.arm.armMax/2 >= Robot.arm.getSensorValue() && Robot.arm.armMin/2 < Robot.arm.getSensorValue()) {
@@ -69,8 +82,9 @@ public class RunMotorArm extends Command {
         Robot.arm.runPIDArm(Robot.arm.posZero);
    //     System.out.print(Robot.arm.runPIDArm(Robot.arm.armMax)); 
         SmartDashboard.putNumber("Target position", Robot.arm.posZero); 
-     // }
-    } else if (OI.armPosOne.get()) {
+        SmartDashboard.putNumber("AT MOP:", Robot.arm.armTalon.getMotorOutputPercent()); 
+   
+      } else if (OI.armPosOne.get()) {
       Robot.arm.armTalon.selectProfileSlot(1, 0);
       Robot.arm.runPIDArm(Robot.arm.posOne);
       SmartDashboard.putNumber("Target position", Robot.arm.posOne); 
@@ -84,8 +98,10 @@ public class RunMotorArm extends Command {
       SmartDashboard.putNumber("Target position", Robot.arm.posThree); 
     } else if (OI.controllerOne.getPOV() == 90) {
       Robot.arm.runPIDArm(Robot.arm.posAbsZero); 
+      hold = true; 
       SmartDashboard.putNumber("Target position", Robot.arm.posAbsZero); 
     }
+
   }
 
   // Make this return true when this Command no longer needs to run execute()

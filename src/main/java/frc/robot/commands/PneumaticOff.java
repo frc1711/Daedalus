@@ -8,7 +8,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
 import frc.robot.Robot;
@@ -17,9 +16,6 @@ public class PneumaticOff extends Command {
   public PneumaticOff() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.manipulator); 
-    requires(Robot.arm); 
-    requires(Robot.lift); 
   }
 
   // Called just before this Command runs the first time

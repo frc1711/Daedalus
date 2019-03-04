@@ -157,6 +157,16 @@ public class Robot extends TimedRobot {
      * autonomousCommand = new ExampleCommand(); break; }
      */
 
+    runPneumaticArm.start(); 
+    //hatchManipulator.start(); 
+    spitHatches.start(); 
+    auxWheel.start(); 
+    runMotorArm.start(); 
+    scissorLift.start(); 
+    cargoManipulator.start();
+    //pneumaticOff.start();
+    //double speed = ((OI.controllerZero.getRawAxis(1))/2);
+    driveSystem.robotDrive.arcadeDrive(-(OI.controllerZero.getRawAxis(1)), OI.controllerZero.getRawAxis(4));
     // schedule the autonomous command (example)
     if (autonomousCommand != null) {
       autonomousCommand.start();

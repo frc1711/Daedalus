@@ -31,7 +31,6 @@ public int state = 2;
   @Override
   protected void execute() {
     //this has to work so that it can turn the solenoid on and off
-    double armMotorSpeed = SmartDashboard.getNumber("Arm speed", 0); 
     if (state  == 1) {
       SmartDashboard.putString("Pneumatic Arm State:", "Forward"); 
     } else if (state == 2) {

@@ -7,7 +7,6 @@
 
 package frc.robot.commands.lift;
 
-import java.util.concurrent.TimeUnit;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -47,7 +46,7 @@ public class ScissorLift extends Command {
     } else if (unlockState == 2) {
       SmartDashboard.putString("Pins State:", "Reverse"); 
     }
-    //TODO: put in two other safety protocols 
+
     boolean onOff = OI.climbSafety.get() && OI.liftDeployZero.get() && OI.liftDeployOne.get();
     if ( onOff && state == 2) {
       Robot.lift.botLift.set(DoubleSolenoid.Value.kForward); 
@@ -60,7 +59,7 @@ public class ScissorLift extends Command {
         state = 2; 
       System.out.println("Reverse" + state); 
     }
-    //TODO: replace this with the actual buton later
+
     boolean onOffUnlock = OI.climbSafety.get() && OI.liftDeployZero.get() && OI.pnuematicOffTwo.get();
     SmartDashboard.putBoolean("Is This Working", onOffUnlock); 
     if (onOffUnlock && unlockState == 2) {

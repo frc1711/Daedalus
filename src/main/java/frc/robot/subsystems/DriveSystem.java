@@ -7,7 +7,6 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -91,6 +90,9 @@ public class DriveSystem extends Subsystem {
     return gyro.getAngle(); 
   }
 
+  public double getGyroPitch() {
+    return gyro.getPitch(); 
+  }
   public void zeroGyro() {
     gyro.zeroYaw(); 
   }
