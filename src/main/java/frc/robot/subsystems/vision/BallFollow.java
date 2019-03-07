@@ -24,12 +24,12 @@ public class BallFollow {
         if (OI.visionEnable.get()) {
             if(ballAngle < -5 ) {
               System.out.println("LEFT");
-              Robot.driveSystem.driveDirection(.75, RoboDir.LEFT); 
+              Robot.driveSystem.driveDirection(.3, RoboDir.RIGHT); 
             } else if (ballAngle > 5) {
               System.out.println("RIGHT");
-              Robot.driveSystem.driveDirection(.75, RoboDir.RIGHT); 
+              Robot.driveSystem.driveDirection(.3, RoboDir.LEFT); 
             } else if (ballAngle >= -5 && ballAngle <= 5) {
-             Robot.driveSystem.driveDirection(-.3, RoboDir.STRAIGHT); 
+             Robot.driveSystem.driveDirection(.2, RoboDir.STRAIGHT); 
               System.out.println("STRAIGHT");
               System.out.println(ballAngle);
             } else {

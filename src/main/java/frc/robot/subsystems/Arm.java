@@ -52,9 +52,9 @@ public class Arm extends Subsystem {
     //armTalon.selectProfileSlot(0, 0);
     //corectionary values
     armTalon.config_kF(0, 0.0); //feed forward gain
-    armTalon.config_kP(0, 0.5); //proportional
-    armTalon.config_kI(0, 0.00005); 
-    armTalon.config_kD(0, 0.3);
+    armTalon.config_kP(0, 0.8); //proportional
+    armTalon.config_kI(0, 0.0001); 
+    armTalon.config_kD(0, 5.5);
     //max speed
     armTalon.configClosedLoopPeakOutput(0, 0.7);
     //allowable error

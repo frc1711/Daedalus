@@ -62,31 +62,55 @@ public class RunMotorArm extends Command {
       }
     } */
 
-    if (!OI.armPosZero.get() && !OI.armPosOne.get() && !OI.armPosTwo.get() && !OI.armPosThree.get() && !(OI.controllerOne.getPOV() == 90)) {
-      double holdPos = SmartDashboard.getNumber("armTalon Motor Output Percent", 0); 
-      Robot.arm.runArm(holdPos); 
-    } else if ( !(Math.abs(OI.controllerOne.getRawAxis(1)) > .1) && hold == true) {
+     /*else if ( !(Math.abs(OI.controllerOne.getRawAxis(1)) > .1) && hold == true) {
       Robot.arm.runArm(0); 
       hold = false; 
-    }
+    } */
     if (Math.abs(OI.controllerOne.getRawAxis(1)) > .1) {
       double armSpeedRun = OI.controllerOne.getRawAxis(1) / 3; 
-      Robot.arm.runArm(armSpeedRun); 
+      Robot.arm.runArm(armSpeedRun);
+       
       SmartDashboard.putNumber("Arm Value", armSpeedRun); 
-    }
-  
+    } 
+    /*while (OI.controllerOne.getRawAxis(1) > 0) {
+      if (Math.abs(OI.controllerOne.getRawAxis(1)) > .1) {
+        double armSpeedRun = OI.controllerOne.getRawAxis(1) / 3; 
+        Robot.arm.runArm(armSpeedRun); 
+      } /*else if (Math.abs(OI.controllerOne.getRawAxis(1)) > .1 || Math.abs(OI.controllerOne.getRawAxis(1)) < .2) {
+        double currentPos = SmartDashboard.getNumber("encPos", 0); 
+        Robot.arm.runPIDArm(currentPos); 
+        SmartDashboard.putNumber("Target position", currentPos); 
+      } */
+  //}  
+
     if (OI.armPosZero.get()) {
      System.out.println("B button pressed"); 
      // if(Robot.arm.armMax/2 >= Robot.arm.getSensorValue() && Robot.arm.armMin/2 < Robot.arm.getSensorValue()) {
+       do {
         Robot.arm.armTalon.selectProfileSlot(1, 0);
         Robot.arm.runPIDArm(Robot.arm.posZero);
+        System.out.println("Executing.");
+       } while (!(SmartDashboard.getNumber("Velocity", 10) == 0)); 
    //     System.out.print(Robot.arm.runPIDArm(Robot.arm.armMax)); 
+       if (SmartDashboard.getNumber("Velocity", 10) == 0) {
+         double holdPos = SmartDashboard.getNumber("armTalon Motor Output Percent", 0); 
+         Robot.arm.runArm(holdPos); 
+       }
         SmartDashboard.putNumber("Target position", Robot.arm.posZero); 
         SmartDashboard.putNumber("AT MOP:", Robot.arm.armTalon.getMotorOutputPercent()); 
-   
-      } else if (OI.armPosOne.get()) {
-      Robot.arm.armTalon.selectProfileSlot(1, 0);
-      Robot.arm.runPIDArm(Robot.arm.posOne);
+        System.out.println("Also executing.");
+    } else if (OI.armPosOne.get()) {
+      do {
+        Robot.arm.armTalon.selectProfileSlot(1, 0);
+        Robot.arm.runPIDArm(Robot.arm.posOne);
+        System.out.println("Executing.");
+       } while (!(SmartDashboard.getNumber("Velocity", 10) == 0)); 
+
+       if (SmartDashboard.getNumber("Velocity", 10) == 0) {
+        double holdPos = SmartDashboard.getNumber("armTalon Motor Output Percent", 0); 
+        Robot.arm.runArm(holdPos); 
+      }
+      
       SmartDashboard.putNumber("Target position", Robot.arm.posOne); 
     } else if (OI.armPosTwo.get()) {
       Robot.arm.armTalon.selectProfileSlot(1, 0);
