@@ -10,11 +10,14 @@ package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+
 import frc.robot.OI;
 import frc.robot.Robot;
 
 public class RunMotorArm extends Command {
   public boolean hold = false; 
+  public boolean started = false; 
   public RunMotorArm() {
     
     // Use requires() here to declare subsystem dependencies
@@ -34,97 +37,99 @@ public class RunMotorArm extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+   double sensorVel = Robot.arm.armTalon.getSelectedSensorVelocity(); 
+   double MOP = Robot.arm.armTalon.getMotorOutputPercent(); 
+   SmartDashboard.putNumber("Sensor Velocity", sensorVel); 
+   SmartDashboard.putNumber("armTalon Motor Output Percent", MOP); 
    SmartDashboard.putNumber("Enc position", Robot.arm.getSensorValue()); 
    double speed = OI.controllerOne.getRawAxis(1) * OI.controllerOne.getRawAxis(1); 
    double runningSpeed = speed / 2; 
    SmartDashboard.putNumber("Arm speed", runningSpeed); 
    System.out.println(Robot.arm.getSensorValue());
 
-     //JUST MOTION CONTROLLER CODE
-  /*if (OI.controllerOne.getRawAxis(1) > .1 && !OI.armPosZero.get() && !OI.armPosOne.get() && !OI.armPosTwo.get() && !OI.armPosThree.get()) {
-      
-    } else if (OI.controllerOne.getRawAxis(1) < 0 && !OI.armPosZero.get() && !OI.armPosOne.get() && !OI.armPosTwo.get() && !OI.armPosThree.get()) {  
-      Robot.arm.runArm(-runningSpeed);
-    }
-    else if (OI.controllerOne.getRawAxis(1) == 0 && !OI.armPosZero.get() && !OI.armPosOne.get() && !OI.armPosTwo.get() && !OI.armPosThree.get()) {
-      Robot.arm.runArm(0);
-    } */
+   //EXIT PID LOOP ON BUTTON RELEASE
+    /*if (!OI.armPosZero.get() && !OI.armPosOne.get() && !OI.armPosTwo.get() && !OI.armPosThree.get() && !(OI.controllerOne.getPOV() == 90)) {
+      double holdPos = SmartDashboard.getNumber("armTalon Motor Output Percent", 0); 
+      Robot.arm.runArm(holdPos); 
+    }  */
 
-    //ALTERING PID CODE 
-    /*if (OI.controllerOne.getRawAxis(1) > .1  ) {
-      Robot.clock.startClock(); 
-      double actualPos = SmartDashboard.getNumber("Enc position", 0); 
-      if(Robot.clock.getClock() > 1) {
-        double currentPos = actualPos + 10; 
-        Robot.arm.runPIDArm(currentPos);
-        SmartDashboard.putNumber("Target position", currentPos); 
-        Robot.clock.resetClock(); 
-      }
-    } */
-
-     /*else if ( !(Math.abs(OI.controllerOne.getRawAxis(1)) > .1) && hold == true) {
-      Robot.arm.runArm(0); 
-      hold = false; 
-    } */
-    if (Math.abs(OI.controllerOne.getRawAxis(1)) > .1) {
+    //RUN THE ARM AT 1/3RD THE SPEED
+   /* if (Math.abs(OI.controllerOne.getRawAxis(1)) > .1) {
       double armSpeedRun = OI.controllerOne.getRawAxis(1) / 3; 
       Robot.arm.runArm(armSpeedRun);
        
       SmartDashboard.putNumber("Arm Value", armSpeedRun); 
     } 
-    /*while (OI.controllerOne.getRawAxis(1) > 0) {
-      if (Math.abs(OI.controllerOne.getRawAxis(1)) > .1) {
-        double armSpeedRun = OI.controllerOne.getRawAxis(1) / 3; 
-        Robot.arm.runArm(armSpeedRun); 
-      } /*else if (Math.abs(OI.controllerOne.getRawAxis(1)) > .1 || Math.abs(OI.controllerOne.getRawAxis(1)) < .2) {
-        double currentPos = SmartDashboard.getNumber("encPos", 0); 
-        Robot.arm.runPIDArm(currentPos); 
-        SmartDashboard.putNumber("Target position", currentPos); 
-      } */
-  //}  
+   */
+    //HATCH POSITIONS
+    if(OI.armPosOne.get() && OI.controllerOne.getRawAxis(2) > .1) {
+     
+      Robot.arm.armTalon.selectProfileSlot(1, 0); 
+      Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kReverse); 
+      Robot.arm.runPIDArm(Robot.arm.hatchPosOne); 
 
-    if (OI.armPosZero.get()) {
-     System.out.println("B button pressed"); 
-     // if(Robot.arm.armMax/2 >= Robot.arm.getSensorValue() && Robot.arm.armMin/2 < Robot.arm.getSensorValue()) {
-       do {
-        Robot.arm.armTalon.selectProfileSlot(1, 0);
-        Robot.arm.runPIDArm(Robot.arm.posZero);
-        System.out.println("Executing.");
-       } while (!(SmartDashboard.getNumber("Velocity", 10) == 0)); 
-   //     System.out.print(Robot.arm.runPIDArm(Robot.arm.armMax)); 
-       if (SmartDashboard.getNumber("Velocity", 10) == 0) {
-         double holdPos = SmartDashboard.getNumber("armTalon Motor Output Percent", 0); 
-         Robot.arm.runArm(holdPos); 
-       }
-        SmartDashboard.putNumber("Target position", Robot.arm.posZero); 
-        SmartDashboard.putNumber("AT MOP:", Robot.arm.armTalon.getMotorOutputPercent()); 
-        System.out.println("Also executing.");
-    } else if (OI.armPosOne.get()) {
-      do {
-        Robot.arm.armTalon.selectProfileSlot(1, 0);
-        Robot.arm.runPIDArm(Robot.arm.posOne);
-        System.out.println("Executing.");
-       } while (!(SmartDashboard.getNumber("Velocity", 10) == 0)); 
-
-       if (SmartDashboard.getNumber("Velocity", 10) == 0) {
-        double holdPos = SmartDashboard.getNumber("armTalon Motor Output Percent", 0); 
-        Robot.arm.runArm(holdPos); 
-      }
+      SmartDashboard.putNumber("Target position", Robot.arm.hatchPosOne); 
+   
+    } else if (OI.armPosTwo.get() && OI.controllerOne.getRawAxis(2) > .1) {
       
-      SmartDashboard.putNumber("Target position", Robot.arm.posOne); 
-    } else if (OI.armPosTwo.get()) {
+      Robot.arm.armTalon.selectProfileSlot(2, 0); 
+      Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kForward); 
+      Robot.arm.runPIDArm(Robot.arm.hatchPosTwo); 
+
+      SmartDashboard.putNumber("Target position", Robot.arm.hatchPosTwo); 
+
+    } else if (OI.armPosThree.get() && OI.controllerOne.getRawAxis(2) > .1) {
+     
+      Robot.arm.armTalon.selectProfileSlot(3, 0); 
+      Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kReverse); 
+      Robot.arm.runPIDArm(Robot.arm.hatchPosThree); 
+
+      SmartDashboard.putNumber("Target position", Robot.arm.hatchPosThree); 
+    
+    } //CARGO POSITIONS
+    else if (OI.armPosZero.get() && !(OI.controllerOne.getRawAxis(2) > .1)) {
+
       Robot.arm.armTalon.selectProfileSlot(1, 0);
+      Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kReverse); 
+      Robot.arm.runPIDArm(Robot.arm.posZero);
+      SmartDashboard.putNumber("Target position", Robot.arm.posZero); 
+
+    } else if (OI.armPosOne.get() && !(OI.controllerOne.getRawAxis(2) > .1)) {
+
+      Robot.arm.armTalon.selectProfileSlot(1, 0);
+      Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kReverse); 
+      Robot.arm.runPIDArm(Robot.arm.posOne);
+      SmartDashboard.putNumber("Target position", Robot.arm.posOne);  
+    
+    } else if (OI.armPosTwo.get() && !(OI.controllerOne.getRawAxis(2) > .1)) {
+      
+      Robot.arm.armTalon.selectProfileSlot(2, 0);
+      Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kForward); 
       Robot.arm.runPIDArm(Robot.arm.posTwo);
       SmartDashboard.putNumber("Target position", Robot.arm.posTwo); 
-    } else if (OI.armPosThree.get()) {
-      Robot.arm.armTalon.selectProfileSlot(0, 0);
+    
+    } else if (OI.armPosThree.get() && !(OI.controllerOne.getRawAxis(2) > .1)) {
+
+      Robot.arm.armTalon.selectProfileSlot(3, 0);
+      Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kForward); 
       Robot.arm.runPIDArm(Robot.arm.posThree); 
-      SmartDashboard.putNumber("Target position", Robot.arm.posThree); 
+      SmartDashboard.putNumber("Target position", Robot.arm.posThree);
+
     } else if (OI.controllerOne.getPOV() == 90) {
+
       Robot.arm.runPIDArm(Robot.arm.posAbsZero); 
-      hold = true; 
       SmartDashboard.putNumber("Target position", Robot.arm.posAbsZero); 
+    
     }
+
+    /*if (vel == 0 ) {
+      double holdPos = SmartDashboard.getNumber("armTalon Motor Output Percent", 0); 
+      Robot.arm.runArm(holdPos); 
+    }*/
+
+    double armTargetPos = SmartDashboard.getNumber("Target position", 0); 
+    double encCount = SmartDashboard.getNumber("Enc position", 10); 
+    Robot.arm.stopPIDPos(sensorVel, encCount, armTargetPos, MOP); 
 
   }
 

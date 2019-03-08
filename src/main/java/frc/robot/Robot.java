@@ -51,6 +51,7 @@ public class Robot extends TimedRobot {
   public static Lift lift;  
   public static Clock clock; 
   public static OI oi;
+  public boolean endGame = false; 
 
   Command spitHatches; 
   Command runPneumaticArm; 
@@ -91,12 +92,12 @@ public class Robot extends TimedRobot {
     scissorLift = new ScissorLift(); 
 
     //CAMERAS AND PIXYCAM
-   /* CameraConfig.setup(); 
+    CameraConfig.setup(); 
 
     SmartDashboard.putBoolean("Pixy2 Light", false);
     boolean PixyLightState = SmartDashboard.getBoolean("Pixy2 Light", false); 
     CameraConfig.light(PixyLightState); 
-*/
+
 
     UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture();
     cam0.setFPS(30);
@@ -115,10 +116,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     Scheduler.getInstance().run();
-   // CameraConfig.run(); 
-
-    /*boolean PixyLightState = SmartDashboard.getBoolean("Pixy2 Light", false); 
-    CameraConfig.light(PixyLightState);  */
   }
 
   /**
@@ -183,6 +180,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+   
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -201,18 +199,35 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    runPneumaticArm.start(); 
+    if(!endGame) {
+
+      CameraConfig.run(); 
+
+      boolean PixyLightState = SmartDashboard.getBoolean("Pixy2 Light", false); 
+      CameraConfig.light(PixyLightState);    
+     
+      System.out.println("GAMEPLAY");
+      runPneumaticArm.start(); 
     //hatchManipulator.start(); 
-    spitHatches.start(); 
-    auxWheel.start(); 
-    runMotorArm.start(); 
-    scissorLift.start(); 
-    cargoManipulator.start();
+      spitHatches.start();
+      runMotorArm.start(); 
+      cargoManipulator.start();
+    }
+    
     //pneumaticOff.start();
-    //double speed = ((OI.controllerZero.getRawAxis(1))/2);
     driveSystem.robotDrive.arcadeDrive(-(OI.controllerZero.getRawAxis(1)), OI.controllerZero.getRawAxis(4));
    // System.out.println(manipulator.getManipulatorSwitch());
-   // driveSystem.robotDrive.arcadeDrive(-speed, OI.controllerZero.getRawAxis(4)); 
+    //System.out.println("Gyro" + Robot.driveSystem.getGyroPitch() + Robot.driveSystem.isGyroConnected()); 
+   if (endGame || OI.controllerZero.getRawButtonReleased(7) && OI.controllerZero.getRawButtonReleased(8)) {
+      spitHatches.cancel(); 
+      runMotorArm.cancel(); 
+      cargoManipulator.cancel(); 
+      System.out.println("NOT GAMEPLAY");
+      
+      scissorLift.start(); 
+      auxWheel.start(); 
+      endGame = true; 
+    }
   }
 
   /**

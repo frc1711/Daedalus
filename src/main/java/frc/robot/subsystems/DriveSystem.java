@@ -90,9 +90,9 @@ public class DriveSystem extends Subsystem {
     return gyro.getAngle(); 
   }
 
-  public double getGyroPitch() {
+ /* public double getGyroPitch() {
     return gyro.getPitch(); 
-  }
+  } */
   public void zeroGyro() {
     gyro.zeroYaw(); 
   }

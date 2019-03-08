@@ -41,38 +41,40 @@ public class ScissorLift extends Command {
     } else if (state == 2) {
       SmartDashboard.putString("Scissor Lift State:", "Reverse"); 
     }
+
     if (unlockState  == 1) {
       SmartDashboard.putString("Pins State:", "Forward"); 
     } else if (unlockState == 2) {
       SmartDashboard.putString("Pins State:", "Reverse"); 
     }
 
-    boolean onOff = OI.climbSafety.get() && OI.liftDeployZero.get() && OI.liftDeployOne.get();
+    //triggers
+    boolean onOff =  OI.liftDeployZero.get() && OI.liftDeployOne.get();
     if ( onOff && state == 2) {
       Robot.lift.botLift.set(DoubleSolenoid.Value.kForward); 
-      if (OI.controllerOne.getRawButtonReleased(5) && OI.controllerOne.getRawButtonReleased(6) && OI.controllerZero.getRawButtonReleased(7))
+      if (OI.controllerOne.getRawButtonReleased(5) && OI.controllerOne.getRawButtonReleased(6))
         state = 1; 
       System.out.println("Forward" + state); 
     } else if (onOff && state == 1) {
       Robot.lift.botLift.set(DoubleSolenoid.Value.kReverse); 
-      if (OI.controllerOne.getRawButtonReleased(5) && OI.controllerOne.getRawButtonReleased(6) && OI.controllerZero.getRawButtonReleased(7))
+      if (OI.controllerOne.getRawButtonReleased(5) && OI.controllerOne.getRawButtonReleased(6))
         state = 2; 
       System.out.println("Reverse" + state); 
     }
 
-    boolean onOffUnlock = OI.climbSafety.get() && OI.liftDeployZero.get() && OI.pnuematicOffTwo.get();
+    boolean onOffUnlock = OI.liftDeployZero.get() && OI.armPosZero.get();
     SmartDashboard.putBoolean("Is This Working", onOffUnlock); 
     if (onOffUnlock && unlockState == 2) {
      
       Robot.lift.unlockBot.set(DoubleSolenoid.Value.kForward); 
       
-      if (OI.controllerZero.getRawButtonReleased(7) && OI.controllerOne.getRawButtonReleased(5) && OI.controllerOne.getRawButtonReleased(2)) 
+      if (OI.controllerOne.getRawButtonReleased(5) && OI.controllerOne.getRawButtonReleased(2)) 
         unlockState = 1; 
       System.out.println("Back");
     
     } else if ( onOffUnlock && unlockState == 1) {
       Robot.lift.unlockBot.set(DoubleSolenoid.Value.kReverse); 
-      if (OI.controllerZero.getRawButtonReleased(7) && OI.controllerOne.getRawButtonReleased(5) && OI.controllerOne.getRawButtonReleased(2)) 
+      if ( OI.controllerOne.getRawButtonReleased(5) && OI.controllerOne.getRawButtonReleased(2)) 
          unlockState = 2; 
       System.out.println("Forward");
     }

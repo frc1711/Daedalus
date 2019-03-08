@@ -28,10 +28,15 @@ public class Arm extends Subsystem {
   public double armMin; 
   public double posZero; 
   public double posAbsZero; 
+  public double hatchPosOne; 
   public double posOne; 
+  public double hatchPosTwo; 
   public double posTwo; 
+  public double hatchPosThree; 
   public double posThree; 
   public double rightAngle; 
+  public double posDepo; 
+  public double hatchPosDepo; 
   public int unitsPerRotation; 
   public double baseSpeed; 
 
@@ -41,8 +46,13 @@ public class Arm extends Subsystem {
     armMin = -1; 
     posZero = 1912; //-799
     posOne = 1355; //-1356
-    posTwo = -2220; //-2823
-    posThree = -1520; //-2195
+    posTwo = 2500; //-2823
+    posThree = 1680; //-2195
+
+    hatchPosOne = 1500; 
+    hatchPosTwo = 2700; 
+    hatchPosThree = 1500;
+
     posAbsZero = 0; 
     rightAngle = 0; //1422
 
@@ -58,11 +68,11 @@ public class Arm extends Subsystem {
     //max speed
     armTalon.configClosedLoopPeakOutput(0, 0.7);
     //allowable error
-    armTalon.configAllowableClosedloopError(0, 100);
+    armTalon.configAllowableClosedloopError(0, 50);
     //(how fast you get there) how many counts per 100 milliseconds you can go  (rate of change of duty cycle)
-    armTalon.configMotionAcceleration(250); //250 ON ROBOT
+    //armTalon.configMotionAcceleration(50); //250 ON ROBOT
     //how fast you go once you're there
-    armTalon.configMotionCruiseVelocity(100); //100 on robot
+    //armTalon.configMotionCruiseVelocity(50); //100 on robot
     
     armTalon.config_kF(1, 0.0); 
     armTalon.config_kP(1, 0.8); 
@@ -72,6 +82,22 @@ public class Arm extends Subsystem {
     armTalon.configClosedLoopPeakOutput(1, 0.7); 
 
     armTalon.configAllowableClosedloopError(1, 50); 
+
+    armTalon.config_kF(2, 0.0); 
+    armTalon.config_kP(2, 0.8); 
+    armTalon.config_kI(2, 0.0001); 
+    armTalon.config_kD(2, 5.5); 
+
+    armTalon.configClosedLoopPeakOutput(2, .7); 
+    armTalon.configAllowableClosedloopError(2, 50); 
+
+    armTalon.config_kF(3, 0.0); 
+    armTalon.config_kP(3, 0.8); 
+    armTalon.config_kI(3, 0.00025); 
+    armTalon.config_kD(3, 5.5); 
+
+    armTalon.configClosedLoopPeakOutput(3, .7); 
+    armTalon.configAllowableClosedloopError(3, 50); 
 
     armTalon.configMotionAcceleration(50); //250 ON ROBOT
 
@@ -94,12 +120,15 @@ public class Arm extends Subsystem {
     }
   }
   public void runPIDArm (double pos) {
-    double tester = armTalon.getActiveTrajectoryVelocity(); 
-    double theSpeed = armTalon.getMotorOutputPercent(); 
-    SmartDashboard.putNumber("Velocity", tester); 
     SmartDashboard.putNumber("Position", pos); 
-    SmartDashboard.putNumber("armTalon Motor Output Percent", theSpeed);
     armTalon.set(ControlMode.MotionMagic, pos); 
+  }
+
+  public void stopPIDPos (double vel, double encPos, double targetPos, double MOP) {
+    if (encPos >= targetPos-300 && encPos <= targetPos+300 && vel == 0) {
+      SmartDashboard.putBoolean("HOLDING", true); 
+      armTalon.set(MOP); 
+    }
   }
 
   public int getSensorValue() {
