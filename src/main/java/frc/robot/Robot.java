@@ -23,6 +23,7 @@ import frc.robot.commands.lift.AuxWheel;
 import frc.robot.commands.lift.ScissorLift;
 import frc.robot.commands.manipulators.CargoManipulator;
 import frc.robot.commands.manipulators.SpitHatches;
+import frc.robot.pixy2api.links.SPILink;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Clock;
 import frc.robot.subsystems.DriveSystem;
@@ -31,6 +32,7 @@ import frc.robot.subsystems.Manipulator;
 import frc.robot.subsystems.ManipulatorHatch;
 import frc.robot.subsystems.PneumaticArm;
 import frc.robot.subsystems.vision.CameraConfig;
+import frc.robot.subsystems.vision.PixyCameraDef;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -50,9 +52,11 @@ public class Robot extends TimedRobot {
   public static Arm arm;
   public static Lift lift;  
   public static Clock clock; 
+  //public static PixyCameraDef pixyCam; 
   public static OI oi;
   public boolean endGame = false; 
-
+  public double cameraCount = 0; 
+ 
   Command spitHatches; 
   Command runPneumaticArm; 
   Command pneumaticOff; 
@@ -93,11 +97,7 @@ public class Robot extends TimedRobot {
 
     //CAMERAS AND PIXYCAM
     CameraConfig.setup(); 
-
-    SmartDashboard.putBoolean("Pixy2 Light", false);
-    boolean PixyLightState = SmartDashboard.getBoolean("Pixy2 Light", false); 
-    CameraConfig.light(PixyLightState); 
-
+    //pixyCam = new PixyCameraDef(new SPILink()); 
 
     UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture();
     cam0.setFPS(30);
@@ -192,6 +192,7 @@ public class Robot extends TimedRobot {
 
     //hatchManipulator.start();
     
+
   }
 
   /**
@@ -199,26 +200,25 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    if(!endGame) {
-
-      CameraConfig.run(); 
-
-      boolean PixyLightState = SmartDashboard.getBoolean("Pixy2 Light", false); 
-      CameraConfig.light(PixyLightState);    
-     
-      System.out.println("GAMEPLAY");
-      runPneumaticArm.start(); 
-    //hatchManipulator.start(); 
-      spitHatches.start();
-      runMotorArm.start(); 
-      cargoManipulator.start();
-    }
-    
-    //pneumaticOff.start();
     driveSystem.robotDrive.arcadeDrive(-(OI.controllerZero.getRawAxis(1)), OI.controllerZero.getRawAxis(4));
-   // System.out.println(manipulator.getManipulatorSwitch());
-    //System.out.println("Gyro" + Robot.driveSystem.getGyroPitch() + Robot.driveSystem.isGyroConnected()); 
-   if (endGame || OI.controllerZero.getRawButtonReleased(7) && OI.controllerZero.getRawButtonReleased(8)) {
+    if(!endGame) {
+            cameraCount++;
+            if (cameraCount == 5) {
+              //pixyCam.run(); 
+              CameraConfig.run(); 
+              cameraCount = 0; 
+            }
+      //
+            //CameraConfig.run(); 
+      
+            System.out.println("GAMEPLAY");
+            runPneumaticArm.start(); 
+          //hatchManipulator.start(); 
+            spitHatches.start();
+            runMotorArm.start(); 
+            cargoManipulator.start();
+    }
+    if (endGame || OI.controllerZero.getRawButtonReleased(7) && OI.controllerZero.getRawButtonReleased(8)) {
       spitHatches.cancel(); 
       runMotorArm.cancel(); 
       cargoManipulator.cancel(); 
@@ -228,6 +228,14 @@ public class Robot extends TimedRobot {
       auxWheel.start(); 
       endGame = true; 
     }
+
+    
+
+ 
+    //pneumaticOff.start();
+   // System.out.println(manipulator.getManipulatorSwitch());
+    //System.out.println("Gyro" + Robot.driveSystem.getGyroPitch() + Robot.driveSystem.isGyroConnected()); 
+  
   }
 
   /**

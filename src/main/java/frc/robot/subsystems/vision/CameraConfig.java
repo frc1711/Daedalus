@@ -7,7 +7,8 @@
 
 package frc.robot.subsystems.vision;
 
-import io.github.pseudoresonance.pixy2api.links.SPILink;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.pixy2api.links.SPILink;;
 
 /***
  *Shoutout to team 4546
@@ -17,20 +18,22 @@ import io.github.pseudoresonance.pixy2api.links.SPILink;
 public class CameraConfig {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  private static PixyCamera pixyCam = null; 
+  private static PixyCameraDef pixyCam = null; 
   
   public static void setup() {
-    pixyCam = new PixyCamera(new SPILink()); 
+    pixyCam = new PixyCameraDef(new SPILink());
+    System.out.println("PIXY CREATED");  
+    SmartDashboard.putBoolean("PIXY CREATED", true);
   }
   
-  public static void light (boolean state) {
+ /* public static void light (boolean state) {
     pixyCam.light(state); 
-  }
+  } */
   public static void run() {
     pixyCam.run(); 
   }
 
-  public static PixyCamera getPixyCamera() {
+  public static PixyCameraDef getPixyCamera() {
     return pixyCam; 
   }
 }

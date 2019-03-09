@@ -40,12 +40,12 @@ public class AuxWheel extends Command {
 
     if (OI.auxWheelButton.get() && state == 2 || state ==  0) {
       Robot.lift.auxWheelSolenoid.set(Value.kForward); 
-      System.out.println("ForwardAux");
+      //System.out.println("ForwardAux");
       if (OI.controllerOne.getRawButtonReleased(10)) 
         state = 1;
     } else if (OI.auxWheelButton.get() && state == 1) {
       Robot.lift.auxWheelSolenoid.set(Value.kReverse); 
-      System.out.println("BackwardAux");
+     // System.out.println("BackwardAux");
       if (OI.controllerOne.getRawButtonReleased(10)) 
         state = 2; 
     } 

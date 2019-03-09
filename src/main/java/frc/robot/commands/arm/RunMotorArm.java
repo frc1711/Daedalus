@@ -40,12 +40,13 @@ public class RunMotorArm extends Command {
    double sensorVel = Robot.arm.armTalon.getSelectedSensorVelocity(); 
    double MOP = Robot.arm.armTalon.getMotorOutputPercent(); 
    SmartDashboard.putNumber("Sensor Velocity", sensorVel); 
+   System.out.println("SENSOR VEL WORKING"); 
    SmartDashboard.putNumber("armTalon Motor Output Percent", MOP); 
    SmartDashboard.putNumber("Enc position", Robot.arm.getSensorValue()); 
    double speed = OI.controllerOne.getRawAxis(1) * OI.controllerOne.getRawAxis(1); 
    double runningSpeed = speed / 2; 
    SmartDashboard.putNumber("Arm speed", runningSpeed); 
-   System.out.println(Robot.arm.getSensorValue());
+   //System.out.println(Robot.arm.getSensorValue());
 
    //EXIT PID LOOP ON BUTTON RELEASE
     /*if (!OI.armPosZero.get() && !OI.armPosOne.get() && !OI.armPosTwo.get() && !OI.armPosThree.get() && !(OI.controllerOne.getPOV() == 90)) {
@@ -54,13 +55,13 @@ public class RunMotorArm extends Command {
     }  */
 
     //RUN THE ARM AT 1/3RD THE SPEED
-   /* if (Math.abs(OI.controllerOne.getRawAxis(1)) > .1) {
+   /*if (Math.abs(OI.controllerOne.getRawAxis(1)) > .1) {
       double armSpeedRun = OI.controllerOne.getRawAxis(1) / 3; 
       Robot.arm.runArm(armSpeedRun);
        
       SmartDashboard.putNumber("Arm Value", armSpeedRun); 
-    } 
-   */
+    }  */
+   
     //HATCH POSITIONS
     if(OI.armPosOne.get() && OI.controllerOne.getRawAxis(2) > .1) {
      
@@ -129,7 +130,9 @@ public class RunMotorArm extends Command {
 
     double armTargetPos = SmartDashboard.getNumber("Target position", 0); 
     double encCount = SmartDashboard.getNumber("Enc position", 10); 
-    Robot.arm.stopPIDPos(sensorVel, encCount, armTargetPos, MOP); 
+    //if (!OI.armPosZero.get() && !OI.armPosTwo.get() && !OI.armPosThree.get() && !(OI.controllerOne.getPOV() == 180)) {
+    Robot.arm.stopPIDPos(sensorVel, encCount, armTargetPos, MOP);  
+    //}
 
   }
 

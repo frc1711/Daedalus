@@ -125,10 +125,18 @@ public class Arm extends Subsystem {
   }
 
   public void stopPIDPos (double vel, double encPos, double targetPos, double MOP) {
-    if (encPos >= targetPos-300 && encPos <= targetPos+300 && vel == 0) {
+    while (encPos >= targetPos-300 && encPos <= targetPos+300 && vel == 0) {
       SmartDashboard.putBoolean("HOLDING", true); 
+      System.out.println("VEL:" + vel + "\n ENCPOS:" + encPos + "\n TARGETPOS:" +targetPos + "MOP:" + MOP); 
+      SmartDashboard.putNumber("VEL", vel); 
+      SmartDashboard.putNumber("ENCPOS", encPos); 
+      SmartDashboard.putNumber("TARGETPOS", targetPos); 
+      SmartDashboard.putNumber("MOP", MOP); 
+      System.out.println("MOP" + MOP); 
       armTalon.set(MOP); 
-    }
+    } /*else {
+      SmartDashboard.putBoolean("HOLDING", false); 
+    } */
   }
 
   public int getSensorValue() {
