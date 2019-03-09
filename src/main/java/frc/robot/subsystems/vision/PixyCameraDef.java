@@ -32,12 +32,14 @@ public class PixyCameraDef extends Subsystem {
     if (initFailure < 5) {
     //final int pixyStatus = pixyCam.init(PixyResult); 
     //int count = pixyCam.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG1, 25); 
-      int count = pixyCam.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG1, 25);
+      int count = pixyCam.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG3, 25);
       if (count >= 0) {
         System.out.println("PIXY RUNNING"); 
         SmartDashboard.putBoolean("PIXY RUNNING", true); 
         //BallTrack.run(count); 
-      // BallFollow.run(); 
+       // ReflectiveAlign.run(count); 
+       //BallFollow.run(); 
+       RefAlign.run(count); 
       } else {
         System.out.println("PIXY NOT RUNNING");
         if(pixyCam.init(PixyResult) != Pixy2.PIXY_RESULT_OK) {

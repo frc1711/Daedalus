@@ -25,6 +25,7 @@ public class Arm extends Subsystem {
   // here. Call these from Commands.
   public WPI_TalonSRX armTalon;
   
+  public double velCounter; 
   public double armMin; 
   public double posZero; 
   public double posAbsZero; 
@@ -58,6 +59,8 @@ public class Arm extends Subsystem {
 
     unitsPerRotation = 4096; //This was 1205 
     
+    velCounter = 0; 
+
     armTalon.setSelectedSensorPosition(0);
     //armTalon.selectProfileSlot(0, 0);
     //corectionary values
@@ -125,7 +128,13 @@ public class Arm extends Subsystem {
   }
 
   public void stopPIDPos (double vel, double encPos, double targetPos, double MOP) {
-    while (encPos >= targetPos-300 && encPos <= targetPos+300 && vel == 0) {
+    if (vel == 0) {
+      velCounter++;
+    } else {
+      velCounter = 0; 
+    }
+
+    if (encPos >= targetPos-200 && encPos <= targetPos+200 && vel == 0 && velCounter == 15) {
       SmartDashboard.putBoolean("HOLDING", true); 
       System.out.println("VEL:" + vel + "\n ENCPOS:" + encPos + "\n TARGETPOS:" +targetPos + "MOP:" + MOP); 
       SmartDashboard.putNumber("VEL", vel); 
@@ -133,10 +142,11 @@ public class Arm extends Subsystem {
       SmartDashboard.putNumber("TARGETPOS", targetPos); 
       SmartDashboard.putNumber("MOP", MOP); 
       System.out.println("MOP" + MOP); 
-      armTalon.set(MOP); 
-    } /*else {
+      armTalon.set(MOP);
+      velCounter = 0;  
+    } else {
       SmartDashboard.putBoolean("HOLDING", false); 
-    } */
+    } 
   }
 
   public int getSensorValue() {

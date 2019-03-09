@@ -16,7 +16,7 @@ import frc.robot.pixy2api.Pixy2CCC.Block;
  * Shoutout to team 4546.
 * @author: Lou DeZeeuw 
  */
-public class BallTrack {
+public class RefAlign {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   private static ArrayList<Block> blocks = CameraConfig.getPixyCamera().getPixy().getCCC().getBlocks();
@@ -41,11 +41,11 @@ public class BallTrack {
       int ballX = largestBlock.getX();
       yaw = ((ballX - 157.5) * 0.1904761905);
 
-      SmartDashboard.putNumber("Ball Angle", yaw);
-      SmartDashboard.putNumber("Ball X", largestBlock.getX());
-      SmartDashboard.putNumber("Ball Y", largestBlock.getY());
-      SmartDashboard.putNumber("Ball Box Width", largestBlock.getWidth());
-      SmartDashboard.putNumber("Ball Box Height", largestBlock.getHeight());
+      SmartDashboard.putNumber("Tape Angle", yaw);
+      SmartDashboard.putNumber("Tape X", largestBlock.getX());
+      SmartDashboard.putNumber("Tape Y", largestBlock.getY());
+      SmartDashboard.putNumber("Tape Box Width", largestBlock.getWidth());
+      SmartDashboard.putNumber("Tape Box Height", largestBlock.getHeight());
     }
   }
   

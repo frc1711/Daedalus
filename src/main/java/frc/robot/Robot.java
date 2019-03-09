@@ -163,7 +163,6 @@ public class Robot extends TimedRobot {
     cargoManipulator.start();
     //pneumaticOff.start();
     //double speed = ((OI.controllerZero.getRawAxis(1))/2);
-    driveSystem.robotDrive.arcadeDrive(-(OI.controllerZero.getRawAxis(1)), OI.controllerZero.getRawAxis(4));
     // schedule the autonomous command (example)
     if (autonomousCommand != null) {
       autonomousCommand.start();
@@ -175,6 +174,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+    driveSystem.robotDrive.arcadeDrive(-(OI.controllerZero.getRawAxis(1)), OI.controllerZero.getRawAxis(4)); 
     Scheduler.getInstance().run();
   }
 
