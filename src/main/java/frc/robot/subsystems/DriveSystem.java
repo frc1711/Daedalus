@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.RobotMap;
@@ -55,6 +56,7 @@ public class DriveSystem extends Subsystem {
 
     robotDrive = new DifferentialDrive (leftSideDrive, rightSideDrive);
 
+    gyro = new AHRS(Port.kUSB); 
   }
   
   public void stopRobot() {
@@ -86,6 +88,13 @@ public class DriveSystem extends Subsystem {
 
   }
 
+  public void arcadeDrive (double speed, double rot) {
+    robotDrive.arcadeDrive(-speed, rot); 
+  }
+  public double getGyroYAW() {
+    return gyro.getYaw(); 
+  }
+
   public double getGyroAngle() {
     return gyro.getAngle(); 
   }
@@ -93,6 +102,10 @@ public class DriveSystem extends Subsystem {
   public double getGyroPitch() {
     return gyro.getPitch(); 
   } 
+
+  public double getGyroRoll() {
+    return gyro.getRoll(); 
+  }
 
   public void zeroGyro() {
     gyro.zeroYaw(); 

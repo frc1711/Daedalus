@@ -16,10 +16,10 @@ package frc.robot;
 public class RobotMap {
   //MOTORS
   //drive base controllers
-  public static int RRD = 1; 
+  public static int RRD = 4; 
   public static int RLD = 2; 
-  public static int FLD = 3; 
-  public static int FRD = 4; 
+  public static int FLD = 1; 
+  public static int FRD = 3; 
 
   //manipulator and arm talons 
   public static int manipulatorTalon = 6; 

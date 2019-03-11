@@ -7,34 +7,26 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
-import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
-public class Manipulator extends Subsystem {
+public class PixyTilt extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  TalonSRX manipulatorTalon; 
-  DigitalInput beamValue; 
-
-
-  public Manipulator() {
-    manipulatorTalon = new TalonSRX(RobotMap.manipulatorTalon);
-    beamValue = new DigitalInput(RobotMap.manipulatorSwitch);
+  public Servo pixyTilt; 
+  public PixyTilt() {
+    pixyTilt = new Servo(0); 
   }
 
-  public void runManipulator(double speed) {
-    manipulatorTalon.set(ControlMode.PercentOutput, speed);
+  public void runServo(double speed) { 
+    pixyTilt.set(speed); 
   }
-  
-  public boolean getManipulatorSwitch() {
-    return beamValue.get();
+
+  public double getServoAngle () {
+    return pixyTilt.getAngle(); 
   }
 
   @Override

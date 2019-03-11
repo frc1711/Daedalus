@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.PneumaticOff;
 import frc.robot.commands.arm.RunMotorArm;
 import frc.robot.commands.arm.RunPneumaticArm;
+import frc.robot.commands.drive.RawArcadeDrive;
 import frc.robot.commands.lift.AuxWheel;
 import frc.robot.commands.lift.ScissorLift;
 import frc.robot.commands.manipulators.CargoManipulator;
@@ -30,6 +31,7 @@ import frc.robot.subsystems.DriveSystem;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.subsystems.ManipulatorHatch;
+import frc.robot.subsystems.PixyTilt;
 import frc.robot.subsystems.PneumaticArm;
 import frc.robot.subsystems.vision.CameraConfig;
 import frc.robot.subsystems.vision.PixyCameraDef;
@@ -51,12 +53,14 @@ public class Robot extends TimedRobot {
   public static PneumaticArm pneumaticArm; 
   public static Arm arm;
   public static Lift lift;  
+  public static PixyTilt pixyTilt; 
   public static Clock clock; 
   //public static PixyCameraDef pixyCam; 
   public static OI oi;
   public boolean endGame = false; 
   public double cameraCount = 0; 
  
+  Command rawArcadeDrive; 
   Command spitHatches; 
   Command runPneumaticArm; 
   Command pneumaticOff; 
@@ -83,7 +87,8 @@ public class Robot extends TimedRobot {
     pneumaticArm = new PneumaticArm();
     hatchManipulatorSub = new ManipulatorHatch();  
     lift = new Lift(); 
-    clock = new Clock(); 
+    clock = new Clock();
+    pixyTilt = new PixyTilt();  
     oi = new OI();
 
     // COMMANDS
@@ -93,6 +98,7 @@ public class Robot extends TimedRobot {
     cargoManipulator = new CargoManipulator(); 
     auxWheel = new AuxWheel();
     pneumaticOff = new PneumaticOff(); 
+    rawArcadeDrive = new RawArcadeDrive(); 
     scissorLift = new ScissorLift(); 
 
     //CAMERAS AND PIXYCAM
@@ -180,7 +186,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-   
+    driveSystem.zeroGyro(); 
+    rawArcadeDrive.start(); 
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -202,28 +209,31 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     driveSystem.robotDrive.arcadeDrive(-(OI.controllerZero.getRawAxis(1)), OI.controllerZero.getRawAxis(4));
     if(!endGame) {
-            cameraCount++;
-            if (cameraCount == 5) {
+            //TODO: Map servo to preset ositions when a button is pressed. Figure out what those positions are .
+      pixyTilt.runServo(OI.controllerOne.getRawAxis(2)); 
+      SmartDashboard.putNumber("SERVO ANGLE", pixyTilt.getServoAngle()); 
+      cameraCount++;
+      if (cameraCount == 5) {
               //pixyCam.run(); 
-              CameraConfig.run(); 
-              cameraCount = 0; 
-            }
+        CameraConfig.run(); 
+        cameraCount = 0; 
+      }
       //
             //CameraConfig.run(); 
-      
-            System.out.println("GAMEPLAY");
-            runPneumaticArm.start(); 
-          //hatchManipulator.start(); 
-            spitHatches.start();
-            runMotorArm.start(); 
-            cargoManipulator.start();
+      SmartDashboard.putString("GAME MODE", "GAMPELAY"); 
+      runPneumaticArm.start(); 
+       //hatchManipulator.start(); 
+      spitHatches.start();
+      runMotorArm.start(); 
+      cargoManipulator.start();
+      System.out.println(driveSystem.isGyroConnected()); 
     }
     if (endGame || OI.controllerZero.getRawButtonReleased(7) && OI.controllerZero.getRawButtonReleased(8)) {
       spitHatches.cancel(); 
       runMotorArm.cancel(); 
       cargoManipulator.cancel(); 
-      System.out.println("NOT GAMEPLAY");
-      
+      SmartDashboard.putString("GAME MODE", "ENDGAME");
+
       scissorLift.start(); 
       auxWheel.start(); 
       endGame = true; 

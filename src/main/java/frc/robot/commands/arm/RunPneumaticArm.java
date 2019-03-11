@@ -24,6 +24,7 @@ public int state = 2;
   // Called just before this Command runs the first time
   @Override
   protected void initialize() { 
+    Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kReverse); 
     
   }
 
