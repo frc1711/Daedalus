@@ -22,22 +22,23 @@ public class LineUp {
      double tapeAngle = SmartDashboard.getNumber("Tape Angle", 700); 
         //TODO: Fix these angles to be Correct
         //TODO: Adjust the angle of Pixycam based on button press
-        if (OI.lineUpEnable.get()) {
+        //if (OI.lineUpEnable.get()) {
              Robot.pixyTilt.angleServo(180); 
             if(tapeAngle < -5 ) {
-              System.out.println("LEFT");
+              SmartDashboard.putString("PIXY DIR", "LEFT");
               Robot.driveSystem.driveDirection(.7, RoboDir.RIGHT); 
             } else if (tapeAngle > 5) {
-              System.out.println("RIGHT");
+              SmartDashboard.putString("PIXY DIR", "RIGHT");
+              
               Robot.driveSystem.driveDirection(.7, RoboDir.LEFT); 
             } else if (tapeAngle >= -5 && tapeAngle <= 5) {
               Robot.driveSystem.driveDirection(.5, RoboDir.STRAIGHT); 
-              System.out.println("STRAIGHT");
+              SmartDashboard.putString("PIXY DIR", "STRAIGHT");
               System.out.println(tapeAngle);
             } else {
-              System.out.println("FAIL");
+              SmartDashboard.putString("PIXY DIR", "FAIL");
             }
             
-          }
+         // }
     }
 }

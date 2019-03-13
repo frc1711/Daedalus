@@ -31,7 +31,7 @@ public class PixyCameraDef extends Subsystem {
     if (initFailure < 5) {
     //final int pixyStatus = pixyCam.init(PixyResult); 
     //int count = pixyCam.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG1, 25); 
-      int refCount = pixyCam.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG3, 25);
+      int refCount = pixyCam.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG1, 25);
      // int ballCount = pixyCam.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG1, 25); 
       //int bumperBlueCount = pixyCam.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG2, 25); 
 
