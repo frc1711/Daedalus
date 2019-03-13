@@ -5,50 +5,31 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.arm;
+package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.OI;
 import frc.robot.Robot;
 
-public class RunPneumaticArm extends Command {
-public int state = 2; 
-  public RunPneumaticArm() {
+public class InitEndGamePneumatics extends Command {
+  public InitEndGamePneumatics() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.pneumaticArm); 
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() { 
-    Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kReverse); 
-    
+  protected void initialize() {
+    Robot.lift.auxWheelSolenoid.set(Value.kReverse);
+    Robot.lift.botLift.set(Value.kReverse);
+    Robot.lift.unlockBot.set(Value.kReverse); 
+
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //this has to work so that it can turn the solenoid on and off
-    if (state  == 1) {
-      SmartDashboard.putString("Pneumatic Arm State:", "Forward"); 
-    } else if (state == 2) {
-      SmartDashboard.putString("Pneumatic Arm State:", "Reverse"); 
-    }
-    if (OI.controllerOne.getPOV() == 180 && state == 1 ) {
-      Robot.arm.runPIDArm(Robot.arm.rightAngle); 
-      Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kReverse); 
-      state = 2; 
-      //&& !(armMotorSpeed == 0)
-    } else if (OI.controllerOne.getPOV() == 0 && state == 2) {
-      Robot.arm.runPIDArm(Robot.arm.rightAngle); 
-      Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kForward);
-      state = 1;  
-
-      
-    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

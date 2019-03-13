@@ -47,7 +47,8 @@ public class OI {
   public static Joystick controllerOne = new Joystick(RobotMap.controllerOne); 
   //BUTTONS
   //controller zero, drive 
-  public static JoystickButton visionEnable = new JoystickButton(controllerZero, 4);
+  public static JoystickButton lineUpEnable = new JoystickButton(controllerZero, 4); 
+  public static JoystickButton ballVisionEnable = new JoystickButton(controllerZero, 2);
   public static JoystickButton manipButtonZero = new JoystickButton(controllerZero, 5); 
   public static JoystickButton manipButtonOne = new JoystickButton(controllerZero, 6);
   public static JoystickButton climbSafetyZero = new JoystickButton(controllerZero, 7); 

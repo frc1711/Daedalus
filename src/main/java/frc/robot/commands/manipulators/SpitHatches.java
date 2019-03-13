@@ -29,7 +29,6 @@ public class SpitHatches extends Command {
   @Override
   protected void execute() {
     if (OI.controllerZero.getRawAxis(2) > .1 || OI.controllerZero.getRawAxis(3) > .1) {
-      System.out.println("This is running"); 
       Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kForward);
     } else {
       Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kOff); 

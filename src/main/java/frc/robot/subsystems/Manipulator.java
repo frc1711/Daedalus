@@ -26,7 +26,7 @@ public class Manipulator extends Subsystem {
 
   public Manipulator() {
     manipulatorTalon = new TalonSRX(RobotMap.manipulatorTalon);
-    beamValue = new DigitalInput(RobotMap.manipulatorSwitch);
+    beamValue = new DigitalInput(0);
   }
 
   public void runManipulator(double speed) {

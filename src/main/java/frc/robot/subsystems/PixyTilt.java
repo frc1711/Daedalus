@@ -25,6 +25,10 @@ public class PixyTilt extends Subsystem {
     pixyTilt.set(speed); 
   }
 
+  public void angleServo(double angle) {
+    pixyTilt.setAngle(angle); 
+  }
+
   public double getServoAngle () {
     return pixyTilt.getAngle(); 
   }

@@ -15,23 +15,25 @@ import frc.robot.RobotMap.RoboDir;
 /**
  * Add your docs here.
  */
-public class BallFollow {
+public class LineUp {
     
     public static void run() {
         
-    double ballAngle = SmartDashboard.getNumber("Ball Angle", 700); 
-
-        if (OI.ballVisionEnable.get()) {
-            if(ballAngle < -5 ) {
+     double tapeAngle = SmartDashboard.getNumber("Tape Angle", 700); 
+        //TODO: Fix these angles to be Correct
+        //TODO: Adjust the angle of Pixycam based on button press
+        if (OI.lineUpEnable.get()) {
+             Robot.pixyTilt.angleServo(180); 
+            if(tapeAngle < -5 ) {
               System.out.println("LEFT");
-              Robot.driveSystem.driveDirection(.3, RoboDir.RIGHT); 
-            } else if (ballAngle > 5) {
+              Robot.driveSystem.driveDirection(.7, RoboDir.RIGHT); 
+            } else if (tapeAngle > 5) {
               System.out.println("RIGHT");
-              Robot.driveSystem.driveDirection(.3, RoboDir.LEFT); 
-            } else if (ballAngle >= -5 && ballAngle <= 5) {
-              Robot.driveSystem.driveDirection(.2, RoboDir.STRAIGHT); 
+              Robot.driveSystem.driveDirection(.7, RoboDir.LEFT); 
+            } else if (tapeAngle >= -5 && tapeAngle <= 5) {
+              Robot.driveSystem.driveDirection(.5, RoboDir.STRAIGHT); 
               System.out.println("STRAIGHT");
-              System.out.println(ballAngle);
+              System.out.println(tapeAngle);
             } else {
               System.out.println("FAIL");
             }

@@ -24,14 +24,17 @@ public class AuxWheel extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+
     Robot.lift.stopWheel(); 
     Robot.lift.auxWheelSolenoid.set(Value.kReverse);
     state = 2; 
+
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() { 
+
     if (state  == 1) {
       SmartDashboard.putString("Aux Wheel State:", "Forward"); 
     } else if (state == 2) {
@@ -55,6 +58,7 @@ public class AuxWheel extends Command {
     } else if (OI.controllerOne.getRawAxis(5) == 0) {
       Robot.lift.runAuxWheel(0);
     }
+    
   }
 
   // Make this return true when this Command no longer needs to run execute()

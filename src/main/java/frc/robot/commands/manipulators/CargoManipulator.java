@@ -32,9 +32,9 @@ public class CargoManipulator extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() { 
-    System.out.println(Robot.manipulator.getManipulatorSwitch()+"MS");
     //Intake and outtake method
-    if (Robot.manipulator.getManipulatorSwitch() && OI.manipButtonZero.get()) {
+    System.out.println(Robot.manipulator.getManipulatorSwitch()); 
+    if (OI.manipButtonZero.get()) {
       
       Robot.manipulator.runManipulator(.75);
 
@@ -42,21 +42,17 @@ public class CargoManipulator extends Command {
 
       Robot.manipulator.runManipulator(-.75); 
 
-    } else if (!Robot.manipulator.getManipulatorSwitch()) {
-
-      Robot.manipulator.runManipulator(0);
-
-      if (OI.manipButtonZero.get()) {
-        OI.controllerOne.setRumble(RumbleType.kLeftRumble, 1); 
-      } else {
-        OI.controllerOne.setRumble(RumbleType.kLeftRumble, 0);
-      }
-
     } else {
 
       Robot.manipulator.runManipulator(0);
 
     } 
+
+    if (OI.manipButtonZero.get() && !Robot.manipulator.getManipulatorSwitch()) {
+      OI.controllerZero.setRumble(RumbleType.kLeftRumble, 1); 
+    } else {
+      OI.controllerZero.setRumble(RumbleType.kLeftRumble, 0);
+    }
 /*
     if (OI.manipButtonZero.get()) {
       Robot.manipulator.runManipulator(.75); 
@@ -65,7 +61,7 @@ public class CargoManipulator extends Command {
     } else {
       Robot.manipulator.runManipulator(0); 
     }
-    */
+  */  
   }
 
   // Make this return true when this Command no longer needs to run execute()

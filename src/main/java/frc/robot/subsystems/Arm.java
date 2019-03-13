@@ -45,17 +45,17 @@ public class Arm extends Subsystem {
     armTalon = new WPI_TalonSRX(RobotMap.armTalon); 
     
     armMin = -1; 
-    posZero = 1912; //-799
-    posOne = 1355; //-1356
-    posTwo = 2500; //-2823
-    posThree = 1680; //-2195
+    posZero = 1612; //-799
+    posOne = 855; //-1356
+    posTwo = 2100; //-2823
+    posThree = 1580; //-2195
 
-    hatchPosOne = 1500; 
+    hatchPosOne = 1250; 
     hatchPosTwo = 2700; 
     hatchPosThree = 1500;
 
     posAbsZero = 0; 
-    rightAngle = 0; //1422
+    rightAngle = 1500; //1422
 
     unitsPerRotation = 4096; //This was 1205 
     
@@ -134,14 +134,12 @@ public class Arm extends Subsystem {
       velCounter = 0; 
     }
 
-    if (encPos >= targetPos-200 && encPos <= targetPos+200 && vel == 0 && velCounter == 15) {
+    if (encPos >= targetPos-300 && encPos <= targetPos+300 && vel == 0 && velCounter == 15) {
       SmartDashboard.putBoolean("HOLDING", true); 
-      System.out.println("VEL:" + vel + "\n ENCPOS:" + encPos + "\n TARGETPOS:" +targetPos + "MOP:" + MOP); 
       SmartDashboard.putNumber("VEL", vel); 
       SmartDashboard.putNumber("ENCPOS", encPos); 
       SmartDashboard.putNumber("TARGETPOS", targetPos); 
       SmartDashboard.putNumber("MOP", MOP); 
-      System.out.println("MOP" + MOP); 
       armTalon.set(MOP);
       velCounter = 0;  
     } else {

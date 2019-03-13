@@ -20,7 +20,6 @@ public class PixyCameraDef extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   private static Pixy2 pixyCam; 
-  private boolean lastState = false; 
   public static int PixyResult = 0; 
   public static int initFailure = 0; 
   public PixyCameraDef(Link link) {
@@ -34,18 +33,25 @@ public class PixyCameraDef extends Subsystem {
     //int count = pixyCam.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG1, 25); 
       int refCount = pixyCam.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG3, 25);
      // int ballCount = pixyCam.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG1, 25); 
+      //int bumperBlueCount = pixyCam.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG2, 25); 
 
       if (refCount >= 0) {
-        System.out.println("PIXY RUNNING"); 
         SmartDashboard.putBoolean("PIXY RUNNING", true); 
+        if (refCount == 0) 
+          SmartDashboard.putBoolean("TAPE VISIBLE", true); 
+        else if (refCount == 0)
+          SmartDashboard.putBoolean("TAPE VISIBLE", false); 
+
         //BallTrack.run(count); 
        // ReflectiveAlign.run(count); 
        //BallFollow.run(); 
        RefAlign.run(refCount); 
+       LineUp.run(); 
+
       } else {
-        System.out.println("PIXY NOT RUNNING");
         if(pixyCam.init(PixyResult) != Pixy2.PIXY_RESULT_OK) {
           initFailure++; 
+          System.out.println("PIXY NOT RUNNING");
           SmartDashboard.putBoolean("PIXY RUNNING", false); 
         } else {
           initFailure = 0; 

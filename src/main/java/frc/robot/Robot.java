@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.InitEndGamePneumatics;
 import frc.robot.commands.PneumaticOff;
 import frc.robot.commands.arm.RunMotorArm;
 import frc.robot.commands.arm.RunPneumaticArm;
@@ -24,7 +25,6 @@ import frc.robot.commands.lift.AuxWheel;
 import frc.robot.commands.lift.ScissorLift;
 import frc.robot.commands.manipulators.CargoManipulator;
 import frc.robot.commands.manipulators.SpitHatches;
-import frc.robot.pixy2api.links.SPILink;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Clock;
 import frc.robot.subsystems.DriveSystem;
@@ -34,7 +34,6 @@ import frc.robot.subsystems.ManipulatorHatch;
 import frc.robot.subsystems.PixyTilt;
 import frc.robot.subsystems.PneumaticArm;
 import frc.robot.subsystems.vision.CameraConfig;
-import frc.robot.subsystems.vision.PixyCameraDef;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -68,6 +67,7 @@ public class Robot extends TimedRobot {
   Command auxWheel; 
   Command scissorLift; 
   Command cargoManipulator; 
+  Command initEndGamePneumatics; 
   Command hatchManipulatorFirst; 
 
   Command autonomousCommand;
@@ -92,6 +92,7 @@ public class Robot extends TimedRobot {
     oi = new OI();
 
     // COMMANDS
+    initEndGamePneumatics = new InitEndGamePneumatics(); 
     spitHatches = new SpitHatches(); 
     runPneumaticArm = new RunPneumaticArm();
     runMotorArm = new RunMotorArm(); 
@@ -159,7 +160,7 @@ public class Robot extends TimedRobot {
      * = new MyAutoCommand(); break; case "Default Auto": default:
      * autonomousCommand = new ExampleCommand(); break; }
      */
-
+    initEndGamePneumatics.start(); 
     runPneumaticArm.start(); 
     //hatchManipulator.start(); 
     spitHatches.start(); 
@@ -186,8 +187,15 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    initEndGamePneumatics.start(); 
     driveSystem.zeroGyro(); 
     rawArcadeDrive.start(); 
+
+    if(!endGame) {
+    
+    } else if (endGame) {
+      
+    }
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -207,10 +215,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    driveSystem.robotDrive.arcadeDrive(-(OI.controllerZero.getRawAxis(1)), OI.controllerZero.getRawAxis(4));
     if(!endGame) {
-            //TODO: Map servo to preset ositions when a button is pressed. Figure out what those positions are .
-      pixyTilt.runServo(OI.controllerOne.getRawAxis(2)); 
+      SmartDashboard.putString("GAME MODE", "GAMEPLAY"); 
+      runPneumaticArm.start(); 
+       //hatchManipulator.start(); 
+      spitHatches.start();
+      runMotorArm.start(); 
+      cargoManipulator.start();
+      //TODO: Map servo to preset positions when a button is pressed. Figure out what those positions are .
+      //pixyTilt.runServo(OI.controllerOne.getRawAxis(2)); 
       SmartDashboard.putNumber("SERVO ANGLE", pixyTilt.getServoAngle()); 
       cameraCount++;
       if (cameraCount == 5) {
@@ -220,15 +233,10 @@ public class Robot extends TimedRobot {
       }
       //
             //CameraConfig.run(); 
-      SmartDashboard.putString("GAME MODE", "GAMPELAY"); 
-      runPneumaticArm.start(); 
-       //hatchManipulator.start(); 
-      spitHatches.start();
-      runMotorArm.start(); 
-      cargoManipulator.start();
-      System.out.println(driveSystem.isGyroConnected()); 
+
     }
-    if (endGame || OI.controllerZero.getRawButtonReleased(7) && OI.controllerZero.getRawButtonReleased(8)) {
+    if (endGame || (OI.controllerZero.getRawButtonReleased(7) && OI.controllerZero.getRawButtonReleased(8))) {
+      endGame = true; 
       spitHatches.cancel(); 
       runMotorArm.cancel(); 
       cargoManipulator.cancel(); 
@@ -236,7 +244,6 @@ public class Robot extends TimedRobot {
 
       scissorLift.start(); 
       auxWheel.start(); 
-      endGame = true; 
     }
 
     
