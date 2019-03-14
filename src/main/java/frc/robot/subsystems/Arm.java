@@ -40,6 +40,7 @@ public class Arm extends Subsystem {
   public double hatchPosDepo; 
   public int unitsPerRotation; 
   public double baseSpeed; 
+  public double hatchLift; 
 
   public Arm() {
     armTalon = new WPI_TalonSRX(RobotMap.armTalon); 
@@ -49,6 +50,7 @@ public class Arm extends Subsystem {
     posOne = 855; //-1356
     posTwo = 2100; //-2823
     posThree = 1580; //-2195
+    hatchLift = 1050; 
 
     hatchPosOne = 1250; 
     hatchPosTwo = 2700; 

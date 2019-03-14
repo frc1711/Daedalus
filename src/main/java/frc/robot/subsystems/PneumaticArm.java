@@ -20,7 +20,7 @@ public class PneumaticArm extends Subsystem {
   public DoubleSolenoid armSolenoid; 
 
   public PneumaticArm() {
-    armSolenoid = new DoubleSolenoid(RobotMap.armSolenoid, RobotMap.armSolenoidRear);
+    armSolenoid = new DoubleSolenoid(RobotMap.armSolenoidRear, RobotMap.armSolenoid);
 
   }
 

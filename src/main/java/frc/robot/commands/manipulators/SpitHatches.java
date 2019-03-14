@@ -13,6 +13,8 @@ import frc.robot.OI;
 import frc.robot.Robot;
 
 public class SpitHatches extends Command {
+  double state; 
+  boolean pressed; 
   public SpitHatches() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -22,16 +24,31 @@ public class SpitHatches extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    pressed = false; 
     
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (OI.controllerZero.getRawAxis(2) > .1 || OI.controllerZero.getRawAxis(3) > .1) {
+   /* if (OI.controllerZero.getRawAxis(2) > .1 || OI.controllerZero.getRawAxis(3) > .1) {
       Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kForward);
     } else {
       Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kOff); 
+    } */
+    if ((OI.controllerZero.getRawAxis(2) > 0 && state == 1) ||(OI.controllerZero.getRawAxis(3) > 0 && state == 1) ) {
+    
+      Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kForward); 
+
+      if (OI.controllerZero.getTriggerReleased()) {
+        state = 2; 
+      }
+    } else if ((OI.controllerZero.getRawAxis(2) > .1 && state == 2) || (OI.controllerZero.getRawAxis(3) > .1 && state == 2)) {
+      Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kForward); 
+
+      if (OI.controllerZero.getTriggerReleased()) {
+        state = 1; 
+      }
     }
   }
 
