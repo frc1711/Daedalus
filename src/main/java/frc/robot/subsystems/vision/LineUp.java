@@ -26,9 +26,10 @@ public class LineUp {
              Robot.pixyTilt.angleServo(180); 
             if(tapeAngle < -5 ) {
               SmartDashboard.putString("PIXY DIR", "LEFT");
-              Robot.driveSystem.driveDirection(.7, RoboDir.RIGHT); 
+              Robot.driveSystem.driveDirection(.7, RoboDir.LEFT); 
             } else if (tapeAngle > 5) {
               SmartDashboard.putString("PIXY DIR", "RIGHT");
+              Robot.driveSystem.driveDirection(.7, RoboDir.RIGHT); 
               
               Robot.driveSystem.driveDirection(.7, RoboDir.LEFT); 
             } else if (tapeAngle >= -5 && tapeAngle <= 5) {

@@ -31,11 +31,12 @@ public class SpitHatches extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-   /* if (OI.controllerZero.getRawAxis(2) > .1 || OI.controllerZero.getRawAxis(3) > .1) {
+    if (OI.controllerZero.getRawAxis(2) > .1 || OI.controllerZero.getRawAxis(3) > .1) {
       Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kForward);
     } else {
       Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kOff); 
-    } */
+    } 
+    /*
     if ((OI.controllerZero.getRawAxis(2) > 0 && state == 1) ||(OI.controllerZero.getRawAxis(3) > 0 && state == 1) ) {
     
       Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kForward); 
@@ -49,7 +50,7 @@ public class SpitHatches extends Command {
       if (OI.controllerZero.getTriggerReleased()) {
         state = 1; 
       }
-    }
+    } */
   }
 
   // Make this return true when this Command no longer needs to run execute()

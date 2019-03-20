@@ -241,7 +241,7 @@ public class Robot extends TimedRobot {
       runMotorArm.cancel(); 
       cargoManipulator.cancel(); 
       SmartDashboard.putString("GAME MODE", "ENDGAME");
-
+      runPneumaticArm.start(); 
       scissorLift.start(); 
       auxWheel.start(); 
     }

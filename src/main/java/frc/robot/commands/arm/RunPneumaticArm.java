@@ -14,7 +14,7 @@ import frc.robot.OI;
 import frc.robot.Robot;
 
 public class RunPneumaticArm extends Command {
-public int state = 2; 
+public int state = 0;  
   public RunPneumaticArm() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -25,7 +25,7 @@ public int state = 2;
   @Override
   protected void initialize() { 
     Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kReverse); 
-    
+    state = 2; 
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -38,12 +38,12 @@ public int state = 2;
       SmartDashboard.putString("Pneumatic Arm State:", "Reverse"); 
     }
     if (OI.controllerOne.getPOV() == 180 && state == 1 ) {
-      Robot.arm.runPIDArm(Robot.arm.rightAngle); 
+      //Robot.arm.runPIDArm(Robot.arm.rightAngle); 
       Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kReverse); 
       state = 2; 
       //&& !(armMotorSpeed == 0)
     } else if (OI.controllerOne.getPOV() == 0 && state == 2) {
-      Robot.arm.runPIDArm(Robot.arm.rightAngle); 
+      //Robot.arm.runPIDArm(Robot.arm.rightAngle); 
       Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kForward);
       state = 1;  
 

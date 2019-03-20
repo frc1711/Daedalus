@@ -107,15 +107,19 @@ public class RunMotorArm extends Command {
       SmartDashboard.putNumber("Target position", Robot.arm.posAbsZero); 
     
     } else if (OI.controllerOne.getPOV() == 90 && OI.controllerOne.getRawAxis(2) > .1) {
-      Robot.arm.runPIDArm(Robot.arm.hatchLift); 
+      Robot.arm.runPIDArm(Robot.arm.hatchLift);   
       SmartDashboard.putNumber("Target position", Robot.arm.hatchLift); 
     }
 
     double armTargetPos = SmartDashboard.getNumber("Target position", 0); 
     double encCount = SmartDashboard.getNumber("Enc position", 10); 
-    Robot.arm.stopPIDPos(sensorVel, encCount, armTargetPos, MOP);  
-
-  }
+    //if (!(armTargetPos == 0))
+      Robot.arm.stopPIDPos(sensorVel, encCount, armTargetPos, MOP);  
+   // else if (armTargetPos == 0) {
+   //   if (encCount >= armTargetPos - 50 && encCount <= armTargetPos + 50 && sensorVel == 0) {    }
+      //  Robot.arm.runArm(-.015); 
+    //}
+    }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override

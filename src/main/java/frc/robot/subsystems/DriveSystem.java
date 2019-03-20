@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
 import frc.robot.RobotMap.RoboDir;
@@ -76,7 +77,8 @@ public class DriveSystem extends Subsystem {
       rearLeftDrive.set(direction.getNum()*speed); 
       frontRightDrive.set(direction.getNum()*speed); 
       rearRightDrive.set(direction.getNum()*speed); 
-
+      SmartDashboard.putNumber("DIR SPEED", speed); 
+      SmartDashboard.putNumber("DIR DIR", direction.getNum()); 
     } else {
 
       frontLeftDrive.set(-speed); 
