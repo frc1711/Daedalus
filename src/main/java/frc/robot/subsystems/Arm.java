@@ -43,7 +43,7 @@ public class Arm extends Subsystem {
   public double hatchLift; 
 
   public Arm() {
-    armTalon = new WPI_TalonSRX(RobotMap.armTalon); 
+    armTalon = new WPI_TalonSRX(10); 
     
     armMin = -1; 
     posZero = 1612; //-799

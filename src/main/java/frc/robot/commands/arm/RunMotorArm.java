@@ -22,22 +22,22 @@ public class RunMotorArm extends Command {
     
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.arm); 
-    requires(Robot.clock); 
+  //  requires(Robot.arm); 
+   // requires(Robot.clock); 
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
    
-    Robot.clock.resetClock();
+  //  Robot.clock.resetClock();
    // Robot.clock.stopClock();     
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-     double sensorVel = Robot.arm.armTalon.getSelectedSensorVelocity(); 
+    /* double sensorVel = Robot.arm.armTalon.getSelectedSensorVelocity(); 
      double MOP = Robot.arm.armTalon.getMotorOutputPercent(); 
      SmartDashboard.putNumber("Sensor Velocity", sensorVel); 
      SmartDashboard.putNumber("armTalon Motor Output Percent", MOP); 
@@ -119,7 +119,7 @@ public class RunMotorArm extends Command {
    //   if (encCount >= armTargetPos - 50 && encCount <= armTargetPos + 50 && sensorVel == 0) {    }
       //  Robot.arm.runArm(-.015); 
     //}
-    }
+   */}
 
   // Make this return true when this Command no longer needs to run execute()
   @Override

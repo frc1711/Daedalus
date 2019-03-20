@@ -33,10 +33,11 @@ import frc.robot.subsystems.Manipulator;
 import frc.robot.subsystems.ManipulatorHatch;
 import frc.robot.subsystems.PixyTilt;
 import frc.robot.subsystems.PneumaticArm;
+import frc.robot.subsystems.PID.AntiWindArm;
 import frc.robot.subsystems.vision.CameraConfig;
 
 /**
- * The VM is configured to automatically run this class, and to call the
+ * The VM is configured to austomatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the build.gradle file in the
@@ -45,7 +46,8 @@ import frc.robot.subsystems.vision.CameraConfig;
 public class Robot extends TimedRobot {
   
   public static RobotMap robotMap; 
-  public static DriveSystem driveSystem; 
+  public static DriveSystem driveSystem;
+  public static AntiWindArm antiWindArm;  
   public static UsbCamera camera; 
   public static Manipulator manipulator; 
   public static ManipulatorHatch hatchManipulatorSub;
@@ -84,6 +86,7 @@ public class Robot extends TimedRobot {
     driveSystem = new DriveSystem();
     manipulator = new Manipulator(); 
     arm = new Arm(); 
+    antiWindArm = new AntiWindArm(); 
     pneumaticArm = new PneumaticArm();
     hatchManipulatorSub = new ManipulatorHatch();  
     lift = new Lift(); 
