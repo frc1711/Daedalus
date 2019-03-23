@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
 /**
@@ -37,28 +38,31 @@ public class AntiWindArm extends Subsystem {
   public AntiWindArm() {
 
     pid = new AntiWindPID(); 
-
+    
     pid.setKp(POSITION_KP); 
     pid.setKi(POSITION_KI); 
     pid.setKd(POSITION_KD); 
-    pid.setDFilterTime(POSITION_DFILTER); 
+    pid.setDfilterTime(POSITION_DFILTER); 
     pid.setSampleTime(POSITION_SAMPLE_TIME); 
 
     pid.setMeasured(0.0f); 
-    pid.setTarget(0.0f); 
+    pid.setSetpoint(0.0f); 
 
     armTalon = new WPI_TalonSRX(RobotMap.armTalon); 
+
+    armTalon.setSelectedSensorPosition(0);
+    armTalon.set(0); 
 
     motorDC = 0.0f; 
 
   }
 
   public void setTargetPosition (float pos) {
-    pid.setTarget(pos); 
+    pid.setSetpoint(pos); 
   }
 
   public float getTargetPosition() {
-    return pid.getTarget(); 
+    return pid.getSetpoint(); 
   }
 
   public double getDC() {
@@ -84,7 +88,8 @@ public class AntiWindArm extends Subsystem {
  
     pid.setMeasured(measuredPosition); 
 
-    adjustment = pid.calcPID(); 
+    adjustment = pid.calculate(); 
+    SmartDashboard.putNumber("PID ADJ", adjustment); 
 
     motorDC += adjustment; 
     
@@ -93,6 +98,8 @@ public class AntiWindArm extends Subsystem {
     } else if (motorDC < -1.0f) {
       motorDC = -1.0f; 
     }
+
+    armTalon.set(motorDC); 
 
 
   }

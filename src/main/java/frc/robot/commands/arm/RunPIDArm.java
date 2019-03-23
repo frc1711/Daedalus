@@ -8,6 +8,8 @@
 package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.OI;
 import frc.robot.Robot;
 import frc.robot.subsystems.PID.AntiWindArm;
 
@@ -27,9 +29,17 @@ public class RunPIDArm extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    
     Robot.antiWindArm.positionControl();
     double speed = Robot.antiWindArm.motorDC; 
-    Robot.antiWindArm.runArmTalon(speed);
+    //Robot.antiWindArm.runArmTalon(speed);
+    SmartDashboard.putNumber("PID Speed", speed); 
+    
+    SmartDashboard.putNumber("PID Targ", Robot.antiWindArm.getTargetPosition()); 
+    SmartDashboard.putNumber("PID Location", Robot.antiWindArm.getCurrentPosition()); 
+    if (OI.armPosZero.get()) {
+      Robot.antiWindArm.setTargetPosition(20000); 
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

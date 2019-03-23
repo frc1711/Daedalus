@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 
@@ -19,6 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.InitEndGamePneumatics;
 import frc.robot.commands.PneumaticOff;
 import frc.robot.commands.arm.RunMotorArm;
+import frc.robot.commands.arm.RunPIDArm;
 import frc.robot.commands.arm.RunPneumaticArm;
 import frc.robot.commands.drive.RawArcadeDrive;
 import frc.robot.commands.lift.AuxWheel;
@@ -62,6 +64,7 @@ public class Robot extends TimedRobot {
   public double cameraCount = 0; 
  
   Command rawArcadeDrive; 
+  Command runPIDArm; 
   Command spitHatches; 
   Command runPneumaticArm; 
   Command pneumaticOff; 
@@ -103,6 +106,7 @@ public class Robot extends TimedRobot {
     auxWheel = new AuxWheel();
     pneumaticOff = new PneumaticOff(); 
     rawArcadeDrive = new RawArcadeDrive(); 
+    runPIDArm = new RunPIDArm(); 
     scissorLift = new ScissorLift(); 
 
     //CAMERAS AND PIXYCAM
@@ -223,7 +227,8 @@ public class Robot extends TimedRobot {
       runPneumaticArm.start(); 
        //hatchManipulator.start(); 
       spitHatches.start();
-      runMotorArm.start(); 
+      runPIDArm.start(); 
+     // runMotorArm.start(); 
       cargoManipulator.start();
       //TODO: Map servo to preset positions when a button is pressed. Figure out what those positions are .
       //pixyTilt.runServo(OI.controllerOne.getRawAxis(2)); 
@@ -241,7 +246,7 @@ public class Robot extends TimedRobot {
     if (endGame || (OI.controllerZero.getRawButtonReleased(7) && OI.controllerZero.getRawButtonReleased(8))) {
       endGame = true; 
       spitHatches.cancel(); 
-      runMotorArm.cancel(); 
+      //runMotorArm.cancel(); 
       cargoManipulator.cancel(); 
       SmartDashboard.putString("GAME MODE", "ENDGAME");
       runPneumaticArm.start(); 
