@@ -5,43 +5,43 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.arm;
+package frc.robot.commands.drive;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.subsystems.PID.AntiWindArm;
+import frc.robot.RobotMap.RoboDir;
 
-public class RunPIDArm extends Command {
-  public RunPIDArm() {
+public class PixyDrive extends Command {
+  public PixyDrive() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.antiWindArm); 
+    requires(Robot.i2CInterface); 
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-
-    
+   
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    SmartDashboard.putNumber("Enc Pos", Robot.antiWindArm.armTalon.getSelectedSensorPosition()); 
-    Robot.antiWindArm.positionControl();
-    double speed = Robot.antiWindArm.motorDC; 
-    //Robot.antiWindArm.runArmTalon(speed);
-    SmartDashboard.putNumber("PID Speed", speed); 
-    SmartDashboard.putNumber("PID Targ", Robot.antiWindArm.getTargetPosition()); 
-    SmartDashboard.putNumber("PID Location", Robot.antiWindArm.getCurrentPosition()); 
-    if (OI.armPosZero.get() && Robot.antiWindArm.getTargetPosition() != 300) {
-      Robot.antiWindArm.setTargetPosition(300); 
-     // Robot.antiWindArm.runArmTalon(0.04); 
-    } else if (OI.armPosOne.get() && Robot.antiWindArm.getTargetPosition() != 2026) {
-      Robot.antiWindArm.setTargetPosition(2026); 
+    if (OI.lineUpEnable.get()) {
+      if(Robot.i2CInterface.getPixyAngle() < -5 && Robot.i2CInterface.getPixyAngle() != 700) {
+        SmartDashboard.putString("DIRECTIONPIXY", "LEFT"); 
+        Robot.driveSystem.driveDirection(.5, RoboDir.LEFT); 
+      } else if (Robot.i2CInterface.getPixyAngle() > 5 && Robot.i2CInterface.getPixyAngle() != 700) {
+        SmartDashboard.putString("DIRECTIONPIXY", "RIGHT"); 
+        Robot.driveSystem.driveDirection(.5, RoboDir.RIGHT); 
+      } else if (Robot.i2CInterface.getPixyAngle() >= -5 && Robot.i2CInterface.getPixyAngle() <= 5 && Robot.i2CInterface.getPixyAngle() != 700) {
+        SmartDashboard.putString("DIRECTIONPIXY", "STRAIGHT"); 
+        Robot.driveSystem.driveDirection(0.7, RoboDir.STRAIGHT); 
+      } else {
+        SmartDashboard.putString("DIRECTIONPIXY", "FAIL"); 
+      }
     }
   }
 
@@ -62,3 +62,4 @@ public class RunPIDArm extends Command {
   protected void interrupted() {
   }
 }
+//TODO: Add PixyDrive to command and wire arduino. Remove other methods. Add SmartDashboard logs to help with debugging.

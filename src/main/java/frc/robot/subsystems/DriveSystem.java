@@ -12,6 +12,7 @@ import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -42,7 +43,7 @@ public class DriveSystem extends Subsystem {
 
   SpeedControllerGroup leftSideDrive; 
   SpeedControllerGroup rightSideDrive; 
-
+  CANSparkMax thing; 
   public DriveSystem() {
     frontLeftDrive = new WPI_TalonSRX(RobotMap.FLD); 
     frontRightDrive = new WPI_TalonSRX(RobotMap.FRD);
@@ -94,6 +95,11 @@ public class DriveSystem extends Subsystem {
   public void arcadeDrive (double speed, double rot) {
     robotDrive.arcadeDrive(-speed, rot); 
   }
+  
+  public void zeroEncoders() {
+    
+  }
+
   public double getGyroYAW() {
     return gyro.getYaw(); 
   }

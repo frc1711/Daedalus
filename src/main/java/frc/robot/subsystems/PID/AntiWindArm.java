@@ -10,6 +10,9 @@ package frc.robot.subsystems.PID;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
@@ -20,9 +23,9 @@ import frc.robot.RobotMap;
 public class AntiWindArm extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  private final float POSITION_KP = 0.00000150f;      // Proportional gain for the motor PID
-  private final float POSITION_KI = 0.000075f;        // Integral gain for the motor PID
-  private final float POSITION_KD = 0.0f;             // Derivative gain for the motor PID
+  private final float POSITION_KP = 0.00004f;      // Proportional gain for the motor PID
+  private final float POSITION_KI = 0.00003f;        // Integral gain for the motor PID
+  private final float POSITION_KD = 0.00000f; //3.5 * 10^-6           // Derivative gain for the motor PID
   private final float POSITION_DFILTER = 1.0f;        // One second derivative filter time for the PID
   private final float POSITION_SAMPLE_TIME = 20E-3f;  // How often the current position is sampled
   
@@ -36,6 +39,7 @@ public class AntiWindArm extends Subsystem {
   public WPI_TalonSRX armTalon;
 
   public AntiWindArm() {
+  
 
     pid = new AntiWindPID(); 
     
@@ -82,6 +86,8 @@ public class AntiWindArm extends Subsystem {
   }
 
   public void positionControl() {
+   
+    
     float adjustment; 
 
     measuredPosition = armTalon.getSelectedSensorPosition(); 
@@ -92,13 +98,17 @@ public class AntiWindArm extends Subsystem {
     SmartDashboard.putNumber("PID ADJ", adjustment); 
 
     motorDC += adjustment; 
-    
+
     if (motorDC > 1.0f) {
       motorDC = 1.0f; 
     } else if (motorDC < -1.0f) {
       motorDC = -1.0f; 
     }
-
+    if ((motorDC > 0) && (motorDC < .05)) {
+      motorDC = .05f; 
+    } else if ((motorDC < 0) && (motorDC > -.05)) {
+      motorDC = -.05f; 
+    }
     armTalon.set(motorDC); 
 
 

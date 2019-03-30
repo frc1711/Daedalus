@@ -6,7 +6,12 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.subsystems.PID;
+
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /*
  This file contains the source for a generic PID algorithm.  See
@@ -27,16 +32,23 @@ public class AntiWindPID extends Subsystem {
   private float Ki;
   private float Kd;
   private float DfilterTime;
-  
+  private float recieveCount; 
   private float measured;     // Measured value
   private float setpoint;     // Target value
-  
+  private double netKP = 0; 
+  private double netKI = 0; 
+  private double netKD = 0; 
   // Internal variables for storing PID history
   private float ePn_1;
   private float eDfn_1;
   private float eDfn_2;
   
+  NetworkTableEntry kPNT; 
+  NetworkTableEntry kDNT; 
+  NetworkTableEntry kINT; 
 
+  NetworkTable table; 
+  NetworkTableInstance inst; 
 
 /**************************************************************************** 
 Constructor.  Initialize the PID structure so that it may be used by the
@@ -44,6 +56,13 @@ algorithm.  Only the "historic" variables are modified.  It does not
 do any argument checking to verify the results are reasonable.
 ****************************************************************************/
 public AntiWindPID() {
+  inst = NetworkTableInstance.getDefault(); 
+  table = inst.getTable("SmartDashboard"); 
+
+  SmartDashboard.putNumber("Ki", 0); 
+  SmartDashboard.putNumber("Kp", 0); 
+  SmartDashboard.putNumber("Kd", 0); 
+
   ePn_1 = 0.0f;
   eDfn_1 = 0.0f;
   eDfn_2 = 0.0f;
@@ -117,7 +136,21 @@ public float calculate()
   float IGain;        // The sample time dependent integral gain
   float DGain;        // The sample time dependent derivative gain
 
-  
+  recieveCount++; 
+  SmartDashboard.putNumber("COUTNER", recieveCount); 
+  if (recieveCount > 10) {
+    kPNT = table.getEntry("Kp"); 
+    netKP = kPNT.getDouble(0.0);
+    kDNT = table.getEntry("Kd"); 
+    netKD = kDNT.getDouble(0.0); 
+    kINT = table.getEntry("Ki"); 
+    netKI = kINT.getDouble(0.0); 
+    recieveCount = 0; 
+  }
+  System.out.println("NETWORK TABLE KI VALUE RAW:" + netKI); 
+  Kp = (float)netKP; 
+  Ki =  (float)netKI; 
+  Kd = (float)netKD; 
       /* Calculate parameters which are dependent upon sample time so that 
        *  the user can use parameters that are sample time independent
        *  where sample time is the time between successive calls to this function
@@ -147,9 +180,9 @@ public float calculate()
   eDfn_2 = eDfn_1;
   eDfn_1 = eDfn;
   ePn_1  = error;
-  
+  //SmartDashboard.putNumber("IGAIN", Ki*sampleTime); 
+  SmartDashboard.putNumber("Error", error);   
   return dun;
-  
 }
 
 

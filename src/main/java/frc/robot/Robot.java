@@ -10,11 +10,12 @@ package frc.robot;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
-
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.NetworkTable; 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.InitEndGamePneumatics;
@@ -36,7 +37,9 @@ import frc.robot.subsystems.ManipulatorHatch;
 import frc.robot.subsystems.PixyTilt;
 import frc.robot.subsystems.PneumaticArm;
 import frc.robot.subsystems.PID.AntiWindArm;
+import frc.robot.subsystems.vision.BallFollow;
 import frc.robot.subsystems.vision.CameraConfig;
+import frc.robot.subsystems.vision.I2CInterface;
 
 /**
  * The VM is configured to austomatically run this class, and to call the
@@ -56,6 +59,7 @@ public class Robot extends TimedRobot {
   public static PneumaticArm pneumaticArm; 
   public static Arm arm;
   public static Lift lift;  
+  public static I2CInterface i2CInterface; 
   public static PixyTilt pixyTilt; 
   public static Clock clock; 
   //public static PixyCameraDef pixyCam; 
@@ -84,6 +88,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+        
     //BASIC FILES AND SUBSYTEMS
     robotMap = new RobotMap();
     driveSystem = new DriveSystem();
@@ -197,6 +202,7 @@ public class Robot extends TimedRobot {
     initEndGamePneumatics.start(); 
     driveSystem.zeroGyro(); 
     rawArcadeDrive.start(); 
+    runPIDArm.start(); 
 
     if(!endGame) {
     
@@ -206,7 +212,7 @@ public class Robot extends TimedRobot {
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
-    // this line or comment it out.
+    // this line or comment it ou3t.
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
@@ -222,26 +228,27 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+   
     if(!endGame) {
       SmartDashboard.putString("GAME MODE", "GAMEPLAY"); 
-      runPneumaticArm.start(); 
+   //   runPneumaticArm.start(); 
        //hatchManipulator.start(); 
-      spitHatches.start();
-      runPIDArm.start(); 
+    //  spitHatches.start();
      // runMotorArm.start(); 
-      cargoManipulator.start();
+    //  cargoManipulator.start();
       //TODO: Map servo to preset positions when a button is pressed. Figure out what those positions are .
       //pixyTilt.runServo(OI.controllerOne.getRawAxis(2)); 
       SmartDashboard.putNumber("SERVO ANGLE", pixyTilt.getServoAngle()); 
       cameraCount++;
-      if (cameraCount == 5) {
+    if (cameraCount == 5) {
               //pixyCam.run(); 
         CameraConfig.run(); 
         cameraCount = 0; 
       }
+      BallFollow.run();
       //
             //CameraConfig.run(); 
-
+     
     }
     if (endGame || (OI.controllerZero.getRawButtonReleased(7) && OI.controllerZero.getRawButtonReleased(8))) {
       endGame = true; 

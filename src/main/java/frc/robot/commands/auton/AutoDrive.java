@@ -5,44 +5,41 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.arm;
+package frc.robot.commands.auton;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.subsystems.PID.AntiWindArm;
 
-public class RunPIDArm extends Command {
-  public RunPIDArm() {
+public class AutoDrive extends Command {
+
+  double encValue; 
+  double desiredLocation; 
+  double gyroAngle; 
+  double startTime; 
+  double speed; 
+  double currentTime; 
+  double timeout; 
+
+  public AutoDrive(double distance, double speed, double timeout) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.antiWindArm); 
+    desiredLocation = Math.round(distance * 11.5); // 1 in per 11.5 revolutions (based on a total count of 69 count per rot and 6 in wheels)
+    // 6 in per 69 count per rot = 1 in per 11.5 count per rot 
+    this.speed = speed; 
+    
+    this.timeout = timeout * 1000; //timeout in seconds, system in millis
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-
+    Robot.driveSystem.stopRobot(); 
     
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    SmartDashboard.putNumber("Enc Pos", Robot.antiWindArm.armTalon.getSelectedSensorPosition()); 
-    Robot.antiWindArm.positionControl();
-    double speed = Robot.antiWindArm.motorDC; 
-    //Robot.antiWindArm.runArmTalon(speed);
-    SmartDashboard.putNumber("PID Speed", speed); 
-    SmartDashboard.putNumber("PID Targ", Robot.antiWindArm.getTargetPosition()); 
-    SmartDashboard.putNumber("PID Location", Robot.antiWindArm.getCurrentPosition()); 
-    if (OI.armPosZero.get() && Robot.antiWindArm.getTargetPosition() != 300) {
-      Robot.antiWindArm.setTargetPosition(300); 
-     // Robot.antiWindArm.runArmTalon(0.04); 
-    } else if (OI.armPosOne.get() && Robot.antiWindArm.getTargetPosition() != 2026) {
-      Robot.antiWindArm.setTargetPosition(2026); 
-    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

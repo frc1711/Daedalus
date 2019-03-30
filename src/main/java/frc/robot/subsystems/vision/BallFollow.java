@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems.vision;
 
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
 import frc.robot.Robot;
@@ -18,19 +19,19 @@ import frc.robot.RobotMap.RoboDir;
 public class BallFollow {
     
     public static void run() {
-        
     double ballAngle = SmartDashboard.getNumber("Ball Angle", 700); 
-
+        SmartDashboard.putBoolean("IS IT HOLDING", OI.ballVisionEnable.get()); 
         if (OI.ballVisionEnable.get()) {
+         // System.gc(); 
             if(ballAngle < -5 ) {
-              System.out.println("LEFT");
-              Robot.driveSystem.driveDirection(.3, RoboDir.RIGHT); 
+              SmartDashboard.putString("DIRECTIONPIXY", "LEFT");
+              Robot.driveSystem.driveDirection(.5, RoboDir.LEFT); 
             } else if (ballAngle > 5) {
-              System.out.println("RIGHT");
-              Robot.driveSystem.driveDirection(.3, RoboDir.LEFT); 
+              SmartDashboard.putString("DIRECTIONPIXY", "RIGHT");
+              Robot.driveSystem.driveDirection(.5, RoboDir.RIGHT); 
             } else if (ballAngle >= -5 && ballAngle <= 5) {
-              Robot.driveSystem.driveDirection(.2, RoboDir.STRAIGHT); 
-              System.out.println("STRAIGHT");
+              Robot.driveSystem.driveDirection(-1, RoboDir.STRAIGHT); 
+              SmartDashboard.putString("DIRECTIONPIXY", "STRAIGHT");
               System.out.println(ballAngle);
             } else {
               System.out.println("FAIL");

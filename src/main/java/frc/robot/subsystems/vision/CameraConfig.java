@@ -8,7 +8,7 @@
 package frc.robot.subsystems.vision;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.pixy2api.links.SPILink;;
+import frc.robot.pixy2api.links.SPILink;
 
 /***
  *Shoutout to team 4546
