@@ -208,11 +208,11 @@ public class Robot extends TimedRobot {
     driveSystem.zeroGyro(); 
     rawArcadeDrive.start(); 
   //  runPIDArm.start(); 
-    runMotorArm.start(); 
     lineUpDrive.start(); 
     cargoManipulator.start();
     //BallFollow.run();
     spitHatches.start();
+
  
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
@@ -233,8 +233,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-   
+    runMotorArm.start(); 
+
     if(!endGame) {
+
      // runMotorArm.start(); 
       //TODO: Map servo to preset positions when a button is pressed. Figure out what those positions are .
       //pixyTilt.runServo(OI.controllerOne.getRawAxis(2)); 
