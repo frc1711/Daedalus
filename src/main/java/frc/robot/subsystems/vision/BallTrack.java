@@ -42,10 +42,6 @@ public class BallTrack {
       yaw = ((ballX - 157.5) * 0.1904761905);
 
       SmartDashboard.putNumber("Ball Angle", yaw);
-      SmartDashboard.putNumber("Ball X", largestBlock.getX());
-      SmartDashboard.putNumber("Ball Y", largestBlock.getY());
-      SmartDashboard.putNumber("Ball Box Width", largestBlock.getWidth());
-      SmartDashboard.putNumber("Ball Box Height", largestBlock.getHeight());
     }
   }
   

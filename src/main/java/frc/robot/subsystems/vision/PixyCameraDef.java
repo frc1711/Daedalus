@@ -30,23 +30,25 @@ public class PixyCameraDef extends Subsystem {
   public void run() { 
     if (initFailure < 5) {
     //final int pixyStatus = pixyCam.init(PixyResult); 
-    //int count = pixyCam.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG1, 25); 
-      int refCount = pixyCam.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG1, 25);
+    int count = pixyCam.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG1, 25); 
+    //  int refCount = pixyCam.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG1, 25);
      // int ballCount = pixyCam.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG1, 25); 
       //int bumperBlueCount = pixyCam.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG2, 25); 
+      SmartDashboard.putNumber("COUNT", count); 
+      if (count >= 0) {
+        BallTrack.run(count); 
+        //BallFollow.run(); 
 
-      if (refCount >= 0) {
         SmartDashboard.putBoolean("PIXY RUNNING", true); 
-        if (refCount == 0) 
-          SmartDashboard.putBoolean("TAPE VISIBLE", true); 
-        else if (refCount == 0)
-          SmartDashboard.putBoolean("TAPE VISIBLE", false); 
+       
+        if (count == 0) 
+          SmartDashboard.putBoolean("BALL VISIBLE", false); 
+        else if (count > 0)
+          SmartDashboard.putBoolean("BALL VISIBLE", true); 
 
-        //BallTrack.run(count); 
        // ReflectiveAlign.run(count); 
-       //BallFollow.run(); 
-       RefAlign.run(refCount); 
-       LineUp.run(); 
+       //RefAlign.run(refCount); 
+       //LineUp.run(); 
 
       } else {
         if(pixyCam.init(PixyResult) != Pixy2.PIXY_RESULT_OK) {

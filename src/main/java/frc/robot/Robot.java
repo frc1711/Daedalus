@@ -20,6 +20,7 @@ import frc.robot.commands.InitEndGamePneumatics;
 import frc.robot.commands.PneumaticOff;
 import frc.robot.commands.arm.RunMotorArm;
 import frc.robot.commands.arm.RunPneumaticArm;
+import frc.robot.commands.drive.LineUpDrive;
 import frc.robot.commands.drive.RawArcadeDrive;
 import frc.robot.commands.lift.AuxWheel;
 import frc.robot.commands.lift.ScissorLift;
@@ -69,6 +70,7 @@ public class Robot extends TimedRobot {
   Command cargoManipulator; 
   Command initEndGamePneumatics; 
   Command hatchManipulatorFirst; 
+  Command lineUpDrive; 
 
   Command autonomousCommand;
   SendableChooser<Command> chooser = new SendableChooser<>();
@@ -101,6 +103,7 @@ public class Robot extends TimedRobot {
     pneumaticOff = new PneumaticOff(); 
     rawArcadeDrive = new RawArcadeDrive(); 
     scissorLift = new ScissorLift(); 
+    lineUpDrive = new LineUpDrive(); 
 
     //CAMERAS AND PIXYCAM
     CameraConfig.setup(); 
@@ -165,6 +168,7 @@ public class Robot extends TimedRobot {
     //hatchManipulator.start(); 
     spitHatches.start(); 
     auxWheel.start(); 
+    lineUpDrive.start(); 
     runMotorArm.start(); 
     scissorLift.start(); 
     cargoManipulator.start();
@@ -190,6 +194,7 @@ public class Robot extends TimedRobot {
     initEndGamePneumatics.start(); 
     driveSystem.zeroGyro(); 
     rawArcadeDrive.start(); 
+    lineUpDrive.start(); 
 
     if(!endGame) {
     
