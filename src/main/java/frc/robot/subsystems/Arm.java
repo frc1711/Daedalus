@@ -15,6 +15,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 /**
@@ -143,9 +144,11 @@ public class Arm extends Subsystem {
       SmartDashboard.putNumber("TARGETPOS", targetPos); 
       SmartDashboard.putNumber("MOP", MOP); 
       armTalon.set(MOP);
+     // Robot.arm.runPIDArm(encPos);
       velCounter = 0;  
     } else {
-      SmartDashboard.putBoolean("HOLDING", false); 
+      if (velCounter == 15)
+        SmartDashboard.putBoolean("HOLDING", false); 
     } 
   }
 

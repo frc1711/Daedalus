@@ -137,7 +137,7 @@ public float calculate()
   float DGain;        // The sample time dependent derivative gain
 
   recieveCount++; 
-  SmartDashboard.putNumber("COUTNER", recieveCount); 
+  SmartDashboard.putNumber("COUNTER", recieveCount); 
   if (recieveCount > 10) {
     kPNT = table.getEntry("Kp"); 
     netKP = kPNT.getDouble(0.0);

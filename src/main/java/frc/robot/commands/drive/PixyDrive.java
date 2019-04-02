@@ -17,7 +17,7 @@ public class PixyDrive extends Command {
   public PixyDrive() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.i2CInterface); 
+  //  requires(Robot.i2CInterface); 
   }
 
   // Called just before this Command runs the first time
@@ -29,20 +29,20 @@ public class PixyDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (OI.lineUpEnable.get()) {
-      if(Robot.i2CInterface.getPixyAngle() < -5 && Robot.i2CInterface.getPixyAngle() != 700) {
+  /*  if (OI.lineUpEnable.get()) {
+      if(Robot.i2CInterface.getPixyAngle() < -5 && Robot.i2CInterface.getPixyAngle() != 400 && Robot.i2CInterface.getPixyAngle() != 700) {
         SmartDashboard.putString("DIRECTIONPIXY", "LEFT"); 
         Robot.driveSystem.driveDirection(.5, RoboDir.LEFT); 
-      } else if (Robot.i2CInterface.getPixyAngle() > 5 && Robot.i2CInterface.getPixyAngle() != 700) {
+      } else if (Robot.i2CInterface.getPixyAngle() > 5 && Robot.i2CInterface.getPixyAngle() != 400 && Robot.i2CInterface.getPixyAngle() != 700) {
         SmartDashboard.putString("DIRECTIONPIXY", "RIGHT"); 
         Robot.driveSystem.driveDirection(.5, RoboDir.RIGHT); 
-      } else if (Robot.i2CInterface.getPixyAngle() >= -5 && Robot.i2CInterface.getPixyAngle() <= 5 && Robot.i2CInterface.getPixyAngle() != 700) {
+      } else if (Robot.i2CInterface.getPixyAngle() >= -5 && Robot.i2CInterface.getPixyAngle() <= 5 && Robot.i2CInterface.getPixyAngle() != 400 && Robot.i2CInterface.getPixyAngle() != 700) {
         SmartDashboard.putString("DIRECTIONPIXY", "STRAIGHT"); 
         Robot.driveSystem.driveDirection(0.7, RoboDir.STRAIGHT); 
       } else {
         SmartDashboard.putString("DIRECTIONPIXY", "FAIL"); 
       }
-    }
+    } */
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -62,4 +62,3 @@ public class PixyDrive extends Command {
   protected void interrupted() {
   }
 }
-//TODO: Add PixyDrive to command and wire arduino. Remove other methods. Add SmartDashboard logs to help with debugging.

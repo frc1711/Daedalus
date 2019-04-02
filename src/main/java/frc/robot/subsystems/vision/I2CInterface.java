@@ -45,8 +45,12 @@ public class I2CInterface extends Subsystem {
   }
 
   public double getPixyAngle() {
-    double angle; 
-    angle = Double.parseDouble(this.read()); 
+    double angle;
+    try {
+      angle = Double.parseDouble(this.read()); 
+    } catch (Exception e){
+      angle = 700; 
+    }
     SmartDashboard.putNumber("Pixy Data", angle); 
     return angle; 
   }

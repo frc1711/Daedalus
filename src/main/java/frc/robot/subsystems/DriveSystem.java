@@ -28,32 +28,35 @@ import frc.robot.RobotMap.RoboDir;
 public class DriveSystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  public WPI_TalonSRX frontLeftDrive;
+/*  public WPI_TalonSRX frontLeftDrive;
 	public WPI_TalonSRX frontRightDrive;
 	public WPI_TalonSRX rearLeftDrive;
-  public WPI_TalonSRX rearRightDrive; 
-/*  public CANSparkMax frontLeftDrive; 
+  public WPI_TalonSRX rearRightDrive; */
+
+  public CANSparkMax frontLeftDrive; 
   public CANSparkMax frontRightDrive; 
   public CANSparkMax rearLeftDrive; 
   public CANSparkMax rearRightDrive; 
-*/
+
   public AHRS gyro; 
 
   public DifferentialDrive robotDrive;
 
   SpeedControllerGroup leftSideDrive; 
   SpeedControllerGroup rightSideDrive; 
-  CANSparkMax thing; 
+  //CANSparkMax thing; 
   public DriveSystem() {
+    /*
     frontLeftDrive = new WPI_TalonSRX(RobotMap.FLD); 
     frontRightDrive = new WPI_TalonSRX(RobotMap.FRD);
     rearRightDrive = new WPI_TalonSRX(RobotMap.RRD);
-    rearLeftDrive = new WPI_TalonSRX(RobotMap.RLD);
-   /* frontLeftDrive = new CANSparkMax(RobotMap.FLD, MotorType.kBrushless); 
+    rearLeftDrive = new WPI_TalonSRX(RobotMap.RLD); */
+
+    frontLeftDrive = new CANSparkMax(RobotMap.FLD, MotorType.kBrushless); 
     frontRightDrive = new CANSparkMax(RobotMap.FRD, MotorType.kBrushless); 
     rearLeftDrive = new CANSparkMax(RobotMap.RLD, MotorType.kBrushless); 
     rearRightDrive = new CANSparkMax(RobotMap.RRD, MotorType.kBrushless); 
-*/
+
     leftSideDrive = new SpeedControllerGroup(frontLeftDrive, rearLeftDrive);
     rightSideDrive = new SpeedControllerGroup(frontRightDrive, rearRightDrive); 
 
@@ -79,8 +82,8 @@ public class DriveSystem extends Subsystem {
       rearLeftDrive.set(direction.getNum()*speed); 
       frontRightDrive.set(direction.getNum()*speed); 
       rearRightDrive.set(direction.getNum()*speed); 
-      SmartDashboard.putNumber("DIR SPEED", speed); 
-      SmartDashboard.putNumber("DIR DIR", direction.getNum()); 
+     // SmartDashboard.putNumber("DIR SPEED", speed); 
+     // SmartDashboard.putNumber("DIR DIR", direction.getNum()); 
     } else {
 
       frontLeftDrive.set(-speed); 

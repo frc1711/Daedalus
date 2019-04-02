@@ -22,7 +22,6 @@ public class CameraConfig {
   
   public static void setup() {
     pixyCam = new PixyCameraDef(new SPILink());
-    System.out.println("PIXY CREATED");  
     SmartDashboard.putBoolean("PIXY CREATED", true);
   }
   

@@ -37,7 +37,7 @@ public class RunMotorArm extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    /* double sensorVel = Robot.arm.armTalon.getSelectedSensorVelocity(); 
+     double sensorVel = Robot.arm.armTalon.getSelectedSensorVelocity(); 
      double MOP = Robot.arm.armTalon.getMotorOutputPercent(); 
      SmartDashboard.putNumber("Sensor Velocity", sensorVel); 
      SmartDashboard.putNumber("armTalon Motor Output Percent", MOP); 
@@ -46,7 +46,8 @@ public class RunMotorArm extends Command {
      double runningSpeed = speed / 2; 
      SmartDashboard.putNumber("Arm speed", runningSpeed); 
    
-   
+     double integralAcum = Robot.arm.armTalon.getIntegralAccumulator(); 
+     SmartDashboard.putNumber("INTEGRAL ACUM", integralAcum); 
     //HATCH POSITIONS
     if(OI.armPosOne.get() && OI.controllerOne.getRawAxis(2) > .1) {
      
@@ -119,7 +120,7 @@ public class RunMotorArm extends Command {
    //   if (encCount >= armTargetPos - 50 && encCount <= armTargetPos + 50 && sensorVel == 0) {    }
       //  Robot.arm.runArm(-.015); 
     //}
-   */}
+   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
