@@ -15,7 +15,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 /**
@@ -44,14 +43,14 @@ public class Arm extends Subsystem {
   public double hatchLift; 
 
   public Arm() {
-    armTalon = new WPI_TalonSRX(10); 
+    armTalon = new WPI_TalonSRX(RobotMap.armTalon); 
     
     armMin = -1; 
     posZero = 1612; //-799
     posOne = 855; //-1356
     posTwo = 2100; //-2823
     posThree = 1580; //-2195
-    hatchLift = 1050; 
+    hatchLift = 600; 
 
     hatchPosOne = 1225; 
     hatchPosTwo = 2600; 
@@ -144,11 +143,9 @@ public class Arm extends Subsystem {
       SmartDashboard.putNumber("TARGETPOS", targetPos); 
       SmartDashboard.putNumber("MOP", MOP); 
       armTalon.set(MOP);
-     // Robot.arm.runPIDArm(encPos);
       velCounter = 0;  
     } else {
-      if (velCounter == 15)
-        SmartDashboard.putBoolean("HOLDING", false); 
+      SmartDashboard.putBoolean("HOLDING", false); 
     } 
   }
 

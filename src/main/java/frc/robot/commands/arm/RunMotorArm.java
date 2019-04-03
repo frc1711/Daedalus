@@ -22,15 +22,13 @@ public class RunMotorArm extends Command {
     
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-  //  requires(Robot.arm); 
-   // requires(Robot.clock); 
+    requires(Robot.arm); 
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
    
-  //  Robot.clock.resetClock();
    // Robot.clock.stopClock();     
   }
 
@@ -46,8 +44,7 @@ public class RunMotorArm extends Command {
      double runningSpeed = speed / 2; 
      SmartDashboard.putNumber("Arm speed", runningSpeed); 
    
-     double integralAcum = Robot.arm.armTalon.getIntegralAccumulator(); 
-     SmartDashboard.putNumber("INTEGRAL ACUM", integralAcum); 
+   
     //HATCH POSITIONS
     if(OI.armPosOne.get() && OI.controllerOne.getRawAxis(2) > .1) {
      
@@ -120,7 +117,7 @@ public class RunMotorArm extends Command {
    //   if (encCount >= armTargetPos - 50 && encCount <= armTargetPos + 50 && sensorVel == 0) {    }
       //  Robot.arm.runArm(-.015); 
     //}
-   }
+    }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
