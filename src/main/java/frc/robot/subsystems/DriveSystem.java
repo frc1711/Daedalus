@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -34,8 +35,17 @@ public class DriveSystem extends Subsystem {
   public CANSparkMax frontRightDrive; 
   public CANSparkMax rearLeftDrive; 
   public CANSparkMax rearRightDrive; 
+  public CANEncoder frontLeftEnc; 
+  public CANEncoder frontRightEnc; 
+  public CANEncoder rearLeftEnc; 
+  public CANEncoder rearRightEnc; 
 
   public AHRS gyro; 
+
+  public double rearLeftEncValue; 
+  public double rearRightEncValue; 
+  public double initialRLValue; 
+  public double initialRRValue; 
 
   public DifferentialDrive robotDrive;
 
@@ -51,6 +61,11 @@ public class DriveSystem extends Subsystem {
     frontRightDrive = new CANSparkMax(RobotMap.FRD, MotorType.kBrushless); 
     rearLeftDrive = new CANSparkMax(RobotMap.RLD, MotorType.kBrushless); 
     rearRightDrive = new CANSparkMax(RobotMap.RRD, MotorType.kBrushless); 
+
+    frontLeftEnc = new CANEncoder(frontLeftDrive); 
+    frontRightEnc = new CANEncoder(frontRightDrive); 
+    rearRightEnc = new CANEncoder(rearRightDrive); 
+    rearLeftEnc = new CANEncoder(rearLeftDrive); 
 
     leftSideDrive = new SpeedControllerGroup(frontLeftDrive, rearLeftDrive);
     rightSideDrive = new SpeedControllerGroup(frontRightDrive, rearRightDrive); 
@@ -92,6 +107,14 @@ public class DriveSystem extends Subsystem {
 
   public void arcadeDrive (double speed, double rot) {
     robotDrive.arcadeDrive(-speed, rot); 
+  }
+
+  public double zeroedRRPos() {
+    return rearRightEnc.getPosition() - initialRRValue; 
+  }
+
+  public double zeroedRLPos() {
+    return rearLeftEnc.getPosition() - initialRLValue; 
   }
   public double getGyroYAW() {
     return gyro.getYaw(); 

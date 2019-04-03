@@ -124,6 +124,8 @@ public class Robot extends TimedRobot {
     UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture();
     cam0.setFPS(30);
     cam0.setResolution(480, 320); 
+    driveSystem.initialRRValue = driveSystem.rearRightEnc.getPosition(); 
+    driveSystem.initialRLValue = driveSystem.rearLeftEnc.getPosition(); 
   }
 
 
@@ -212,6 +214,7 @@ public class Robot extends TimedRobot {
     cargoManipulator.start();
     //BallFollow.run();
     spitHatches.start();
+    runPneumaticArm.start(); 
 
  
     // This makes sure that the autonomous stops running when

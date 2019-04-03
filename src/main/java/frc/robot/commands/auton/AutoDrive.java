@@ -33,8 +33,7 @@ public class AutoDrive extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.driveSystem.stopRobot(); 
-    
+    Robot.driveSystem.stopRobot();     
   }
 
   // Called repeatedly when this Command is scheduled to run
