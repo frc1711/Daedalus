@@ -28,7 +28,7 @@ public class LineUpDrive extends Command {
   @Override
   protected void execute() {
     double ballAngle = SmartDashboard.getNumber("Ball Angle", 700); 
-        SmartDashboard.putBoolean("IS IT HOLDING", OI.ballVisionEnable.get()); 
+       // SmartDashboard.putBoolean("IS IT HOLDING", OI.ballVisionEnable.get()); 
         if (OI.ballVisionEnable.get()) {
           Robot.pixyTilt.angleServo(180);
          // System.gc(); 

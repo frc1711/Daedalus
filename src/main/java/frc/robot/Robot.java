@@ -10,9 +10,7 @@ package frc.robot;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.networktables.NetworkTable; 
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -21,7 +19,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.InitEndGamePneumatics;
 import frc.robot.commands.PneumaticOff;
 import frc.robot.commands.arm.RunMotorArm;
-import frc.robot.commands.arm.RunPIDArm;
 import frc.robot.commands.arm.RunPneumaticArm;
 import frc.robot.commands.drive.LineUpDrive;
 import frc.robot.commands.drive.PixyDrive;
@@ -37,9 +34,7 @@ import frc.robot.subsystems.Manipulator;
 import frc.robot.subsystems.ManipulatorHatch;
 import frc.robot.subsystems.PixyTilt;
 import frc.robot.subsystems.PneumaticArm;
-import frc.robot.subsystems.PID.AntiWindArm;
 import frc.robot.subsystems.vision.CameraConfig;
-import frc.robot.subsystems.vision.I2CInterface;
 
 /**
  * The VM is configured to austomatically run this class, and to call the
@@ -52,7 +47,6 @@ public class Robot extends TimedRobot {
   
   public static RobotMap robotMap; 
   public static DriveSystem driveSystem;
-  public static AntiWindArm antiWindArm;  
   public static UsbCamera camera; 
   public static Manipulator manipulator; 
   public static ManipulatorHatch hatchManipulatorSub;
@@ -95,7 +89,6 @@ public class Robot extends TimedRobot {
     driveSystem = new DriveSystem();
     manipulator = new Manipulator(); 
     arm = new Arm(); 
-    antiWindArm = new AntiWindArm(); 
     pneumaticArm = new PneumaticArm();
     hatchManipulatorSub = new ManipulatorHatch();  
     lift = new Lift(); 

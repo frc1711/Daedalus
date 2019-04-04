@@ -35,18 +35,18 @@ public class RunMotorArm extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-     double sensorVel = Robot.arm.armTalon.getSelectedSensorVelocity(); 
-     double MOP = Robot.arm.armTalon.getMotorOutputPercent(); 
-     SmartDashboard.putNumber("Sensor Velocity", sensorVel); 
-     SmartDashboard.putNumber("armTalon Motor Output Percent", MOP); 
+     //double sensorVel = Robot.arm.armTalon.getSelectedSensorVelocity(); 
+     //double MOP = Robot.arm.armTalon.getMotorOutputPercent(); 
+    // SmartDashboard.putNumber("Sensor Velocity", sensorVel); 
+     //SmartDashboard.putNumber("armTalon Motor Output Percent", MOP); 
      SmartDashboard.putNumber("Enc position", Robot.arm.getSensorValue()); 
-     double speed = OI.controllerOne.getRawAxis(1) * OI.controllerOne.getRawAxis(1); 
-     double runningSpeed = speed / 2; 
-     SmartDashboard.putNumber("Arm speed", runningSpeed); 
-     double iGAIN = Robot.arm.armTalon.getIntegralAccumulator(); 
-     double cle = Robot.arm.armTalon.getClosedLoopError(); 
-    SmartDashboard.putNumber("CLOSED LOOP ERROR", cle); 
-    SmartDashboard.putNumber("INTGAIN", iGAIN); 
+     //double speed = OI.controllerOne.getRawAxis(1) * OI.controllerOne.getRawAxis(1); 
+    // double runningSpeed = speed / 2; 
+     //SmartDashboard.putNumber("Arm speed", runningSpeed); 
+     //double iGAIN = Robot.arm.armTalon.getIntegralAccumulator(); 
+     //double cle = Robot.arm.armTalon.getClosedLoopError(); 
+    //SmartDashboard.putNumber("CLOSED LOOP ERROR", cle); 
+    //SmartDashboard.putNumber("INTGAIN", iGAIN); 
    
     //HATCH POSITIONS
     if(OI.armPosOne.get() && OI.controllerOne.getRawAxis(2) > .1) {
@@ -113,8 +113,8 @@ public class RunMotorArm extends Command {
       SmartDashboard.putNumber("Target position", Robot.arm.hatchLift); 
     }
 
-    double armTargetPos = SmartDashboard.getNumber("Target position", 0); 
-    double encCount = SmartDashboard.getNumber("Enc position", 10); 
+    //double armTargetPos = SmartDashboard.getNumber("Target position", 0); 
+  // double encCount = SmartDashboard.getNumber("Enc position", 10); 
     //if (!(armTargetPos == 0))
       //Robot.arm.stopPIDPos(sensorVel, encCount, armTargetPos, MOP);  
    // else if (armTargetPos == 0) {

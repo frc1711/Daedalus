@@ -127,7 +127,7 @@ public class Arm extends Subsystem {
     }
   }
   public void runPIDArm (double pos) {
-    SmartDashboard.putNumber("Position", pos); 
+    //SmartDashboard.putNumber("Position", pos); 
     armTalon.set(ControlMode.MotionMagic, pos); 
   }
 
@@ -139,18 +139,18 @@ public class Arm extends Subsystem {
     }
 
     if (encPos >= targetPos-300 && encPos <= targetPos+300 && vel == 0 && velCounter == 15) {
-      SmartDashboard.putBoolean("HOLDING", true); 
-      SmartDashboard.putNumber("VEL", vel); 
-      SmartDashboard.putNumber("ENCPOS", encPos); 
-      SmartDashboard.putNumber("TARGETPOS", targetPos); 
-      SmartDashboard.putNumber("MOP", MOP); 
+//SmartDashboard.putBoolean("HOLDING", true); 
+  //    SmartDashboard.putNumber("VEL", vel); 
+    //  SmartDashboard.putNumber("ENCPOS", encPos); 
+      //SmartDashboard.putNumber("TARGETPOS", targetPos); 
+      //SmartDashboard.putNumber("MOP", MOP); 
       //armTalon.set(MOP);
       Robot.arm.runPIDArm(encPos); 
        
      // Robot.arm.runPIDArm(encPos); 
       velCounter = 0;  
     } else {
-      SmartDashboard.putBoolean("HOLDING", false); 
+      //SmartDashboard.putBoolean("HOLDING", false); 
     } 
   }
 

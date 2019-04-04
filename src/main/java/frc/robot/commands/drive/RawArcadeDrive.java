@@ -35,7 +35,7 @@ public class RawArcadeDrive extends Command {
   @Override
   protected void execute() {
 
-   if (Robot.driveSystem.isGyroConnected()) {
+  /* if (Robot.driveSystem.isGyroConnected()) {
 
       tipAngle = Robot.driveSystem.getGyroRoll() - initAngle; 
       SmartDashboard.putNumber("TIP ANGLE", tipAngle); 
@@ -74,7 +74,9 @@ public class RawArcadeDrive extends Command {
       
       Robot.driveSystem.arcadeDrive(0.8*OI.controllerZero.getRawAxis(1), 0.8*OI.controllerZero.getRawAxis(4)); 
     
-    }
+    } */
+    Robot.driveSystem.arcadeDrive(0.8*OI.controllerZero.getRawAxis(1), 0.8* OI.controllerZero.getRawAxis(4)); 
+
   } 
 
   // Make this return true when this Command no longer needs to run execute()
