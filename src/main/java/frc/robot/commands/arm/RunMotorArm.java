@@ -23,50 +23,52 @@ public class RunMotorArm extends Command {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.arm); 
-    requires(Robot.clock); 
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
    
-    Robot.clock.resetClock();
    // Robot.clock.stopClock();     
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-     double sensorVel = Robot.arm.armTalon.getSelectedSensorVelocity(); 
-     double MOP = Robot.arm.armTalon.getMotorOutputPercent(); 
-     SmartDashboard.putNumber("Sensor Velocity", sensorVel); 
-     SmartDashboard.putNumber("armTalon Motor Output Percent", MOP); 
+     //double sensorVel = Robot.arm.armTalon.getSelectedSensorVelocity(); 
+     //double MOP = Robot.arm.armTalon.getMotorOutputPercent(); 
+    // SmartDashboard.putNumber("Sensor Velocity", sensorVel); 
+     //SmartDashboard.putNumber("armTalon Motor Output Percent", MOP); 
      SmartDashboard.putNumber("Enc position", Robot.arm.getSensorValue()); 
-     double speed = OI.controllerOne.getRawAxis(1) * OI.controllerOne.getRawAxis(1); 
-     double runningSpeed = speed / 2; 
-     SmartDashboard.putNumber("Arm speed", runningSpeed); 
-   
+     //double speed = OI.controllerOne.getRawAxis(1) * OI.controllerOne.getRawAxis(1); 
+    // double runningSpeed = speed / 2; 
+     //SmartDashboard.putNumber("Arm speed", runningSpeed); 
+     //double iGAIN = Robot.arm.armTalon.getIntegralAccumulator(); 
+     //double cle = Robot.arm.armTalon.getClosedLoopError(); 
+    //SmartDashboard.putNumber("CLOSED LOOP ERROR", cle); 
+    //SmartDashboard.putNumber("INTGAIN", iGAIN); 
    
     //HATCH POSITIONS
     if(OI.armPosOne.get() && OI.controllerOne.getRawAxis(2) > .1) {
-     
+     //1
       Robot.arm.armTalon.selectProfileSlot(1, 0); 
+      
      // Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kReverse); 
       Robot.arm.runPIDArm(Robot.arm.hatchPosOne); 
 
       SmartDashboard.putNumber("Target position", Robot.arm.hatchPosOne); 
    
     } else if (OI.armPosTwo.get() && OI.controllerOne.getRawAxis(2) > .1) {
-      
-      Robot.arm.armTalon.selectProfileSlot(2, 0); 
+      //2
+      Robot.arm.armTalon.selectProfileSlot(1, 0); 
       //Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kForward); 
       Robot.arm.runPIDArm(Robot.arm.hatchPosTwo); 
 
       SmartDashboard.putNumber("Target position", Robot.arm.hatchPosTwo); 
 
     } else if (OI.armPosThree.get() && OI.controllerOne.getRawAxis(2) > .1) {
-     
-      Robot.arm.armTalon.selectProfileSlot(3, 0); 
+     //3
+      Robot.arm.armTalon.selectProfileSlot(1, 0); 
      // Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kReverse); 
       Robot.arm.runPIDArm(Robot.arm.hatchPosThree); 
 
@@ -74,29 +76,29 @@ public class RunMotorArm extends Command {
     
     } //CARGO POSITIONS
     else if (OI.armPosZero.get() && !(OI.controllerOne.getRawAxis(2) > .1)) {
-
+      //1
       Robot.arm.armTalon.selectProfileSlot(1, 0);
      // Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kReverse); 
       Robot.arm.runPIDArm(Robot.arm.posZero);
       SmartDashboard.putNumber("Target position", Robot.arm.posZero); 
 
     } else if (OI.armPosOne.get() && !(OI.controllerOne.getRawAxis(2) > .1)) {
-
+      //1
       Robot.arm.armTalon.selectProfileSlot(1, 0);
      // Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kReverse); 
       Robot.arm.runPIDArm(Robot.arm.posOne);
       SmartDashboard.putNumber("Target position", Robot.arm.posOne);  
     
     } else if (OI.armPosTwo.get() && !(OI.controllerOne.getRawAxis(2) > .1)) {
-      
-      Robot.arm.armTalon.selectProfileSlot(2, 0);
+      //2
+      Robot.arm.armTalon.selectProfileSlot(1, 0);
      // Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kForward); 
       Robot.arm.runPIDArm(Robot.arm.posTwo);
       SmartDashboard.putNumber("Target position", Robot.arm.posTwo); 
     
     } else if (OI.armPosThree.get() && !(OI.controllerOne.getRawAxis(2) > .1)) {
-
-      Robot.arm.armTalon.selectProfileSlot(3, 0);
+      //3
+      Robot.arm.armTalon.selectProfileSlot(1, 0);
       //Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kForward); 
       Robot.arm.runPIDArm(Robot.arm.posThree); 
       SmartDashboard.putNumber("Target position", Robot.arm.posThree);
@@ -111,10 +113,10 @@ public class RunMotorArm extends Command {
       SmartDashboard.putNumber("Target position", Robot.arm.hatchLift); 
     }
 
-    double armTargetPos = SmartDashboard.getNumber("Target position", 0); 
-    double encCount = SmartDashboard.getNumber("Enc position", 10); 
+    //double armTargetPos = SmartDashboard.getNumber("Target position", 0); 
+  // double encCount = SmartDashboard.getNumber("Enc position", 10); 
     //if (!(armTargetPos == 0))
-      Robot.arm.stopPIDPos(sensorVel, encCount, armTargetPos, MOP);  
+      //Robot.arm.stopPIDPos(sensorVel, encCount, armTargetPos, MOP);  
    // else if (armTargetPos == 0) {
    //   if (encCount >= armTargetPos - 50 && encCount <= armTargetPos + 50 && sensorVel == 0) {    }
       //  Robot.arm.runArm(-.015); 

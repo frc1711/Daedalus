@@ -15,6 +15,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 /**
@@ -50,39 +51,40 @@ public class Arm extends Subsystem {
     posOne = 855; //-1356
     posTwo = 2100; //-2823
     posThree = 1580; //-2195
-    hatchLift = 1050; 
+    hatchLift = 600; 
 
-    hatchPosOne = 1225; 
+    hatchPosOne = 1500; 
     hatchPosTwo = 2600; 
     hatchPosThree = 1800;
 
     posAbsZero = 0; 
-    rightAngle = 1500; //1422
+    rightAngle = 1350; //1422
 
     unitsPerRotation = 4096; //This was 1205 
     
     velCounter = 0; 
 
+    //armTalon.setIntegralAccumulator(-40000);
     armTalon.setSelectedSensorPosition(0);
     //armTalon.selectProfileSlot(0, 0);
     //corectionary values
     armTalon.config_kF(0, 0.0); //feed forward gain
     armTalon.config_kP(0, 0.8); //proportional
-    armTalon.config_kI(0, 0.0001); 
+    armTalon.config_kI(0, 0.000); 
     armTalon.config_kD(0, 5.5);
     //max speed
     armTalon.configClosedLoopPeakOutput(0, 0.7);
     //allowable error
-    armTalon.configAllowableClosedloopError(0, 50);
+  //  armTalon.configAllowableClosedloopError(0, 200);
     //(how fast you get there) how many counts per 100 milliseconds you can go  (rate of change of duty cycle)
     //armTalon.configMotionAcceleration(50); //250 ON ROBOT
     //how fast you go once you're there
     //armTalon.configMotionCruiseVelocity(50); //100 on robot
-    
+    armTalon.config_IntegralZone(1, 40000);
     armTalon.config_kF(1, 0.0); 
-    armTalon.config_kP(1, 0.8); 
-    armTalon.config_kI(1, 0.0001);
-    armTalon.config_kD(1, 5.5);
+    armTalon.config_kP(1, 1.25); //1.35 is more accurate but also more shaky  
+    armTalon.config_kI(1, 0.000);
+    armTalon.config_kD(1, 3);
     
     armTalon.configClosedLoopPeakOutput(1, 0.7); 
 
@@ -125,7 +127,7 @@ public class Arm extends Subsystem {
     }
   }
   public void runPIDArm (double pos) {
-    SmartDashboard.putNumber("Position", pos); 
+    //SmartDashboard.putNumber("Position", pos); 
     armTalon.set(ControlMode.MotionMagic, pos); 
   }
 
@@ -137,15 +139,18 @@ public class Arm extends Subsystem {
     }
 
     if (encPos >= targetPos-300 && encPos <= targetPos+300 && vel == 0 && velCounter == 15) {
-      SmartDashboard.putBoolean("HOLDING", true); 
-      SmartDashboard.putNumber("VEL", vel); 
-      SmartDashboard.putNumber("ENCPOS", encPos); 
-      SmartDashboard.putNumber("TARGETPOS", targetPos); 
-      SmartDashboard.putNumber("MOP", MOP); 
-      armTalon.set(MOP);
+//SmartDashboard.putBoolean("HOLDING", true); 
+  //    SmartDashboard.putNumber("VEL", vel); 
+    //  SmartDashboard.putNumber("ENCPOS", encPos); 
+      //SmartDashboard.putNumber("TARGETPOS", targetPos); 
+      //SmartDashboard.putNumber("MOP", MOP); 
+      //armTalon.set(MOP);
+      Robot.arm.runPIDArm(encPos); 
+       
+     // Robot.arm.runPIDArm(encPos); 
       velCounter = 0;  
     } else {
-      SmartDashboard.putBoolean("HOLDING", false); 
+      //SmartDashboard.putBoolean("HOLDING", false); 
     } 
   }
 

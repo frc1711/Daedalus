@@ -5,56 +5,42 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.manipulators;
+package frc.robot.commands.drive;
 
-import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
 import frc.robot.Robot;
+import frc.robot.RobotMap.RoboDir;
 
-public class SpitHatches extends Command {
-  double state; 
-  double positionCounter; 
-  boolean pressed; 
-  public SpitHatches() {
+public class PixyDrive extends Command {
+  public PixyDrive() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.hatchManipulatorSub); 
+  //  requires(Robot.i2CInterface); 
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    pressed = false; 
-    
+   
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
-    //NEW HATCH MANIPULATOR 
-
-    /*if (OI.controllerZero.getRawAxis(2) == .1) {
-    }*/
-    if (OI.controllerZero.getRawAxis(2) > .1 || OI.controllerZero.getRawAxis(3) > .1) {
-      Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kForward);
-    } else {
-      Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kOff); 
-    } 
-  /*  if (OI.controllerZero.getRawAxis(2) == .1) {
-      positionCounter++; 
-    }
-    
-    if ((OI.controllerZero.getRawAxis(2) > 0 && positionCounter > 2) ||(OI.controllerZero.getRawAxis(3) > 0 && state == 1) ) {
-      Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kForward); 
-      state = 2; 
-      
-    } else if ((OI.controllerZero.getRawAxis(2) > .1 && state == 2) || (OI.controllerZero.getRawAxis(3) > .1 && state == 2)) {
-      Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kOff); 
-
-      if (OI.controllerZero.getTriggerReleased()) {
-        state = 1; 
+  /*  if (OI.lineUpEnable.get()) {
+      if(Robot.i2CInterface.getPixyAngle() < -5 && Robot.i2CInterface.getPixyAngle() != 400 && Robot.i2CInterface.getPixyAngle() != 700) {
+        SmartDashboard.putString("DIRECTIONPIXY", "LEFT"); 
+        Robot.driveSystem.driveDirection(.5, RoboDir.LEFT); 
+      } else if (Robot.i2CInterface.getPixyAngle() > 5 && Robot.i2CInterface.getPixyAngle() != 400 && Robot.i2CInterface.getPixyAngle() != 700) {
+        SmartDashboard.putString("DIRECTIONPIXY", "RIGHT"); 
+        Robot.driveSystem.driveDirection(.5, RoboDir.RIGHT); 
+      } else if (Robot.i2CInterface.getPixyAngle() >= -5 && Robot.i2CInterface.getPixyAngle() <= 5 && Robot.i2CInterface.getPixyAngle() != 400 && Robot.i2CInterface.getPixyAngle() != 700) {
+        SmartDashboard.putString("DIRECTIONPIXY", "STRAIGHT"); 
+        Robot.driveSystem.driveDirection(0.7, RoboDir.STRAIGHT); 
+      } else {
+        SmartDashboard.putString("DIRECTIONPIXY", "FAIL"); 
       }
     } */
   }

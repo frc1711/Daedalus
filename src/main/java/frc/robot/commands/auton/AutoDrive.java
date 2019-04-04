@@ -5,58 +5,40 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.manipulators;
+package frc.robot.commands.auton;
 
-import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.OI;
 import frc.robot.Robot;
 
-public class SpitHatches extends Command {
-  double state; 
-  double positionCounter; 
-  boolean pressed; 
-  public SpitHatches() {
+public class AutoDrive extends Command {
+
+  double encValue; 
+  double desiredLocation; 
+  double gyroAngle; 
+  double startTime; 
+  double speed; 
+  double currentTime; 
+  double timeout; 
+
+  public AutoDrive(double distance, double speed, double timeout) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.hatchManipulatorSub); 
+    desiredLocation = Math.round(distance * 11.5); // 1 in per 11.5 revolutions (based on a total count of 69 count per rot and 6 in wheels)
+    // 6 in per 69 count per rot = 1 in per 11.5 count per rot 
+    this.speed = speed; 
+    
+    this.timeout = timeout * 1000; //timeout in seconds, system in millis
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    pressed = false; 
-    
+    Robot.driveSystem.stopRobot();     
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
-    //NEW HATCH MANIPULATOR 
-
-    /*if (OI.controllerZero.getRawAxis(2) == .1) {
-    }*/
-    if (OI.controllerZero.getRawAxis(2) > .1 || OI.controllerZero.getRawAxis(3) > .1) {
-      Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kForward);
-    } else {
-      Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kOff); 
-    } 
-  /*  if (OI.controllerZero.getRawAxis(2) == .1) {
-      positionCounter++; 
-    }
-    
-    if ((OI.controllerZero.getRawAxis(2) > 0 && positionCounter > 2) ||(OI.controllerZero.getRawAxis(3) > 0 && state == 1) ) {
-      Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kForward); 
-      state = 2; 
-      
-    } else if ((OI.controllerZero.getRawAxis(2) > .1 && state == 2) || (OI.controllerZero.getRawAxis(3) > .1 && state == 2)) {
-      Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kOff); 
-
-      if (OI.controllerZero.getTriggerReleased()) {
-        state = 1; 
-      }
-    } */
   }
 
   // Make this return true when this Command no longer needs to run execute()
