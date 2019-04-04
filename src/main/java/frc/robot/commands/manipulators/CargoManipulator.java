@@ -33,7 +33,7 @@ public class CargoManipulator extends Command {
   @Override
   protected void execute() { 
     //Intake and outtake method
-    System.out.println(Robot.manipulator.getManipulatorSwitch()); 
+   // System.out.println(Robot.manipulator.getManipulatorSwitch()); 
     if (OI.manipButtonZero.get()) {
       
       Robot.manipulator.runManipulator(.75);
