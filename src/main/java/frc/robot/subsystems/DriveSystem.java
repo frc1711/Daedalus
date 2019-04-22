@@ -40,7 +40,7 @@ public class DriveSystem extends Subsystem {
   public CANEncoder rearLeftEnc; 
   public CANEncoder rearRightEnc; 
 
-  public AHRS gyro; 
+ // public AHRS gyro; 
 
   public double rearLeftEncValue; 
   public double rearRightEncValue; 
@@ -72,7 +72,7 @@ public class DriveSystem extends Subsystem {
 
     robotDrive = new DifferentialDrive (leftSideDrive, rightSideDrive);
 
-    gyro = new AHRS(Port.kUSB); 
+   // gyro = new AHRS(Port.kUSB); 
   }
   
   public void stopRobot() {
@@ -116,7 +116,7 @@ public class DriveSystem extends Subsystem {
   public double zeroedRLPos() {
     return rearLeftEnc.getPosition() - initialRLValue; 
   }
-  public double getGyroYAW() {
+  /*public double getGyroYAW() {
     return gyro.getYaw(); 
   }
 
@@ -142,7 +142,7 @@ public class DriveSystem extends Subsystem {
 
   public boolean isGyroCalibrating() {
     return gyro.isCalibrating();
-  }
+  } */
 
   @Override
   public void initDefaultCommand() {

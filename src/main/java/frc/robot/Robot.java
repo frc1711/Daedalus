@@ -200,7 +200,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putString("GAME MODE", "GAMEPLAY"); 
    // pixyDrive.start(); 
     initEndGamePneumatics.start(); 
-    driveSystem.zeroGyro(); 
+   //driveSystem.zeroGyro(); 
     rawArcadeDrive.start(); 
   //  runPIDArm.start(); 
     lineUpDrive.start(); 
@@ -229,11 +229,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    runMotorArm.start(); 
+    //runMotorArm.start(); 
 
     if(!endGame) {
 
-     // runMotorArm.start(); 
+      runMotorArm.start(); 
       //TODO: Map servo to preset positions when a button is pressed. Figure out what those positions are .
       //pixyTilt.runServo(OI.controllerOne.getRawAxis(2)); 
       cameraCount++;

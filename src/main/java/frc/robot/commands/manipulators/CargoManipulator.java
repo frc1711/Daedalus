@@ -36,11 +36,11 @@ public class CargoManipulator extends Command {
    // System.out.println(Robot.manipulator.getManipulatorSwitch()); 
     if (OI.manipButtonZero.get()) {
       
-      Robot.manipulator.runManipulator(.75);
+      Robot.manipulator.runManipulator(-.75);
 
     } else if (OI.manipButtonOne.get()){
 
-      Robot.manipulator.runManipulator(-.75); 
+      Robot.manipulator.runManipulator(.75); 
 
     } else {
 

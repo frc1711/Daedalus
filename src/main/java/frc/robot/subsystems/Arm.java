@@ -48,14 +48,14 @@ public class Arm extends Subsystem {
     
     armMin = -1; 
     posZero = 1612; //-799
-    posOne = 855; //-1356
-    posTwo = 2100; //-2823
+    posOne = 1055; //-1356
+    posTwo = 2400; //-2823
     posThree = 1580; //-2195
     hatchLift = 600; 
 
     hatchPosOne = 1500; 
     hatchPosTwo = 2600; 
-    hatchPosThree = 1800;
+    hatchPosThree = 2100;
 
     posAbsZero = 0; 
     rightAngle = 1350; //1422

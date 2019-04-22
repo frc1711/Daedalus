@@ -16,6 +16,7 @@ import frc.robot.Robot;
 public class RawArcadeDrive extends Command {
   public double tipAngle; 
   public double initAngle; 
+  public boolean speed; 
 
   public RawArcadeDrive() {
     // Use requires() here to declare subsystem dependencies
@@ -26,9 +27,8 @@ public class RawArcadeDrive extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    speed = false; 
     Robot.driveSystem.stopRobot(); 
-    if (Robot.driveSystem.isGyroConnected()) 
-      initAngle = Robot.driveSystem.getGyroRoll(); 
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -75,8 +75,16 @@ public class RawArcadeDrive extends Command {
       Robot.driveSystem.arcadeDrive(0.8*OI.controllerZero.getRawAxis(1), 0.8*OI.controllerZero.getRawAxis(4)); 
     
     } */
-    Robot.driveSystem.arcadeDrive(0.8*OI.controllerZero.getRawAxis(1), 0.8* OI.controllerZero.getRawAxis(4)); 
+    if (OI.controllerZero.getRawButtonReleased(1)) {
+      speed = !speed; 
+      SmartDashboard.putBoolean("Speed On", speed); 
+    }
 
+    if (!speed) {
+      Robot.driveSystem.arcadeDrive(0.8*OI.controllerZero.getRawAxis(1), 0.8* OI.controllerZero.getRawAxis(4)); 
+     } else if (speed) {
+      Robot.driveSystem.arcadeDrive(0.4*OI.controllerZero.getRawAxis(1), 0.4*OI.controllerZero.getRawAxis(4)); 
+    }
   } 
 
   // Make this return true when this Command no longer needs to run execute()

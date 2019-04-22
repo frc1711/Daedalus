@@ -49,6 +49,7 @@ public class OI {
   //controller zero, drive 
   public static JoystickButton lineUpEnable = new JoystickButton(controllerZero, 4); 
   public static JoystickButton ballVisionEnable = new JoystickButton(controllerZero, 2);
+  public static JoystickButton speedButton = new JoystickButton(controllerZero, 1); 
   public static JoystickButton manipButtonZero = new JoystickButton(controllerZero, 5); 
   public static JoystickButton manipButtonOne = new JoystickButton(controllerZero, 6);
   public static JoystickButton climbSafetyZero = new JoystickButton(controllerZero, 7); 
