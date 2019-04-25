@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 //import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 //import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -25,7 +26,7 @@ public class Arm extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   public WPI_TalonSRX armTalon;
-  
+  public DigitalInput modeToggle; 
   public double velCounter; 
   public double armMin; 
   public double posZero; 
@@ -45,6 +46,7 @@ public class Arm extends Subsystem {
 
   public Arm() {
     armTalon = new WPI_TalonSRX(RobotMap.armTalon); 
+    modeToggle = new DigitalInput(RobotMap.modeToggle); 
     
     armMin = -1; 
     posZero = 1612; //-799
@@ -158,7 +160,9 @@ public class Arm extends Subsystem {
     return armTalon.getSelectedSensorPosition(0);
   }
 
-  
+  public boolean getControllerMode() {
+    return modeToggle.get(); 
+  }
 
   @Override
   public void initDefaultCommand() {

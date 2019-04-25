@@ -14,7 +14,7 @@ package frc.robot;
  * floating around.
  */
 public class RobotMap {
-  //MOTORS
+//MOTORS
   //drive base controllers
   public static int RRD = 4; 
   public static int RLD = 2; 
@@ -40,14 +40,20 @@ public class RobotMap {
   public static int auxWheelSolenoidRear = 6;  
   public static int botUnlock = 4; 
   public static int botUnlockRear = 0; 
-
+ 
   //controllers
   public static int controllerZero = 0;
   public static int controllerOne = 1; 
+  public static int controllerTwo = 2; 
 
   //digital ports
-  public static int manipulatorSwitch = 5; 
+  public static int manipulatorSwitch = 0; 
+  public static int modeToggle = 3; 
 
+  
+  //servos
+  public static int servoMode = 2; 
+  public static int pixyTilter = 0; 
   //enums
   public enum RoboDir { 
     LEFT (-1), 

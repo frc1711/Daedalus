@@ -18,6 +18,7 @@ import frc.robot.Robot;
 public class RunMotorArm extends Command {
   public boolean hold = false; 
   public boolean started = false; 
+  public boolean state = false; 
   public RunMotorArm() {
     
     // Use requires() here to declare subsystem dependencies
@@ -47,8 +48,19 @@ public class RunMotorArm extends Command {
      //double cle = Robot.arm.armTalon.getClosedLoopError(); 
     //SmartDashboard.putNumber("CLOSED LOOP ERROR", cle); 
     //SmartDashboard.putNumber("INTGAIN", iGAIN); 
-   
+  //  if () {
+   // Robot.modeToggler.modeToggleDevice.setAngle(180); 
+      //Robot.modeToggler.runServo(OI.controllerTwo.getRawAxis(1) ); 
+    // if (OI.modeToggleButton.get() && !state) {
+
+   //  } else if (OI.modeToggleButton.get() && state) {
+       //Robot.modeToggler.angleServo(0); 
+    // }
+
+
+//}
     //HATCH POSITIONS
+    System.out.println(Robot.arm.getControllerMode()); 
     if(OI.armPosOne.get() && OI.controllerOne.getRawAxis(2) > .1) {
      //1
       Robot.arm.armTalon.selectProfileSlot(1, 0); 
@@ -58,7 +70,7 @@ public class RunMotorArm extends Command {
 
       SmartDashboard.putNumber("Target position", Robot.arm.hatchPosOne); 
    
-    } else if (OI.armPosTwo.get() && OI.controllerOne.getRawAxis(2) > .1) {
+    } else if (OI.armPosTwo.get() && OI.controllerOne.getRawAxis(2) > .1 && Robot.arm.getControllerMode()) {
       //2
       Robot.arm.armTalon.selectProfileSlot(1, 0); 
       //Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kForward); 
@@ -66,7 +78,7 @@ public class RunMotorArm extends Command {
 
       SmartDashboard.putNumber("Target position", Robot.arm.hatchPosTwo); 
 
-    } else if (OI.armPosThree.get() && OI.controllerOne.getRawAxis(2) > .1) {
+    } else if (OI.armPosThree.get() && OI.controllerOne.getRawAxis(2) > .1 && Robot.arm.getControllerMode()) {
      //3
       Robot.arm.armTalon.selectProfileSlot(1, 0); 
      // Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kReverse); 
@@ -74,13 +86,16 @@ public class RunMotorArm extends Command {
 
       SmartDashboard.putNumber("Target position", Robot.arm.hatchPosThree); 
     
-    } //CARGO POSITIONS
+    } else if (OI.armPosZero.get() && OI.controllerOne.getRawAxis(2) > .1) {
+      Robot.arm.runPIDArm(Robot.arm.hatchPosOne); 
+    }
+      //CARGO POSITIONS
     else if (OI.armPosZero.get() && !(OI.controllerOne.getRawAxis(2) > .1)) {
       //1
       Robot.arm.armTalon.selectProfileSlot(1, 0);
      // Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kReverse); 
-      Robot.arm.runPIDArm(Robot.arm.posZero);
-      SmartDashboard.putNumber("Target position", Robot.arm.posZero); 
+      Robot.arm.runPIDArm(Robot.arm.hatchLift);
+      SmartDashboard.putNumber("Target position", Robot.arm.hatchLift); 
 
     } else if (OI.armPosOne.get() && !(OI.controllerOne.getRawAxis(2) > .1)) {
       //1
@@ -108,9 +123,6 @@ public class RunMotorArm extends Command {
       Robot.arm.runPIDArm(Robot.arm.posAbsZero); 
       SmartDashboard.putNumber("Target position", Robot.arm.posAbsZero); 
     
-    } else if (OI.controllerOne.getPOV() == 90 && OI.controllerOne.getRawAxis(2) > .1) {
-      Robot.arm.runPIDArm(Robot.arm.hatchLift);   
-      SmartDashboard.putNumber("Target position", Robot.arm.hatchLift); 
     }
 
     //double armTargetPos = SmartDashboard.getNumber("Target position", 0); 

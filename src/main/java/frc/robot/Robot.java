@@ -32,6 +32,7 @@ import frc.robot.subsystems.DriveSystem;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.subsystems.ManipulatorHatch;
+import frc.robot.subsystems.ModeToggler;
 import frc.robot.subsystems.PixyTilt;
 import frc.robot.subsystems.PneumaticArm;
 import frc.robot.subsystems.vision.CameraConfig;
@@ -53,6 +54,7 @@ public class Robot extends TimedRobot {
   public static PneumaticArm pneumaticArm; 
   public static Arm arm;
   public static Lift lift;  
+  public static ModeToggler modeToggler; 
  // public static I2CInterface i2CInterface; 
   public static PixyTilt pixyTilt; 
   //public static PixyCameraDef pixyCam; 
@@ -93,11 +95,11 @@ public class Robot extends TimedRobot {
     hatchManipulatorSub = new ManipulatorHatch();  
     lift = new Lift(); 
     pixyTilt = new PixyTilt();  
-    //i2CInterface = new I2CInterface(); 
     oi = new OI();
 
     // COMMANDS
     lineUpDrive = new LineUpDrive(); 
+    modeToggler = new ModeToggler(); 
     initEndGamePneumatics = new InitEndGamePneumatics(); 
     spitHatches = new SpitHatches(); 
     runPneumaticArm = new RunPneumaticArm();
@@ -106,13 +108,11 @@ public class Robot extends TimedRobot {
     auxWheel = new AuxWheel();
     pneumaticOff = new PneumaticOff(); 
     rawArcadeDrive = new RawArcadeDrive(); 
-    //runPIDArm = new RunPIDArm(); 
     pixyDrive = new PixyDrive(); 
     scissorLift = new ScissorLift(); 
 
     //CAMERAS AND PIXYCAM
     CameraConfig.setup(); 
-    //pixyCam = new PixyCameraDef(new SPILink()); 
 
     UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture();
     cam0.setFPS(30);
@@ -172,14 +172,12 @@ public class Robot extends TimedRobot {
      */
     initEndGamePneumatics.start(); 
     runPneumaticArm.start(); 
-    //hatchManipulator.start(); 
     spitHatches.start(); 
     auxWheel.start(); 
     runMotorArm.start(); 
     scissorLift.start(); 
     cargoManipulator.start();
-    //pneumaticOff.start();
-    //double speed = ((OI.controllerZero.getRawAxis(1))/2);
+
     // schedule the autonomous command (example)
     if (autonomousCommand != null) {
       autonomousCommand.start();
@@ -198,14 +196,10 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     SmartDashboard.putString("GAME MODE", "GAMEPLAY"); 
-   // pixyDrive.start(); 
     initEndGamePneumatics.start(); 
-   //driveSystem.zeroGyro(); 
     rawArcadeDrive.start(); 
-  //  runPIDArm.start(); 
     lineUpDrive.start(); 
     cargoManipulator.start();
-    //BallFollow.run();
     spitHatches.start();
     runPneumaticArm.start(); 
 
@@ -246,7 +240,7 @@ public class Robot extends TimedRobot {
             //CameraConfig.run(); 
      
     }
-    if (endGameCounter == 0 && endGame || (OI.controllerZero.getRawButtonReleased(7) && OI.controllerZero.getRawButtonReleased(8))) {
+    if (endGameCounter < 2 && endGame || (OI.controllerZero.getRawButtonReleased(7) && OI.controllerZero.getRawButtonReleased(8))) {
       endGame = true; 
       spitHatches.cancel(); 
       runMotorArm.cancel(); 
@@ -255,7 +249,7 @@ public class Robot extends TimedRobot {
       runPneumaticArm.start(); 
       scissorLift.start(); 
       auxWheel.start(); 
-      endGameCounter = 1; 
+      endGameCounter++; 
     }
 
     

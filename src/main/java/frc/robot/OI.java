@@ -45,6 +45,8 @@ public class OI {
 
   public static Joystick controllerZero = new Joystick(RobotMap.controllerZero);
   public static Joystick controllerOne = new Joystick(RobotMap.controllerOne); 
+  public static Joystick controllerTwo = new Joystick(RobotMap.controllerTwo); 
+
   //BUTTONS
   //controller zero, drive 
   public static JoystickButton lineUpEnable = new JoystickButton(controllerZero, 4); 
@@ -65,5 +67,7 @@ public class OI {
   public static JoystickButton pnuematicOff = new JoystickButton(controllerOne, 7); 
   public static JoystickButton pnuematicOffTwo = new JoystickButton(controllerOne, 8); 
   public static JoystickButton auxWheelButton = new JoystickButton(controllerOne, 10); 
-  
+ 
+  //controller two, toggle
+  public static JoystickButton modeToggleButton = new JoystickButton(controllerTwo, 2); 
 }

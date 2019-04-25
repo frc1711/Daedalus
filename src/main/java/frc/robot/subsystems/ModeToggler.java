@@ -14,25 +14,24 @@ import frc.robot.RobotMap;
 /**
  * Add your docs here.
  */
-public class PixyTilt extends Subsystem {
+public class ModeToggler extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  public Servo pixyTilt;
-
-  public PixyTilt() {
-    pixyTilt = new Servo(RobotMap.pixyTilter);
+  public Servo modeToggleDevice; 
+  public ModeToggler() { 
+    modeToggleDevice = new Servo(RobotMap.servoMode); 
   }
 
-  public void runServo(double speed) { 
-    pixyTilt.set(speed); 
+  public void runServo(double speed) {
+    modeToggleDevice.set(speed); 
   }
 
   public void angleServo(double angle) {
-    pixyTilt.setAngle(angle); 
+    modeToggleDevice.setAngle(angle); 
   }
 
-  public double getServoAngle () {
-    return pixyTilt.getAngle(); 
+  public double getServoAngle() {
+    return modeToggleDevice.getAngle(); 
   }
   
   @Override
