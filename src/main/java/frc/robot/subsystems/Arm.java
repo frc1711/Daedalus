@@ -7,14 +7,12 @@
 
 package frc.robot.subsystems;
 
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
-//import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-//import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
@@ -60,7 +58,7 @@ public class Arm extends Subsystem {
     hatchPosThree = 2100;
 
     posAbsZero = 0; 
-    rightAngle = 1350; //1422
+    rightAngle = 1350; //1422sn-
 
     unitsPerRotation = 4096; //This was 1205 
     
@@ -71,20 +69,14 @@ public class Arm extends Subsystem {
     //armTalon.selectProfileSlot(0, 0);
     //corectionary values
     armTalon.config_kF(0, 0.0); //feed forward gain
-    armTalon.config_kP(0, 0.8); //proportional
+    armTalon.config_kP(0, .8); //proportional
     armTalon.config_kI(0, 0.000); 
     armTalon.config_kD(0, 5.5);
     //max speed
     armTalon.configClosedLoopPeakOutput(0, 0.7);
     //allowable error
-  //  armTalon.configAllowableClosedloopError(0, 200);
-    //(how fast you get there) how many counts per 100 milliseconds you can go  (rate of change of duty cycle)
-    //armTalon.configMotionAcceleration(50); //250 ON ROBOT
-    //how fast you go once you're there
-    //armTalon.configMotionCruiseVelocity(50); //100 on robot
-    armTalon.config_IntegralZone(1, 40000);
     armTalon.config_kF(1, 0.0); 
-    armTalon.config_kP(1, 1.25); //1.35 is more accurate but also more shaky  
+    armTalon.config_kP(1, 1.25); 
     armTalon.config_kI(1, 0.000);
     armTalon.config_kD(1, 3);
     

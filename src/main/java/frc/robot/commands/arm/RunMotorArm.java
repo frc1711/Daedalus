@@ -123,6 +123,8 @@ public class RunMotorArm extends Command {
       Robot.arm.runPIDArm(Robot.arm.posAbsZero); 
       SmartDashboard.putNumber("Target position", Robot.arm.posAbsZero); 
     
+    } else if (OI.controllerOne.getPOV() == 90 && OI.controllerOne.getRawAxis(2) > .1) {
+      Robot.arm.runPIDArm(Robot.arm.posZero); 
     }
 
     //double armTargetPos = SmartDashboard.getNumber("Target position", 0); 

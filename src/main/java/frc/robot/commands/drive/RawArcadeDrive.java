@@ -83,7 +83,7 @@ public class RawArcadeDrive extends Command {
     if (!speed) {
       Robot.driveSystem.arcadeDrive(0.8*OI.controllerZero.getRawAxis(1), 0.8* OI.controllerZero.getRawAxis(4)); 
      } else if (speed) {
-      Robot.driveSystem.arcadeDrive(0.4*OI.controllerZero.getRawAxis(1), 0.4*OI.controllerZero.getRawAxis(4)); 
+      Robot.driveSystem.arcadeDrive(0.4*OI.controllerZero.getRawAxis(1), 0.5*OI.controllerZero.getRawAxis(4)); 
     }
   } 
 
