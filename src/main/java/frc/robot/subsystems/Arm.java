@@ -28,82 +28,55 @@ public class Arm extends Subsystem {
   public double velCounter; 
   public double armMin; 
   public double posZero; 
-  public double posAbsZero; 
+  public double home; 
   public double hatchPosOne; 
-  public double posOne; 
+  public double cargoPosOne; 
   public double hatchPosTwo; 
-  public double posTwo; 
+  public double cargoPosTwo; 
   public double hatchPosThree; 
-  public double posThree; 
-  public double rightAngle; 
+  public double cargoPosThree; 
+  public double hatchLift; 
+
   public double posDepo; 
   public double hatchPosDepo; 
   public int unitsPerRotation; 
   public double baseSpeed; 
-  public double hatchLift; 
 
   public Arm() {
     armTalon = new WPI_TalonSRX(RobotMap.armTalon); 
     modeToggle = new DigitalInput(RobotMap.modeToggle); 
     
-    armMin = -1; 
     posZero = 1612; //-799
-    posOne = 1055; //-1356
-    posTwo = 2400; //-2823
-    posThree = 1580; //-2195
+    home = 0; 
+
+    cargoPosOne = 1055; //-1356
+    cargoPosTwo = 2400; //-2823
+    cargoPosThree = 1580; //-2195
     hatchLift = 600; 
 
     hatchPosOne = 1500; 
     hatchPosTwo = 2600; 
     hatchPosThree = 2100;
 
-    posAbsZero = 0; 
-    rightAngle = 1350; //1422sn-
+    armMin = -1; 
 
     unitsPerRotation = 4096; //This was 1205 
-    
     velCounter = 0; 
 
-    //armTalon.setIntegralAccumulator(-40000);
-    armTalon.setSelectedSensorPosition(0);
-    //armTalon.selectProfileSlot(0, 0);
-    //corectionary values
-    armTalon.config_kF(0, 0.0); //feed forward gain
-    armTalon.config_kP(0, .8); //proportional
-    armTalon.config_kI(0, 0.000); 
-    armTalon.config_kD(0, 5.5);
-    //max speed
-    armTalon.configClosedLoopPeakOutput(0, 0.7);
-    //allowable error
-    armTalon.config_kF(1, 0.0); 
-    armTalon.config_kP(1, 1.25); 
-    armTalon.config_kI(1, 0.000);
-    armTalon.config_kD(1, 3);
+    armTalon.setSelectedSensorPosition(0); //Sets the selected sensor (armTalon encoder) to zero upon enabling. 
+
+    armTalon.config_kF(1, 0.0); //Configuring the 'kf' of the talon. This is a special value in relation to the talons. 
+    armTalon.config_kP(1, 1.25); //Configure the 'kP' of the PID loop-- how much proportional gain they should have. How fast it will increase. 
+    armTalon.config_kI(1, 0.000);//Configure the 'kI' of the PID loop-- how much adding of the area under the curve should happen. The kI is zero here because the application required that the loop not error-correct itself. It was good enough when it wasn't exact. 
+    armTalon.config_kD(1, 3); //Configure the 'kD' of the PID loop-- how much the slope of it should be 'smoothed out'. The kD is high here because the loop is being applied to a non-linear application. 
     
     armTalon.configClosedLoopPeakOutput(1, 0.7); 
 
     armTalon.configAllowableClosedloopError(1, 50); 
 
-    armTalon.config_kF(2, 0.0); 
-    armTalon.config_kP(2, 0.8); 
-    armTalon.config_kI(2, 0.0001); 
-    armTalon.config_kD(2, 5.5); 
+    armTalon.configMotionAcceleration(50);
 
-    armTalon.configClosedLoopPeakOutput(2, .7); 
-    armTalon.configAllowableClosedloopError(2, 50); 
-
-    armTalon.config_kF(3, 0.0); 
-    armTalon.config_kP(3, 0.8); 
-    armTalon.config_kI(3, 0.00025); 
-    armTalon.config_kD(3, 5.5); 
-
-    armTalon.configClosedLoopPeakOutput(3, .7); 
-    armTalon.configAllowableClosedloopError(3, 50); 
-
-    armTalon.configMotionAcceleration(50); //250 ON ROBOT
-
-    armTalon.configMotionCruiseVelocity(50); //380 ON ROBOT
-
+    armTalon.configMotionCruiseVelocity(50);
   }
 
   public void stopArm() {
@@ -133,18 +106,10 @@ public class Arm extends Subsystem {
     }
 
     if (encPos >= targetPos-300 && encPos <= targetPos+300 && vel == 0 && velCounter == 15) {
-//SmartDashboard.putBoolean("HOLDING", true); 
-  //    SmartDashboard.putNumber("VEL", vel); 
-    //  SmartDashboard.putNumber("ENCPOS", encPos); 
-      //SmartDashboard.putNumber("TARGETPOS", targetPos); 
-      //SmartDashboard.putNumber("MOP", MOP); 
-      //armTalon.set(MOP);
+      
       Robot.arm.runPIDArm(encPos); 
        
-     // Robot.arm.runPIDArm(encPos); 
       velCounter = 0;  
-    } else {
-      //SmartDashboard.putBoolean("HOLDING", false); 
     } 
   }
 

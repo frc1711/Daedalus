@@ -17,11 +17,9 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.InitEndGamePneumatics;
-import frc.robot.commands.PneumaticOff;
 import frc.robot.commands.arm.RunMotorArm;
 import frc.robot.commands.arm.RunPneumaticArm;
 import frc.robot.commands.drive.LineUpDrive;
-import frc.robot.commands.drive.PixyDrive;
 import frc.robot.commands.drive.RawArcadeDrive;
 import frc.robot.commands.lift.AuxWheel;
 import frc.robot.commands.lift.ScissorLift;
@@ -55,14 +53,9 @@ public class Robot extends TimedRobot {
   public static Arm arm;
   public static Lift lift;  
   public static ModeToggler modeToggler; 
- // public static I2CInterface i2CInterface; 
   public static PixyTilt pixyTilt; 
-  //public static PixyCameraDef pixyCam; 
   public static OI oi;
-  public boolean endGame = false; 
-  public double cameraCount = 0; 
-  public double endGameCounter; 
-  Command pixyDrive; 
+ 
   Command lineUpDrive; 
   Command rawArcadeDrive; 
   Command runPIDArm; 
@@ -76,7 +69,10 @@ public class Robot extends TimedRobot {
   Command initEndGamePneumatics; 
   Command hatchManipulatorFirst; 
 
-  Command autonomousCommand;
+  public boolean endGame = false; 
+  public double cameraCount = 0; 
+  public double endGameCounter; 
+
   SendableChooser<Command> chooser = new SendableChooser<>();
 
   /**
@@ -106,9 +102,7 @@ public class Robot extends TimedRobot {
     runMotorArm = new RunMotorArm(); 
     cargoManipulator = new CargoManipulator(); 
     auxWheel = new AuxWheel();
-    pneumaticOff = new PneumaticOff(); 
     rawArcadeDrive = new RawArcadeDrive(); 
-    pixyDrive = new PixyDrive(); 
     scissorLift = new ScissorLift(); 
 
     //CAMERAS AND PIXYCAM
@@ -119,6 +113,9 @@ public class Robot extends TimedRobot {
     cam0.setResolution(480, 320); 
     driveSystem.initialRRValue = driveSystem.rearRightEnc.getPosition(); 
     driveSystem.initialRLValue = driveSystem.rearLeftEnc.getPosition(); 
+  
+    //factory defaulting Talons
+    Robot.arm.armTalon.configFactoryDefault(); 
   }
 
 
@@ -162,14 +159,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    //m_autonomousCommand = m_chooser.getSelected();
 
-    /*
-     * String autoSelected = SmartDashboard.getString("Auto Selector",
-     * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-     * = new MyAutoCommand(); break; case "Default Auto": default:
-     * autonomousCommand = new ExampleCommand(); break; }
-     */
     initEndGamePneumatics.start(); 
     runPneumaticArm.start(); 
     spitHatches.start(); 
@@ -178,10 +168,6 @@ public class Robot extends TimedRobot {
     scissorLift.start(); 
     cargoManipulator.start();
 
-    // schedule the autonomous command (example)
-    if (autonomousCommand != null) {
-      autonomousCommand.start();
-    }
   }
 
   /**
@@ -202,20 +188,6 @@ public class Robot extends TimedRobot {
     cargoManipulator.start();
     spitHatches.start();
     runPneumaticArm.start(); 
-
- 
-    // This makes sure that the autonomous stops running when
-    // teleop starts running. If you want the autonomous to
-    // continue until interrupted by another command, remove
-    // this line or comment it out.
-    if (autonomousCommand != null) {
-      autonomousCommand.cancel();
-    }
-    
-
-    //hatchManipulator.start();
-    
-
   }
 
   /**
@@ -228,18 +200,15 @@ public class Robot extends TimedRobot {
     if(!endGame) {
 
       runMotorArm.start(); 
-      //TODO: Map servo to preset positions when a button is pressed. Figure out what those positions are .
-      //pixyTilt.runServo(OI.controllerOne.getRawAxis(2)); 
       cameraCount++;
+
     if (cameraCount == 5) {
-              //pixyCam.run(); 
         CameraConfig.run(); 
         cameraCount = 0; 
-      }
-      //
-            //CameraConfig.run(); 
-     
+      }     
     }
+
+    //only located here due to the nature of the "endgame" mode. It is not reccomended to run commands here, typically. 
     if (endGameCounter < 2 && endGame || (OI.controllerZero.getRawButtonReleased(7) && OI.controllerZero.getRawButtonReleased(8))) {
       endGame = true; 
       spitHatches.cancel(); 
@@ -251,14 +220,6 @@ public class Robot extends TimedRobot {
       auxWheel.start(); 
       endGameCounter++; 
     }
-
-    
-
- 
-    //pneumaticOff.start();
-   // System.out.println(manipulator.getManipulatorSwitch());
-    //System.out.println("Gyro" + Robot.driveSystem.getGyroPitch() + Robot.driveSystem.isGyroConnected()); 
-  
   }
 
   /**

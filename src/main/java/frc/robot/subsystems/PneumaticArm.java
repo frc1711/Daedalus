@@ -27,6 +27,7 @@ public class PneumaticArm extends Subsystem {
   public void setArmSolenoid(DoubleSolenoid.Value state) {
     armSolenoid.set(state); 
   }
+  
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

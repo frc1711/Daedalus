@@ -53,15 +53,7 @@ public class CargoManipulator extends Command {
     } else {
       OI.controllerZero.setRumble(RumbleType.kLeftRumble, 0);
     }
-/*
-    if (OI.manipButtonZero.get()) {
-      Robot.manipulator.runManipulator(.75); 
-    } else if (OI.manipButtonOne.get()) {
-      Robot.manipulator.runManipulator(-.75); 
-    } else {
-      Robot.manipulator.runManipulator(0); 
-    }
-  */  
+    
   }
 
   // Make this return true when this Command no longer needs to run execute()
