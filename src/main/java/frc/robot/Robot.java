@@ -17,9 +17,17 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.InitEndGamePneumatics;
+<<<<<<< HEAD
 import frc.robot.commands.arm.RunMotorArm;
 import frc.robot.commands.arm.RunPneumaticArm;
 import frc.robot.commands.drive.LineUpDrive;
+=======
+import frc.robot.commands.PneumaticOff;
+import frc.robot.commands.arm.RunMotorArm;
+import frc.robot.commands.arm.RunPneumaticArm;
+import frc.robot.commands.drive.LineUpDrive;
+import frc.robot.commands.drive.PixyDrive;
+>>>>>>> 545f5dca98d9702b3fc825682399047d239f3bc9
 import frc.robot.commands.drive.RawArcadeDrive;
 import frc.robot.commands.lift.AuxWheel;
 import frc.robot.commands.lift.ScissorLift;
@@ -53,9 +61,20 @@ public class Robot extends TimedRobot {
   public static Arm arm;
   public static Lift lift;  
   public static ModeToggler modeToggler; 
+<<<<<<< HEAD
   public static PixyTilt pixyTilt; 
   public static OI oi;
  
+=======
+ // public static I2CInterface i2CInterface; 
+  public static PixyTilt pixyTilt; 
+  //public static PixyCameraDef pixyCam; 
+  public static OI oi;
+  public boolean endGame = false; 
+  public double cameraCount = 0; 
+  public double endGameCounter; 
+  Command pixyDrive; 
+>>>>>>> 545f5dca98d9702b3fc825682399047d239f3bc9
   Command lineUpDrive; 
   Command rawArcadeDrive; 
   Command runPIDArm; 
@@ -69,10 +88,14 @@ public class Robot extends TimedRobot {
   Command initEndGamePneumatics; 
   Command hatchManipulatorFirst; 
 
+<<<<<<< HEAD
   public boolean endGame = false; 
   public double cameraCount = 0; 
   public double endGameCounter; 
 
+=======
+  Command autonomousCommand;
+>>>>>>> 545f5dca98d9702b3fc825682399047d239f3bc9
   SendableChooser<Command> chooser = new SendableChooser<>();
 
   /**
@@ -102,7 +125,13 @@ public class Robot extends TimedRobot {
     runMotorArm = new RunMotorArm(); 
     cargoManipulator = new CargoManipulator(); 
     auxWheel = new AuxWheel();
+<<<<<<< HEAD
     rawArcadeDrive = new RawArcadeDrive(); 
+=======
+    pneumaticOff = new PneumaticOff(); 
+    rawArcadeDrive = new RawArcadeDrive(); 
+    pixyDrive = new PixyDrive(); 
+>>>>>>> 545f5dca98d9702b3fc825682399047d239f3bc9
     scissorLift = new ScissorLift(); 
 
     //CAMERAS AND PIXYCAM
@@ -113,9 +142,12 @@ public class Robot extends TimedRobot {
     cam0.setResolution(480, 320); 
     driveSystem.initialRRValue = driveSystem.rearRightEnc.getPosition(); 
     driveSystem.initialRLValue = driveSystem.rearLeftEnc.getPosition(); 
+<<<<<<< HEAD
   
     //factory defaulting Talons
     Robot.arm.armTalon.configFactoryDefault(); 
+=======
+>>>>>>> 545f5dca98d9702b3fc825682399047d239f3bc9
   }
 
 
@@ -159,7 +191,18 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+<<<<<<< HEAD
 
+=======
+    //m_autonomousCommand = m_chooser.getSelected();
+
+    /*
+     * String autoSelected = SmartDashboard.getString("Auto Selector",
+     * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
+     * = new MyAutoCommand(); break; case "Default Auto": default:
+     * autonomousCommand = new ExampleCommand(); break; }
+     */
+>>>>>>> 545f5dca98d9702b3fc825682399047d239f3bc9
     initEndGamePneumatics.start(); 
     runPneumaticArm.start(); 
     spitHatches.start(); 
@@ -168,6 +211,13 @@ public class Robot extends TimedRobot {
     scissorLift.start(); 
     cargoManipulator.start();
 
+<<<<<<< HEAD
+=======
+    // schedule the autonomous command (example)
+    if (autonomousCommand != null) {
+      autonomousCommand.start();
+    }
+>>>>>>> 545f5dca98d9702b3fc825682399047d239f3bc9
   }
 
   /**
@@ -200,6 +250,7 @@ public class Robot extends TimedRobot {
     if(!endGame) {
 
       runMotorArm.start(); 
+<<<<<<< HEAD
       cameraCount++;
 
     if (cameraCount == 5) {
@@ -209,6 +260,20 @@ public class Robot extends TimedRobot {
     }
 
     //only located here due to the nature of the "endgame" mode. It is not reccomended to run commands here, typically. 
+=======
+      //TODO: Map servo to preset positions when a button is pressed. Figure out what those positions are .
+      //pixyTilt.runServo(OI.controllerOne.getRawAxis(2)); 
+      cameraCount++;
+    if (cameraCount == 5) {
+              //pixyCam.run(); 
+        CameraConfig.run(); 
+        cameraCount = 0; 
+      }
+      //
+            //CameraConfig.run(); 
+     
+    }
+>>>>>>> 545f5dca98d9702b3fc825682399047d239f3bc9
     if (endGameCounter < 2 && endGame || (OI.controllerZero.getRawButtonReleased(7) && OI.controllerZero.getRawButtonReleased(8))) {
       endGame = true; 
       spitHatches.cancel(); 
@@ -220,6 +285,17 @@ public class Robot extends TimedRobot {
       auxWheel.start(); 
       endGameCounter++; 
     }
+<<<<<<< HEAD
+=======
+
+    
+
+ 
+    //pneumaticOff.start();
+   // System.out.println(manipulator.getManipulatorSwitch());
+    //System.out.println("Gyro" + Robot.driveSystem.getGyroPitch() + Robot.driveSystem.isGyroConnected()); 
+  
+>>>>>>> 545f5dca98d9702b3fc825682399047d239f3bc9
   }
 
   /**

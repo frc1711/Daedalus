@@ -37,6 +37,7 @@ public int state = 0;
     } else if (state == 2) {
       SmartDashboard.putString("Pneumatic Arm State:", "Reverse"); 
     }
+<<<<<<< HEAD
     
     if (OI.controllerOne.getPOV() == 180 && state == 1 ) {
       
@@ -48,6 +49,19 @@ public int state = 0;
       Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kForward);
       state = 1;  
 
+=======
+    if (OI.controllerOne.getPOV() == 180 && state == 1 ) {
+      //Robot.arm.runPIDArm(Robot.arm.rightAngle); 
+      Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kReverse); 
+      state = 2; 
+      //&& !(armMotorSpeed == 0)
+    } else if (OI.controllerOne.getPOV() == 0 && state == 2) {
+      //Robot.arm.runPIDArm(Robot.arm.rightAngle); 
+      Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kForward);
+      state = 1;  
+
+      
+>>>>>>> 545f5dca98d9702b3fc825682399047d239f3bc9
     }
   }
 

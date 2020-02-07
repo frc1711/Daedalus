@@ -19,7 +19,10 @@ public class RunMotorArm extends Command {
   public boolean hold = false; 
   public boolean started = false; 
   public boolean state = false; 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 545f5dca98d9702b3fc825682399047d239f3bc9
   public RunMotorArm() {
     
     // Use requires() here to declare subsystem dependencies
@@ -53,7 +56,6 @@ public class RunMotorArm extends Command {
     } else if (OI.armPosTwo.get() && OI.controllerOne.getRawAxis(2) > .1 && Robot.arm.getControllerMode()) {
       //2
       Robot.arm.armTalon.selectProfileSlot(1, 0); 
-
       Robot.arm.runPIDArm(Robot.arm.hatchPosTwo); 
 
       SmartDashboard.putNumber("Target position", Robot.arm.hatchPosTwo); 
@@ -61,7 +63,6 @@ public class RunMotorArm extends Command {
     } else if (OI.armPosThree.get() && OI.controllerOne.getRawAxis(2) > .1 && Robot.arm.getControllerMode()) {
      //3
       Robot.arm.armTalon.selectProfileSlot(1, 0); 
-
       Robot.arm.runPIDArm(Robot.arm.hatchPosThree); 
 
       SmartDashboard.putNumber("Target position", Robot.arm.hatchPosThree); 

@@ -34,6 +34,50 @@ public class RawArcadeDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+<<<<<<< HEAD
+=======
+
+  /* if (Robot.driveSystem.isGyroConnected()) {
+
+      tipAngle = Robot.driveSystem.getGyroRoll() - initAngle; 
+      SmartDashboard.putNumber("TIP ANGLE", tipAngle); 
+
+      if (tipAngle < 7 || tipAngle > 60) {
+
+        SmartDashboard.putBoolean("TIP WARNING", false);
+
+        if (Math.abs(OI.controllerZero.getRawAxis(1)) > .1 || Math.abs(OI.controllerZero.getRawAxis(4)) > .1) {
+         
+          Robot.driveSystem.arcadeDrive(OI.controllerZero.getRawAxis(1), OI.controllerZero.getRawAxis(4)); 
+        
+        } else {
+        
+          Robot.driveSystem.arcadeDrive(0, 0);
+        
+        }
+      } else if (tipAngle >= 7 && tipAngle < 14) {
+        
+        SmartDashboard.putBoolean("TIP WARNING", true); 
+        Robot.driveSystem.arcadeDrive(0.5 * OI.controllerZero.getRawAxis(1), 0.5 * OI.controllerZero.getRawAxis(4));
+      
+      } else if (tipAngle >= 7 && tipAngle < 8.5) {
+      
+        SmartDashboard.putBoolean("TIP WARNING", true); 
+        Robot.driveSystem.arcadeDrive(-.5, 0); 
+      
+      } else if (tipAngle >= 14) {
+      
+        SmartDashboard.putBoolean("TIP WARNING", true); 
+        Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kReverse); 
+        Robot.driveSystem.arcadeDrive(-1, 0); 
+      
+      }
+    } else {
+      
+      Robot.driveSystem.arcadeDrive(0.8*OI.controllerZero.getRawAxis(1), 0.8*OI.controllerZero.getRawAxis(4)); 
+    
+    } */
+>>>>>>> 545f5dca98d9702b3fc825682399047d239f3bc9
     if (OI.controllerZero.getRawButtonReleased(1)) {
       speed = !speed; 
       SmartDashboard.putBoolean("Speed On", speed); 

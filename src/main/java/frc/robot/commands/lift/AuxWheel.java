@@ -43,6 +43,7 @@ public class AuxWheel extends Command {
 
     if (OI.auxWheelButton.get() && state == 2 || state ==  0) {
       Robot.lift.auxWheelSolenoid.set(Value.kForward); 
+<<<<<<< HEAD
 
       if (OI.controllerOne.getRawButtonReleased(10)) 
         state = 1;
@@ -53,6 +54,16 @@ public class AuxWheel extends Command {
       if (OI.controllerOne.getRawButtonReleased(10)) 
         state = 2; 
 
+=======
+      //System.out.println("ForwardAux");
+      if (OI.controllerOne.getRawButtonReleased(10)) 
+        state = 1;
+    } else if (OI.auxWheelButton.get() && state == 1) {
+      Robot.lift.auxWheelSolenoid.set(Value.kReverse); 
+     // System.out.println("BackwardAux");
+      if (OI.controllerOne.getRawButtonReleased(10)) 
+        state = 2; 
+>>>>>>> 545f5dca98d9702b3fc825682399047d239f3bc9
     } 
     
     if (Math.abs(OI.controllerOne.getRawAxis(5)) > .1) {
