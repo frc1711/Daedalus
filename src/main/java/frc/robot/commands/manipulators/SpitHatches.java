@@ -32,37 +32,10 @@ public class SpitHatches extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-<<<<<<< HEAD
-=======
-
-    //NEW HATCH MANIPULATOR 
-
-    /*if (OI.controllerZero.getRawAxis(2) == .1) {
-    }*/
->>>>>>> 545f5dca98d9702b3fc825682399047d239f3bc9
     if (OI.controllerZero.getRawAxis(2) > .1 || OI.controllerZero.getRawAxis(3) > .1) {
       Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kForward);
     } else {
       Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kOff); 
-<<<<<<< HEAD
-=======
-    } 
-  /*  if (OI.controllerZero.getRawAxis(2) == .1) {
-      positionCounter++; 
-    }
-    
-    if ((OI.controllerZero.getRawAxis(2) > 0 && positionCounter > 2) ||(OI.controllerZero.getRawAxis(3) > 0 && state == 1) ) {
-      Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kForward); 
-      state = 2; 
-      
-    } else if ((OI.controllerZero.getRawAxis(2) > .1 && state == 2) || (OI.controllerZero.getRawAxis(3) > .1 && state == 2)) {
-      Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kOff); 
-
-      if (OI.controllerZero.getTriggerReleased()) {
-        state = 1; 
-      }
-    } */
->>>>>>> 545f5dca98d9702b3fc825682399047d239f3bc9
   }
 
   // Make this return true when this Command no longer needs to run execute()
