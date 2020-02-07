@@ -7,112 +7,94 @@
 
 package frc.robot.commands.arm;
 
-
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-
-import frc.robot.OI;
-import frc.robot.Robot;
+import frc.robot.RobotMap;
+import frc.robot.subsystems.Arm;
 
 public class RunMotorArm extends Command {
-  public boolean hold = false; 
-  public boolean started = false; 
-  public boolean state = false; 
-<<<<<<< HEAD
+  private Arm arm; 
+  private Joystick stick; 
 
-=======
->>>>>>> 545f5dca98d9702b3fc825682399047d239f3bc9
-  public RunMotorArm() {
-    
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.arm); 
+  public RunMotorArm(Arm arm, Joystick stick) {
+    requires(arm); 
+    this.arm = arm; 
+    this.stick = stick; 
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
    
-   // Robot.clock.stopClock();     
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
      
-     SmartDashboard.putNumber("Enc position", Robot.arm.getSensorValue()); 
+    SmartDashboard.putNumber("Enc position", arm.getSensorValue()); 
     
     //HATCH POSITIONS
-    System.out.println(Robot.arm.getControllerMode()); 
-    if(OI.armPosOne.get() && OI.controllerOne.getRawAxis(2) > .1) {
-     //1
-      Robot.arm.armTalon.selectProfileSlot(1, 0); 
-      
-      Robot.arm.runPIDArm(Robot.arm.hatchPosOne); 
+    if(stick.getRawButton(1) && stick.getRawAxis(2) > .1) {
+     //1      
+      arm.runPIDArm(RobotMap.hatchPosOne); 
 
-      SmartDashboard.putNumber("Target position", Robot.arm.hatchPosOne); 
+      SmartDashboard.putNumber("Target position", RobotMap.hatchPosOne); 
    
-    } else if (OI.armPosTwo.get() && OI.controllerOne.getRawAxis(2) > .1 && Robot.arm.getControllerMode()) {
+    } else if (stick.getRawButton(3) && stick.getRawAxis(2) > .1 && arm.getControllerMode()) {
       //2
-      Robot.arm.armTalon.selectProfileSlot(1, 0); 
-      Robot.arm.runPIDArm(Robot.arm.hatchPosTwo); 
+      arm.runPIDArm(RobotMap.hatchPosTwo); 
 
-      SmartDashboard.putNumber("Target position", Robot.arm.hatchPosTwo); 
+      SmartDashboard.putNumber("Target position", RobotMap.hatchPosTwo); 
 
-    } else if (OI.armPosThree.get() && OI.controllerOne.getRawAxis(2) > .1 && Robot.arm.getControllerMode()) {
+    } else if (stick.getRawButton(4) && stick.getRawAxis(2) > .1 && arm.getControllerMode()) {
      //3
-      Robot.arm.armTalon.selectProfileSlot(1, 0); 
-      Robot.arm.runPIDArm(Robot.arm.hatchPosThree); 
+      arm.runPIDArm(RobotMap.hatchPosThree); 
 
-      SmartDashboard.putNumber("Target position", Robot.arm.hatchPosThree); 
+      SmartDashboard.putNumber("Target position", RobotMap.hatchPosThree); 
     
-    } else if (OI.armPosZero.get() && OI.controllerOne.getRawAxis(2) > .1) {
-      Robot.arm.runPIDArm(Robot.arm.hatchPosOne); 
+    } else if (stick.getRawButton(2) && stick.getRawAxis(2) > .1) {
+      arm.runPIDArm(RobotMap.hatchPosOne); 
     }
 
-    else if (OI.armPosZero.get() && !(OI.controllerOne.getRawAxis(2) > .1)) {
+    else if (stick.getRawButton(2) && !(stick.getRawAxis(2) > .1)) {
       //hatch lift up
-      Robot.arm.armTalon.selectProfileSlot(1, 0);
-
-      Robot.arm.runPIDArm(Robot.arm.hatchLift);
+      arm.runPIDArm(RobotMap.hatchLift);
   
-      SmartDashboard.putNumber("Target position", Robot.arm.hatchLift); 
+      SmartDashboard.putNumber("Target position", RobotMap.hatchLift); 
 
-    } 
+    } else if (stick.getPOV() == 90 && stick.getRawAxis(2) > .1) {
+      //hatch home
+      arm.runPIDArm(RobotMap.posZero); 
+    }
+    
+
     //Cargo positions
-    else if (OI.armPosOne.get() && !(OI.controllerOne.getRawAxis(2) > .1)) {
+    else if (stick.getRawButton(1) && !(stick.getRawAxis(2) > .1)) {
       //1
-      Robot.arm.armTalon.selectProfileSlot(1, 0);
+      arm.runPIDArm(RobotMap.cargoPosOne);
 
-      Robot.arm.runPIDArm(Robot.arm.cargoPosOne);
-
-      SmartDashboard.putNumber("Target position", Robot.arm.cargoPosOne);  
+      SmartDashboard.putNumber("Target position", RobotMap.cargoPosOne);  
     
-    } else if (OI.armPosTwo.get() && !(OI.controllerOne.getRawAxis(2) > .1)) {
+    } else if (stick.getRawButton(3) && !(stick.getRawAxis(2) > .1)) {
       //2
-      Robot.arm.armTalon.selectProfileSlot(1, 0);
+      arm.runPIDArm(RobotMap.cargoPosTwo);
 
-      Robot.arm.runPIDArm(Robot.arm.cargoPosTwo);
-
-      SmartDashboard.putNumber("Target position", Robot.arm.cargoPosTwo); 
+      SmartDashboard.putNumber("Target position", RobotMap.cargoPosTwo); 
     
-    } else if (OI.armPosThree.get() && !(OI.controllerOne.getRawAxis(2) > .1)) {
+    } else if (stick.getRawButton(4) && !(stick.getRawAxis(2) > .1)) {
       //3
-      Robot.arm.armTalon.selectProfileSlot(1, 0);
+      arm.runPIDArm(RobotMap.cargoPosThree); 
 
-      Robot.arm.runPIDArm(Robot.arm.cargoPosThree); 
+      SmartDashboard.putNumber("Target position", RobotMap.cargoPosThree);
 
-      SmartDashboard.putNumber("Target position", Robot.arm.cargoPosThree);
+    } else if (stick.getPOV() == 90 && !(stick.getRawAxis(2) > .1)) {
 
-    } else if (OI.controllerOne.getPOV() == 90 && !(OI.controllerOne.getRawAxis(2) > .1)) {
-
-      Robot.arm.runPIDArm(Robot.arm.home); 
+      arm.runPIDArm(RobotMap.home); 
      
-      SmartDashboard.putNumber("Target position", Robot.arm.home); 
+      SmartDashboard.putNumber("Target position", RobotMap.home); 
     
-    } else if (OI.controllerOne.getPOV() == 90 && OI.controllerOne.getRawAxis(2) > .1) {
-      Robot.arm.runPIDArm(Robot.arm.posZero); 
     }
   }
 

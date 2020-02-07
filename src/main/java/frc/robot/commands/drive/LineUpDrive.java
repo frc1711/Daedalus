@@ -9,14 +9,14 @@ package frc.robot.commands.drive;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.OI;
-import frc.robot.Robot;
 import frc.robot.RobotMap.RoboDir;
+import frc.robot.subsystems.DriveSystem;
 
 public class LineUpDrive extends Command {
-  public LineUpDrive() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+  private DriveSystem driveSystem; 
+  public LineUpDrive(DriveSystem driveSystem) {
+    requires(driveSystem); 
+    this.driveSystem = driveSystem; 
   }
 
   // Called just before this Command runs the first time
@@ -28,25 +28,19 @@ public class LineUpDrive extends Command {
   @Override
   protected void execute() {
     double ballAngle = SmartDashboard.getNumber("Ball Angle", 700); 
-       // SmartDashboard.putBoolean("IS IT HOLDING", OI.ballVisionEnable.get()); 
-        if (OI.ballVisionEnable.get()) {
-          Robot.pixyTilt.angleServo(180);
-         // System.gc(); 
-            if(ballAngle < -5 ) {
-              SmartDashboard.putString("DIRECTIONPIXY", "LEFT");
-              Robot.driveSystem.driveDirection(.3, RoboDir.LEFT); 
-            } else if (ballAngle > 5) {
-              SmartDashboard.putString("DIRECTIONPIXY", "RIGHT");
-              Robot.driveSystem.driveDirection(.3, RoboDir.RIGHT); 
-            } else if (ballAngle >= -5 && ballAngle <= 5) {
-              Robot.driveSystem.driveDirection(-.3, RoboDir.STRAIGHT); 
-              SmartDashboard.putString("DIRECTIONPIXY", "STRAIGHT");
-              System.out.println(ballAngle);
-            } else {
-              System.out.println("FAIL");
-            }
-            
-          }
+    if(ballAngle < -5 ) {
+      SmartDashboard.putString("DIRECTIONPIXY", "LEFT");
+      driveSystem.driveDirection(.3, RoboDir.LEFT); 
+    } else if (ballAngle > 5) {
+      SmartDashboard.putString("DIRECTIONPIXY", "RIGHT");
+      driveSystem.driveDirection(.3, RoboDir.RIGHT); 
+    } else if (ballAngle >= -5 && ballAngle <= 5) {
+      driveSystem.driveDirection(-.3, RoboDir.STRAIGHT); 
+      SmartDashboard.putString("DIRECTIONPIXY", "STRAIGHT");
+      System.out.println(ballAngle);
+    } else {
+      System.out.println("FAIL");
+    }  
   }
   
 

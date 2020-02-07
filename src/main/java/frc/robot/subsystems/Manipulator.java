@@ -20,8 +20,8 @@ import frc.robot.RobotMap;
 public class Manipulator extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  TalonSRX manipulatorTalon; 
-  DigitalInput beamValue; 
+  private TalonSRX manipulatorTalon; 
+  private DigitalInput beamValue; 
 
 
   public Manipulator() {

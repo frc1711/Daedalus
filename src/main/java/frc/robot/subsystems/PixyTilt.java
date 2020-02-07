@@ -17,7 +17,7 @@ import frc.robot.RobotMap;
 public class PixyTilt extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  public Servo pixyTilt;
+  private Servo pixyTilt;
 
   public PixyTilt() {
     pixyTilt = new Servo(RobotMap.pixyTilter);

@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -14,20 +16,27 @@ import frc.robot.RobotMap;
 /**
  * Add your docs here.
  */
-public class PneumaticArm extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
-  private DoubleSolenoid armSolenoid; 
+public class AuxWheel extends Subsystem {
+  private WPI_TalonSRX auxWheelTalon; 
+  private DoubleSolenoid auxWheelSolenoid;
 
-  public PneumaticArm() {
-    armSolenoid = new DoubleSolenoid(RobotMap.armSolenoid, RobotMap.armSolenoidRear);
+  public AuxWheel() {
+    auxWheelTalon = new WPI_TalonSRX(RobotMap.auxWheelTalon); 
+    auxWheelSolenoid = new DoubleSolenoid(RobotMap.auxWheelSolenoid, RobotMap.auxWheelSolenoidRear);
+  }
 
+  public void stop() {
+    auxWheelTalon.set(0); 
+  }
+
+  public void runAuxWheel(double speed) {
+    auxWheelTalon.set(speed); 
   }
 
   public void set(DoubleSolenoid.Value state) {
-    armSolenoid.set(state); 
+    auxWheelSolenoid.set(state); 
   }
-  
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

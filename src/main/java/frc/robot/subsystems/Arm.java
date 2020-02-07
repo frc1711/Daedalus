@@ -13,8 +13,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.OI;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 /**
@@ -23,56 +21,29 @@ import frc.robot.RobotMap;
 public class Arm extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  public WPI_TalonSRX armTalon;
-  public DigitalInput modeToggle; 
-  public double velCounter; 
-  public double armMin; 
-  public double posZero; 
-  public double home; 
-  public double hatchPosOne; 
-  public double cargoPosOne; 
-  public double hatchPosTwo; 
-  public double cargoPosTwo; 
-  public double hatchPosThree; 
-  public double cargoPosThree; 
-  public double hatchLift; 
+  private WPI_TalonSRX armTalon;
 
-  public double posDepo; 
-  public double hatchPosDepo; 
-  public int unitsPerRotation; 
-  public double baseSpeed; 
+  private DigitalInput modeToggle; 
+
+  private double velCounter; 
 
   public Arm() {
-    armTalon = new WPI_TalonSRX(RobotMap.armTalon); 
+    armTalon = new WPI_TalonSRX(RobotMap.armTalon);
+
     modeToggle = new DigitalInput(RobotMap.modeToggle); 
-    
-    posZero = 1612; //-799
-    home = 0; 
 
-    cargoPosOne = 1055; //-1356
-    cargoPosTwo = 2400; //-2823
-    cargoPosThree = 1580; //-2195
-    hatchLift = 600; 
-
-    hatchPosOne = 1500; 
-    hatchPosTwo = 2600; 
-    hatchPosThree = 2100;
-
-    armMin = -1; 
-
-    unitsPerRotation = 4096; //This was 1205 
     velCounter = 0; 
 
     armTalon.setSelectedSensorPosition(0); //Sets the selected sensor (armTalon encoder) to zero upon enabling. 
 
-    armTalon.config_kF(1, 0.0); //Configuring the 'kf' of the talon. This is a special value in relation to the talons. 
-    armTalon.config_kP(1, 1.25); //Configure the 'kP' of the PID loop-- how much proportional gain they should have. How fast it will increase. 
-    armTalon.config_kI(1, 0.000);//Configure the 'kI' of the PID loop-- how much adding of the area under the curve should happen. The kI is zero here because the application required that the loop not error-correct itself. It was good enough when it wasn't exact. 
-    armTalon.config_kD(1, 3); //Configure the 'kD' of the PID loop-- how much the slope of it should be 'smoothed out'. The kD is high here because the loop is being applied to a non-linear application. 
+    armTalon.config_kF(0, 0.0); //Configuring the 'kf' of the talon. This is a special value in relation to the talons. 
+    armTalon.config_kP(0, 1.25); //Configure the 'kP' of the PID loop-- how much proportional gain they should have. How fast it will increase. 
+    armTalon.config_kI(0, 0.000); //Configure the 'kI' of the PID loop-- how much adding of the area under the curve should happen. The kI is zero here because the application required that the loop not error-correct itself. It was good enough when it wasn't exact. 
+    armTalon.config_kD(0, 3); //Configure the 'kD' of the PID loop-- how much the slope of it should be 'smoothed out'. The kD is high here because the loop is being applied to a non-linear application. 
     
-    armTalon.configClosedLoopPeakOutput(1, 0.7); 
+    armTalon.configClosedLoopPeakOutput(0, 0.7); 
 
-    armTalon.configAllowableClosedloopError(1, 50); 
+    armTalon.configAllowableClosedloopError(0, 50); 
 
     armTalon.configMotionAcceleration(50);
 
@@ -86,15 +57,8 @@ public class Arm extends Subsystem {
   public void runArm(double speed) {
     armTalon.set(speed); 
   }
-  public double returnArmPos() {
-    if(OI.controllerOne.getRawButtonReleased(2)) 
-      return armTalon.getMotorOutputPercent(); 
-    else {
-      return 0; 
-    }
-  }
+  
   public void runPIDArm (double pos) {
-    //SmartDashboard.putNumber("Position", pos); 
     armTalon.set(ControlMode.MotionMagic, pos); 
   }
 
@@ -105,12 +69,15 @@ public class Arm extends Subsystem {
       velCounter = 0; 
     }
 
+    //To deal with the non-linearity of the arm PID, check if we're within 
+    //300 counts either way, and if our velocity has been 0 for more than 30ms.
     if (encPos >= targetPos-300 && encPos <= targetPos+300 && vel == 0 && velCounter == 15) {
       
-      Robot.arm.runPIDArm(encPos); 
+      runPIDArm(encPos); 
        
       velCounter = 0;  
     } 
+
   }
 
   public int getSensorValue() {

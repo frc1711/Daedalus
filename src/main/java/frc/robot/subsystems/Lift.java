@@ -7,8 +7,6 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -17,27 +15,12 @@ import frc.robot.RobotMap;
  * Add your docs here.
  */
 public class Lift extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
-
-  public WPI_TalonSRX auxWheelTalon; 
-  public DoubleSolenoid auxWheelSolenoid; 
-  public DoubleSolenoid botLift; 
-  public DoubleSolenoid unlockBot; 
+  private DoubleSolenoid botLift; 
+  private DoubleSolenoid unlockBot; 
 
   public Lift () {
-    auxWheelTalon = new WPI_TalonSRX(RobotMap.auxWheelTalon); 
     botLift = new DoubleSolenoid(RobotMap.botLift, RobotMap.botLiftRear); 
     unlockBot = new DoubleSolenoid(RobotMap.botUnlock, RobotMap.botUnlockRear); 
-    auxWheelSolenoid = new DoubleSolenoid(RobotMap.auxWheelSolenoid, RobotMap.auxWheelSolenoidRear);
-  }
-
-  public void stopWheel() {
-    auxWheelTalon.set(0); 
-  }
-
-  public void runAuxWheel(double speed) {
-    auxWheelTalon.set(speed); 
   }
   
   public void setBotLift(DoubleSolenoid.Value state) {
@@ -47,10 +30,6 @@ public class Lift extends Subsystem {
   public void unlockBotLift(DoubleSolenoid.Value state) {
     unlockBot.set(state); 
   }
-
- /* public void setAuxWheel(DoubleSolenoid.Value state) { 
-    auxWheelSolenoid.set(state); 
-  } */
 
   @Override
   public void initDefaultCommand() {

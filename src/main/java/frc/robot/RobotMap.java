@@ -54,6 +54,22 @@ public class RobotMap {
   //servos
   public static int servoMode = 2; 
   public static int pixyTilter = 0; 
+
+  //positions 
+  public static int home = 0; 
+  public static int posZero = 1612; 
+  public static int cargoPosOne = 1055;
+  public static int cargoPosTwo = 2400;
+  public static int cargoPosThree = 1580;
+  
+  public static int hatchLift = 600;
+
+  public static int hatchPosOne = 1500;
+  public static int hatchPosTwo = 2600;
+  public static int hatchPosThree = 2100;
+
+  public static int armMin = -1; 
+
   //enums
   public enum RoboDir { 
     LEFT (-1), 

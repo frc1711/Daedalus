@@ -7,19 +7,24 @@
 
 package frc.robot.commands.manipulators;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.OI;
-import frc.robot.Robot;
+import frc.robot.subsystems.ManipulatorHatch;
 
 public class SpitHatches extends Command {
   double state; 
   double positionCounter; 
   boolean pressed; 
-  public SpitHatches() {
+  ManipulatorHatch manipulator; 
+  Joystick stick; 
+
+  public SpitHatches(ManipulatorHatch manipulator, Joystick stick) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.hatchManipulatorSub); 
+    requires(manipulator); 
+    this.manipulator = manipulator; 
+    this.stick = stick; 
   }
 
   // Called just before this Command runs the first time
@@ -32,10 +37,10 @@ public class SpitHatches extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (OI.controllerZero.getRawAxis(2) > .1 || OI.controllerZero.getRawAxis(3) > .1) {
-      Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kForward);
+    if (stick.getRawAxis(2) > .1 || stick.getRawAxis(3) > .1) {
+      manipulator.setHatchRelay(Relay.Value.kForward);
     } else {
-      Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kOff); 
+      manipulator.setHatchRelay(Relay.Value.kOff); 
     }
   }
 

@@ -8,29 +8,34 @@
 package frc.robot.commands.lift;
 
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;  
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.OI;
-import frc.robot.Robot;
+import frc.robot.subsystems.Lift;
 
 public class ScissorLift extends Command {
-  int state = 0; 
-  int unlockState = 0; 
-  public ScissorLift() {
+  private int state = 0; 
+  private int unlockState = 0; 
+  private Lift lift; 
+  Joystick stick; 
+
+  public ScissorLift(Lift lift, Joystick stick) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(lift); 
+    this.lift = lift; 
+    this.stick = stick; 
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.lift.botLift.set(Value.kReverse);
+    lift.setBotLift(Value.kReverse);
     state = 2;  
-    Robot.lift.unlockBot.set(Value.kReverse); 
+    lift.unlockBotLift(Value.kReverse); 
     unlockState = 2; 
-    System.out.println("Initialize");
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -50,34 +55,30 @@ public class ScissorLift extends Command {
     }
 
     //triggers
-    boolean onOff =  OI.liftDeployZero.get() && OI.liftDeployOne.get();
+    boolean onOff =  stick.getRawButton(5) && stick.getRawButton(6);
     if ( onOff && state == 2) {
-      Robot.lift.botLift.set(DoubleSolenoid.Value.kForward); 
-      if (OI.controllerOne.getRawButtonReleased(5) && OI.controllerOne.getRawButtonReleased(6))
+      lift.setBotLift(DoubleSolenoid.Value.kForward); 
+      if (stick.getRawButtonReleased(5) && stick.getRawButtonReleased(6))
         state = 1; 
-      System.out.println("Forward" + state); 
     } else if (onOff && state == 1) {
-      Robot.lift.botLift.set(DoubleSolenoid.Value.kReverse); 
-      if (OI.controllerOne.getRawButtonReleased(5) && OI.controllerOne.getRawButtonReleased(6))
+      lift.setBotLift(DoubleSolenoid.Value.kReverse); 
+      if (stick.getRawButtonReleased(5) && stick.getRawButtonReleased(6))
         state = 2; 
-      System.out.println("Reverse" + state); 
     }
 
-    boolean onOffUnlock = OI.liftDeployZero.get() && OI.armPosZero.get();
-    SmartDashboard.putBoolean("Is This Working", onOffUnlock); 
+    boolean onOffUnlock = stick.getRawButton(5) && stick.getRawButton(2);
     if (onOffUnlock && unlockState == 2) {
      
-      Robot.lift.unlockBot.set(DoubleSolenoid.Value.kForward); 
+      lift.unlockBotLift(DoubleSolenoid.Value.kForward); 
       
-      if (OI.controllerOne.getRawButtonReleased(5) && OI.controllerOne.getRawButtonReleased(2)) 
+      if (stick.getRawButtonReleased(5) && stick.getRawButtonReleased(2)) 
         unlockState = 1; 
-      System.out.println("Back");
     
     } else if ( onOffUnlock && unlockState == 1) {
-      Robot.lift.unlockBot.set(DoubleSolenoid.Value.kReverse); 
-      if ( OI.controllerOne.getRawButtonReleased(5) && OI.controllerOne.getRawButtonReleased(2)) 
-         unlockState = 2; 
-      System.out.println("Forward");
+      lift.unlockBotLift(DoubleSolenoid.Value.kReverse);
+
+      if (stick.getRawButtonReleased(5) && stick.getRawButtonReleased(2)) 
+        unlockState = 2; 
     }
     
   }

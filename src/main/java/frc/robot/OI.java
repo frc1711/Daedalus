@@ -9,6 +9,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.drive.LineUpDrive;
+import frc.robot.subsystems.DriveSystem;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -16,31 +18,18 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
   
-  public static Joystick controllerZero = new Joystick(RobotMap.controllerZero);
-  public static Joystick controllerOne = new Joystick(RobotMap.controllerOne); 
-  public static Joystick controllerTwo = new Joystick(RobotMap.controllerTwo); 
+  public Joystick controllerZero = new Joystick(RobotMap.controllerZero);
+  public Joystick controllerOne = new Joystick(RobotMap.controllerOne); 
+  public Joystick controllerTwo = new Joystick(RobotMap.controllerTwo); 
 
   //BUTTONS
   //controller zero, drive 
-  public static JoystickButton lineUpEnable = new JoystickButton(controllerZero, 4); 
-  public static JoystickButton ballVisionEnable = new JoystickButton(controllerZero, 2);
-  public static JoystickButton speedButton = new JoystickButton(controllerZero, 1); 
-  public static JoystickButton manipButtonZero = new JoystickButton(controllerZero, 5); 
-  public static JoystickButton manipButtonOne = new JoystickButton(controllerZero, 6);
-  public static JoystickButton climbSafetyZero = new JoystickButton(controllerZero, 7); 
-  public static JoystickButton climbSafetyOne = new JoystickButton(controllerZero, 8); 
-  
-  //controller one, manipulator
-  public static JoystickButton armPosZero = new JoystickButton(controllerOne, 2); 
-  public static JoystickButton armPosOne = new JoystickButton(controllerOne, 1);
-  public static JoystickButton armPosTwo = new JoystickButton(controllerOne, 3); 
-  public static JoystickButton armPosThree = new JoystickButton(controllerOne, 4); 
-  public static JoystickButton liftDeployZero = new JoystickButton(controllerOne, 5); 
-  public static JoystickButton liftDeployOne = new JoystickButton(controllerOne, 6); 
-  public static JoystickButton pnuematicOff = new JoystickButton(controllerOne, 7); 
-  public static JoystickButton pnuematicOffTwo = new JoystickButton(controllerOne, 8); 
-  public static JoystickButton auxWheelButton = new JoystickButton(controllerOne, 10); 
- 
+  public JoystickButton ballVisionEnable = new JoystickButton(controllerZero, 2);
+   
   //controller two, toggle
-  public static JoystickButton modeToggleButton = new JoystickButton(controllerTwo, 2); 
+  public JoystickButton modeToggleButton = new JoystickButton(controllerTwo, 2); 
+
+  public OI(DriveSystem driveSystem) {
+    ballVisionEnable.whenPressed(new LineUpDrive(driveSystem)); 
+  }
 }

@@ -7,26 +7,29 @@
 
 package frc.robot.commands.lift;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.OI;
-import frc.robot.Robot;
+import frc.robot.subsystems.AuxWheel;
 
-public class AuxWheel extends Command {
-  public int state = 0; 
-  public AuxWheel() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.lift); 
+public class RunAuxWheel extends Command {
+  private int state = 0; 
+  private AuxWheel auxWheel; 
+  Joystick stick; 
+
+  public RunAuxWheel(AuxWheel auxWheel, Joystick stick) {
+    requires(auxWheel);     
+    this.stick = stick; 
+    this.auxWheel = auxWheel; 
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
 
-    Robot.lift.stopWheel(); 
-    Robot.lift.auxWheelSolenoid.set(Value.kReverse);
+    auxWheel.stop(); 
+    auxWheel.set(Value.kReverse);
     state = 2; 
 
   }
@@ -41,35 +44,25 @@ public class AuxWheel extends Command {
       SmartDashboard.putString("Aux Wheel State:", "Reverse"); 
     }
 
-    if (OI.auxWheelButton.get() && state == 2 || state ==  0) {
-      Robot.lift.auxWheelSolenoid.set(Value.kForward); 
-<<<<<<< HEAD
+    if (stick.getRawButton(10) && state == 2 || state ==  0) {
+      auxWheel.set(Value.kForward); 
 
-      if (OI.controllerOne.getRawButtonReleased(10)) 
+      if (stick.getRawButtonReleased(10)) 
         state = 1;
         
-    } else if (OI.auxWheelButton.get() && state == 1) {
-      Robot.lift.auxWheelSolenoid.set(Value.kReverse); 
+    } else if (stick.getRawButtonReleased(10) && state == 1) {
+      auxWheel.set(Value.kReverse); 
 
-      if (OI.controllerOne.getRawButtonReleased(10)) 
+      if (stick.getRawButtonReleased(10)) 
         state = 2; 
 
-=======
-      //System.out.println("ForwardAux");
-      if (OI.controllerOne.getRawButtonReleased(10)) 
-        state = 1;
-    } else if (OI.auxWheelButton.get() && state == 1) {
-      Robot.lift.auxWheelSolenoid.set(Value.kReverse); 
-     // System.out.println("BackwardAux");
-      if (OI.controllerOne.getRawButtonReleased(10)) 
-        state = 2; 
->>>>>>> 545f5dca98d9702b3fc825682399047d239f3bc9
     } 
     
-    if (Math.abs(OI.controllerOne.getRawAxis(5)) > .1) {
-      Robot.lift.runAuxWheel(OI.controllerOne.getRawAxis(5));
-    } else if (OI.controllerOne.getRawAxis(5) == 0) {
-      Robot.lift.runAuxWheel(0);
+    //oi.controllerOne.
+    if (Math.abs(stick.getRawAxis(5)) > .1) {
+      auxWheel.runAuxWheel(stick.getRawAxis(5));
+    } else if (stick.getRawAxis(5) == 0) {
+      auxWheel.runAuxWheel(0);
     }
     
   }

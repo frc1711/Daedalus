@@ -8,23 +8,27 @@
 package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.OI;
-import frc.robot.Robot;
+import frc.robot.subsystems.PneumaticArm;
 
 public class RunPneumaticArm extends Command {
-public int state = 0;  
-  public RunPneumaticArm() {
+private int state = 0;  
+private PneumaticArm pneumaticArm; 
+private Joystick stick; 
+
+  public RunPneumaticArm(PneumaticArm pneumaticArm, Joystick stick) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.pneumaticArm); 
+    requires(pneumaticArm); 
+    this.stick = stick; 
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() { 
-    Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kReverse); 
+    pneumaticArm.set(DoubleSolenoid.Value.kReverse); 
     state = 2; 
   }
 
@@ -38,14 +42,14 @@ public int state = 0;
       SmartDashboard.putString("Pneumatic Arm State:", "Reverse"); 
     }
     
-    if (OI.controllerOne.getPOV() == 180 && state == 1 ) {
+    if (stick.getPOV() == 180 && state == 1 ) {
       
-      Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kReverse); 
+      pneumaticArm.set(DoubleSolenoid.Value.kReverse); 
       state = 2; 
 
-    } else if (OI.controllerOne.getPOV() == 0 && state == 2) {
+    } else if (stick.getPOV() == 0 && state == 2) {
       
-      Robot.pneumaticArm.armSolenoid.set(DoubleSolenoid.Value.kForward);
+      pneumaticArm.set(DoubleSolenoid.Value.kForward);
       state = 1;  
 
     }

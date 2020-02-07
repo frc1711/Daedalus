@@ -7,51 +7,46 @@
 
 package frc.robot.commands.manipulators;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.OI;
-import frc.robot.Robot;
+import frc.robot.subsystems.Manipulator;
 
 /***
  *@author: Lou DeZeeuw
  */
 
 public class CargoManipulator extends Command {
-  public CargoManipulator() {
-
-    requires(Robot.manipulator);
-
+  Manipulator manipulator; 
+  Joystick stick; 
+  public CargoManipulator(Manipulator manipulator, Joystick stick) {
+    requires(manipulator);
+    this.manipulator = manipulator; 
+    this.stick = stick; 
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.manipulator.runManipulator(0);
+    manipulator.runManipulator(0);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() { 
     //Intake and outtake method
-   // System.out.println(Robot.manipulator.getManipulatorSwitch()); 
-    if (OI.manipButtonZero.get()) {
-      
-      Robot.manipulator.runManipulator(-.75);
-
-    } else if (OI.manipButtonOne.get()){
-
-      Robot.manipulator.runManipulator(.75); 
-
+    if (stick.getRawButton(5)) {
+      manipulator.runManipulator(-.75);
+    } else if (stick.getRawButton(6)){
+      manipulator.runManipulator(.75); 
     } else {
-
-      Robot.manipulator.runManipulator(0);
-
+      manipulator.runManipulator(0);
     } 
 
-    if (OI.manipButtonZero.get() && !Robot.manipulator.getManipulatorSwitch()) {
-      OI.controllerZero.setRumble(RumbleType.kLeftRumble, 1); 
+    if (stick.getRawButton(5) && !manipulator.getManipulatorSwitch()) {
+      stick.setRumble(RumbleType.kLeftRumble, 1); 
     } else {
-      OI.controllerZero.setRumble(RumbleType.kLeftRumble, 0);
+      stick.setRumble(RumbleType.kLeftRumble, 0);
     }
     
   }
@@ -65,13 +60,13 @@ public class CargoManipulator extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.manipulator.runManipulator(0);
+    manipulator.runManipulator(0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.manipulator.runManipulator(0);
+    manipulator.runManipulator(0);
   }
 }

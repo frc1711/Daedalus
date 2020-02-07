@@ -7,42 +7,41 @@
 
 package frc.robot.commands.drive;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.OI;
-import frc.robot.Robot;
+import frc.robot.subsystems.DriveSystem;
 
 public class RawArcadeDrive extends Command {
-  public double tipAngle; 
-  public double initAngle; 
-  public boolean speed; 
+  private boolean speed; 
+  DriveSystem driveSystem; 
+  Joystick stick; 
 
-  public RawArcadeDrive() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.driveSystem); 
+  public RawArcadeDrive(DriveSystem driveSystem, Joystick stick) {
+    requires(driveSystem); 
+    this.driveSystem = driveSystem; 
+    this.stick = stick; 
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     speed = false; 
-    Robot.driveSystem.stopRobot(); 
+    driveSystem.stopRobot(); 
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (OI.controllerZero.getRawButtonReleased(1)) {
+    if (stick.getRawButtonReleased(1)) {
       speed = !speed; 
       SmartDashboard.putBoolean("Speed On", speed); 
     }
 
     if (!speed) {
-      Robot.driveSystem.arcadeDrive(0.8*OI.controllerZero.getRawAxis(1), 0.8* OI.controllerZero.getRawAxis(4)); 
+      driveSystem.arcadeDrive(0.8*stick.getRawAxis(1), 0.8* stick.getRawAxis(4)); 
      } else if (speed) {
-      Robot.driveSystem.arcadeDrive(0.4*OI.controllerZero.getRawAxis(1), 0.5*OI.controllerZero.getRawAxis(4)); 
+      driveSystem.arcadeDrive(0.4*stick.getRawAxis(1), 0.5*stick.getRawAxis(4)); 
     }
   } 
 
