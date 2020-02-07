@@ -36,6 +36,7 @@ public class SpitHatches extends Command {
       Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kForward);
     } else {
       Robot.hatchManipulatorSub.hatchRelay.set(Relay.Value.kOff); 
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
