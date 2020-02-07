@@ -12,8 +12,10 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.arm.RunMotorArm;
 
 /**
  * Add your docs here.
@@ -27,7 +29,9 @@ public class Arm extends Subsystem {
 
   private double velCounter; 
 
-  public Arm() {
+  private Joystick stick; 
+
+  public Arm(Joystick stick) {
     armTalon = new WPI_TalonSRX(RobotMap.armTalon);
 
     modeToggle = new DigitalInput(RobotMap.modeToggle); 
@@ -48,6 +52,8 @@ public class Arm extends Subsystem {
     armTalon.configMotionAcceleration(50);
 
     armTalon.configMotionCruiseVelocity(50);
+
+    this.stick = stick; 
   }
 
   public void stopArm() {
@@ -92,5 +98,6 @@ public class Arm extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new RunMotorArm(stick));
   }
 }

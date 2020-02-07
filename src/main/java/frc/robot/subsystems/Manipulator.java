@@ -11,8 +11,10 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.manipulators.CargoManipulator;
 
 /**
  * Add your docs here.
@@ -22,11 +24,12 @@ public class Manipulator extends Subsystem {
   // here. Call these from Commands.
   private TalonSRX manipulatorTalon; 
   private DigitalInput beamValue; 
+  private Joystick stick; 
 
-
-  public Manipulator() {
+  public Manipulator(Joystick stick) {
     manipulatorTalon = new TalonSRX(RobotMap.manipulatorTalon);
     beamValue = new DigitalInput(0);
+    this.stick = stick; 
   }
 
   public void runManipulator(double speed) {
@@ -41,5 +44,6 @@ public class Manipulator extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new CargoManipulator(stick));
   }
 }

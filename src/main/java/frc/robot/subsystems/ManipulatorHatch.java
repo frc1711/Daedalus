@@ -7,9 +7,11 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.manipulators.SpitHatches;
 
 /**
  * Add your docs here.
@@ -18,9 +20,11 @@ public class ManipulatorHatch extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   private Relay hatchRelay; 
+  private Joystick stick; 
 
-  public ManipulatorHatch() {
+  public ManipulatorHatch(Joystick stick) {
     hatchRelay = new Relay(RobotMap.hatchRelay); 
+    this.stick = stick; 
   }
 
   public void setHatchRelay(Relay.Value state) { 
@@ -31,5 +35,6 @@ public class ManipulatorHatch extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new SpitHatches(stick)); 
   }
 }

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.subsystems.PneumaticArm;
 
 public class RunPneumaticArm extends Command {
@@ -18,10 +19,11 @@ private int state = 0;
 private PneumaticArm pneumaticArm; 
 private Joystick stick; 
 
-  public RunPneumaticArm(PneumaticArm pneumaticArm, Joystick stick) {
+  public RunPneumaticArm(Joystick stick) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(pneumaticArm); 
+    requires(Robot.pneumaticArm); 
+    pneumaticArm = Robot.pneumaticArm; 
     this.stick = stick; 
   }
 

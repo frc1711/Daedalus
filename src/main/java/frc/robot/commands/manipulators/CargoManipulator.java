@@ -10,6 +10,7 @@ package frc.robot.commands.manipulators;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
 import frc.robot.subsystems.Manipulator;
 
 /***
@@ -19,9 +20,9 @@ import frc.robot.subsystems.Manipulator;
 public class CargoManipulator extends Command {
   Manipulator manipulator; 
   Joystick stick; 
-  public CargoManipulator(Manipulator manipulator, Joystick stick) {
-    requires(manipulator);
-    this.manipulator = manipulator; 
+  public CargoManipulator(Joystick stick) {
+    requires(Robot.manipulator);
+    this.manipulator = Robot.manipulator; 
     this.stick = stick; 
   }
 

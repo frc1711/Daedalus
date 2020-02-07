@@ -10,8 +10,10 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.lift.RunAuxWheel;
 
 /**
  * Add your docs here.
@@ -20,9 +22,12 @@ public class AuxWheel extends Subsystem {
   private WPI_TalonSRX auxWheelTalon; 
   private DoubleSolenoid auxWheelSolenoid;
 
-  public AuxWheel() {
+  Joystick stick; 
+
+  public AuxWheel(Joystick stick) {
     auxWheelTalon = new WPI_TalonSRX(RobotMap.auxWheelTalon); 
     auxWheelSolenoid = new DoubleSolenoid(RobotMap.auxWheelSolenoid, RobotMap.auxWheelSolenoidRear);
+    this.stick = stick; 
   }
 
   public void stop() {
@@ -41,5 +46,6 @@ public class AuxWheel extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new RunAuxWheel(stick));
   }
 }

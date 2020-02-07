@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -17,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
 import frc.robot.RobotMap.RoboDir;
+import frc.robot.commands.drive.RawArcadeDrive;
 
 /**
  * Add your docs here.
@@ -33,7 +35,9 @@ public class DriveSystem extends Subsystem {
   SpeedControllerGroup leftSideDrive; 
   SpeedControllerGroup rightSideDrive; 
 
-  public DriveSystem() {
+  Joystick stick; 
+  
+  public DriveSystem(Joystick stick) {
     frontLeftDrive = new CANSparkMax(RobotMap.FLD, MotorType.kBrushless); 
     frontRightDrive = new CANSparkMax(RobotMap.FRD, MotorType.kBrushless); 
     rearLeftDrive = new CANSparkMax(RobotMap.RLD, MotorType.kBrushless); 
@@ -44,6 +48,7 @@ public class DriveSystem extends Subsystem {
 
     robotDrive = new DifferentialDrive (leftSideDrive, rightSideDrive);
 
+    this.stick = stick; 
   }
   
   public void stopRobot() {
@@ -81,6 +86,7 @@ public class DriveSystem extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new RawArcadeDrive(stick)); 
   }
 }
 

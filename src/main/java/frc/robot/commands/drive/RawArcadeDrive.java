@@ -10,6 +10,7 @@ package frc.robot.commands.drive;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.subsystems.DriveSystem;
 
 public class RawArcadeDrive extends Command {
@@ -17,9 +18,9 @@ public class RawArcadeDrive extends Command {
   DriveSystem driveSystem; 
   Joystick stick; 
 
-  public RawArcadeDrive(DriveSystem driveSystem, Joystick stick) {
-    requires(driveSystem); 
-    this.driveSystem = driveSystem; 
+  public RawArcadeDrive(Joystick stick) {
+    requires(Robot.driveSystem); 
+    this.driveSystem = Robot.driveSystem; 
     this.stick = stick; 
   }
 

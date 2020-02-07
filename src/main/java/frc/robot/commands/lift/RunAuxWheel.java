@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.subsystems.AuxWheel;
 
 public class RunAuxWheel extends Command {
@@ -18,10 +19,10 @@ public class RunAuxWheel extends Command {
   private AuxWheel auxWheel; 
   Joystick stick; 
 
-  public RunAuxWheel(AuxWheel auxWheel, Joystick stick) {
-    requires(auxWheel);     
+  public RunAuxWheel(Joystick stick) {
+    requires(Robot.auxWheel);     
     this.stick = stick; 
-    this.auxWheel = auxWheel; 
+    this.auxWheel = Robot.auxWheel; 
   }
 
   // Called just before this Command runs the first time

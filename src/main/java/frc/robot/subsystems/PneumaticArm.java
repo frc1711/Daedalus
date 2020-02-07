@@ -8,8 +8,10 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.arm.RunPneumaticArm;
 
 /**
  * Add your docs here.
@@ -18,10 +20,11 @@ public class PneumaticArm extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   private DoubleSolenoid armSolenoid; 
-
-  public PneumaticArm() {
+  private Joystick stick; 
+  
+  public PneumaticArm(Joystick stick) {
     armSolenoid = new DoubleSolenoid(RobotMap.armSolenoid, RobotMap.armSolenoidRear);
-
+    this.stick = stick; 
   }
 
   public void set(DoubleSolenoid.Value state) {
@@ -32,5 +35,6 @@ public class PneumaticArm extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new RunPneumaticArm(stick)); 
   }
 }

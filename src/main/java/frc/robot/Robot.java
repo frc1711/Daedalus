@@ -14,22 +14,12 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.arm.RunMotorArm;
-import frc.robot.commands.arm.RunPneumaticArm;
-import frc.robot.commands.drive.RawArcadeDrive;
-import frc.robot.commands.lift.RunAuxWheel;
-import frc.robot.commands.lift.ScissorLift;
-import frc.robot.commands.manipulators.CargoManipulator;
-import frc.robot.commands.manipulators.SpitHatches;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.AuxWheel;
 import frc.robot.subsystems.DriveSystem;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.subsystems.ManipulatorHatch;
-import frc.robot.subsystems.ModeToggler;
-import frc.robot.subsystems.PixyTilt;
 import frc.robot.subsystems.PneumaticArm;
 import frc.robot.subsystems.vision.CameraConfig;
 
@@ -42,31 +32,16 @@ import frc.robot.subsystems.vision.CameraConfig;
  */
 public class Robot extends TimedRobot {
   
-  public RobotMap robotMap; 
-  public DriveSystem driveSystem;
-  public UsbCamera camera; 
-  public Manipulator manipulator; 
-  public ManipulatorHatch manipulatorHatch;
-  public PneumaticArm pneumaticArm; 
-  public Arm arm;
-  public Lift lift;  
-  public AuxWheel auxWheel; 
-  public ModeToggler modeToggler; 
-  public PixyTilt pixyTilt; 
-  public OI oi;
- 
-  Command lineUpDrive; 
-  Command rawArcadeDrive; 
-  Command runPIDArm; 
-  Command spitHatches; 
-  Command runPneumaticArm; 
-  Command pneumaticOff; 
-  Command runMotorArm;
-  Command runAuxWheel; 
-  Command scissorLift; 
-  Command cargoManipulator; 
-  Command initEndGamePneumatics; 
-  Command hatchManipulatorFirst; 
+  public static RobotMap robotMap; 
+  public static DriveSystem driveSystem;
+  public static UsbCamera camera; 
+  public static Manipulator manipulator; 
+  public static ManipulatorHatch manipulatorHatch;
+  public static PneumaticArm pneumaticArm; 
+  public static Arm arm;
+  public static Lift lift;  
+  public static AuxWheel auxWheel; 
+  public static OI oi;
 
   public boolean endGame = false; 
   public double cameraCount = 0; 
@@ -83,25 +58,14 @@ public class Robot extends TimedRobot {
         
     //BASIC FILES AND SUBSYTEMS
     robotMap = new RobotMap();
-    driveSystem = new DriveSystem();
-    manipulator = new Manipulator(); 
-    arm = new Arm(); 
-    auxWheel = new AuxWheel();
-    pneumaticArm = new PneumaticArm();
-    manipulatorHatch = new ManipulatorHatch();  
-    lift = new Lift(); 
-    pixyTilt = new PixyTilt();  
+    driveSystem = new DriveSystem(oi.controllerZero);
+    manipulator = new Manipulator(oi.controllerZero); 
+    arm = new Arm(oi.controllerOne); 
+    auxWheel = new AuxWheel(oi.controllerOne);
+    pneumaticArm = new PneumaticArm(oi.controllerOne);
+    manipulatorHatch = new ManipulatorHatch(oi.controllerZero);  
+    lift = new Lift(oi.controllerOne); 
     oi = new OI(driveSystem);
-
-    // COMMANDS
-    modeToggler = new ModeToggler(); 
-    spitHatches = new SpitHatches(manipulatorHatch, oi.controllerZero); 
-    runPneumaticArm = new RunPneumaticArm(pneumaticArm, oi.controllerOne);
-    runMotorArm = new RunMotorArm(arm, oi.controllerOne); 
-    cargoManipulator = new CargoManipulator(manipulator, oi.controllerZero); 
-    runAuxWheel = new RunAuxWheel(auxWheel, oi.controllerOne);
-    rawArcadeDrive = new RawArcadeDrive(driveSystem, oi.controllerZero); 
-    scissorLift = new ScissorLift(lift, oi.controllerOne); 
 
     //CAMERAS AND PIXYCAM
     CameraConfig.setup(); 
@@ -152,14 +116,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    initEndGamePneumatics.start(); 
-    runPneumaticArm.start(); 
-    spitHatches.start(); 
-    runAuxWheel.start(); 
-    runMotorArm.start(); 
-    scissorLift.start(); 
-    cargoManipulator.start();
-
+    
   }
 
   /**
@@ -172,13 +129,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    SmartDashboard.putString("GAME MODE", "GAMEPLAY"); 
-    initEndGamePneumatics.start(); 
-    rawArcadeDrive.start(); 
-    lineUpDrive.start(); 
-    cargoManipulator.start();
-    spitHatches.start();
-    runPneumaticArm.start(); 
+    
   }
 
   /**
@@ -186,31 +137,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    //runMotorArm.start(); 
-
-    if(!endGame) {
-
-      runMotorArm.start(); 
-      cameraCount++;
-
-    if (cameraCount == 5) {
-        CameraConfig.run(); 
-        cameraCount = 0; 
-      }     
-    }
-
-    //only located here due to the nature of the "endgame" mode. Commands should NEVER be initialized in teleopPeriodic(). 
-    if (endGameCounter < 2 && endGame || (oi.controllerZero.getRawButtonReleased(7) && oi.controllerZero.getRawButtonReleased(8))) {
-      endGame = true; 
-      spitHatches.cancel(); 
-      runMotorArm.cancel(); 
-      cargoManipulator.cancel(); 
-      SmartDashboard.putString("GAME MODE", "ENDGAME");
-      runPneumaticArm.start(); 
-      scissorLift.start(); 
-      runAuxWheel.start(); 
-      endGameCounter++; 
-    }
+    Scheduler.getInstance().run(); 
+    
   }
 
   /**

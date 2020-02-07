@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.subsystems.Lift;
 
 public class ScissorLift extends Command {
@@ -21,11 +22,11 @@ public class ScissorLift extends Command {
   private Lift lift; 
   Joystick stick; 
 
-  public ScissorLift(Lift lift, Joystick stick) {
+  public ScissorLift(Joystick stick) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(lift); 
-    this.lift = lift; 
+    requires(Robot.lift); 
+    this.lift = Robot.lift; 
     this.stick = stick; 
   }
 

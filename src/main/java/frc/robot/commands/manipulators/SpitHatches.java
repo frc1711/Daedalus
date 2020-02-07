@@ -10,6 +10,7 @@ package frc.robot.commands.manipulators;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
 import frc.robot.subsystems.ManipulatorHatch;
 
 public class SpitHatches extends Command {
@@ -19,11 +20,11 @@ public class SpitHatches extends Command {
   ManipulatorHatch manipulator; 
   Joystick stick; 
 
-  public SpitHatches(ManipulatorHatch manipulator, Joystick stick) {
+  public SpitHatches(Joystick stick) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(manipulator); 
-    this.manipulator = manipulator; 
+    requires(Robot.manipulatorHatch); 
+    this.manipulator = Robot.manipulatorHatch; 
     this.stick = stick; 
   }
 

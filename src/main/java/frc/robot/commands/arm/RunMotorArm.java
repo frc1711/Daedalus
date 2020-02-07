@@ -10,6 +10,7 @@ package frc.robot.commands.arm;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.Arm;
 
@@ -17,9 +18,9 @@ public class RunMotorArm extends Command {
   private Arm arm; 
   private Joystick stick; 
 
-  public RunMotorArm(Arm arm, Joystick stick) {
-    requires(arm); 
-    this.arm = arm; 
+  public RunMotorArm(Joystick stick) {
+    requires(Robot.arm); 
+    this.arm = Robot.arm; 
     this.stick = stick; 
   }
 

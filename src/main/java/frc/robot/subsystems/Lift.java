@@ -8,8 +8,10 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.lift.ScissorLift;
 
 /**
  * Add your docs here.
@@ -17,10 +19,12 @@ import frc.robot.RobotMap;
 public class Lift extends Subsystem {
   private DoubleSolenoid botLift; 
   private DoubleSolenoid unlockBot; 
+  private Joystick stick; 
 
-  public Lift () {
+  public Lift (Joystick stick) {
     botLift = new DoubleSolenoid(RobotMap.botLift, RobotMap.botLiftRear); 
     unlockBot = new DoubleSolenoid(RobotMap.botUnlock, RobotMap.botUnlockRear); 
+    this.stick = stick; 
   }
   
   public void setBotLift(DoubleSolenoid.Value state) {
@@ -35,5 +39,6 @@ public class Lift extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new ScissorLift(stick));
   }
 }
